@@ -12,7 +12,7 @@ class Background {
     
     private var tileRows : [SKNode] = []
     private var originalTile : SKSpriteNode! = nil;
-    private var screenSize: CGSize = CGSizeMake(0, 0)
+    private var screenSize: CGSize = CGSize(width: 0, height: 0)
     
     private var tileMaxY: CGFloat = 0;
     private var tileMinY: CGFloat = 0;

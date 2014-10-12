@@ -11,10 +11,14 @@ import SpriteKit
 class GameScene: SKScene {
     
     var background: Background!
+    var markers: Markers!
     
     override func didMoveToView(view: SKView) {        
         fillScreenWithBackground()
         background.scrollingEnabled = true
+        
+        addMarkers()
+        markers.scrollingEnabled = true
     }
     
     func fillScreenWithBackground() {
@@ -24,6 +28,13 @@ class GameScene: SKScene {
                 background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
                 background.addTo(backgroundLayer)
             }
+        }
+    }
+    
+    func addMarkers() {
+        markers = Markers(screenSize: self.size)
+        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
+            markers.addTo(backgroundLayer)
         }
     }
     
@@ -50,5 +61,6 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         background.update()
+        markers.update()
     }
 }
