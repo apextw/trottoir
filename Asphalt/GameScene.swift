@@ -9,14 +9,22 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+    
+    var background: Background!
+    
+    override func didMoveToView(view: SKView) {        
+        fillScreenWithBackground()
+        background.scrollingEnabled = true
+    }
+    
+    func fillScreenWithBackground() {
         
-        self.addChild(myLabel)
+        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
+            if let backgroundPart = backgroundLayer.childNodeWithName("BackgroundPart") as? SKSpriteNode {
+                background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
+                background.addTo(backgroundLayer)
+            }
+        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -41,5 +49,6 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        background.update()
     }
 }
