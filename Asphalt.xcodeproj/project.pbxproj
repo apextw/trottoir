@@ -15,8 +15,9 @@
 		9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977AC19E7B0C1008ED26F /* Images.xcassets */; };
 		9D3977B019E7B0C1008ED26F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */; };
 		9D3977BC19E7B0C1008ED26F /* AsphaltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */; };
-		9D3977C619E7B0EC008ED26F /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977C519E7B0EC008ED26F /* black.png */; };
 		9D3D7CC019E9B15600A36405 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3D7CBF19E9B15600A36405 /* Background.swift */; };
+		9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F20F19EE6C8B00EC0575 /* Achievements.swift */; };
+		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +44,9 @@
 		9D3977B519E7B0C1008ED26F /* AsphaltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsphaltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3977BA19E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsphaltTests.swift; sourceTree = "<group>"; };
-		9D3977C519E7B0EC008ED26F /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		9D3D7CBF19E9B15600A36405 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		9D45F20F19EE6C8B00EC0575 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Achievements.swift; path = ../Achievements.swift; sourceTree = "<group>"; };
+		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = ../Marker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,7 +89,6 @@
 		9D39779E19E7B0C1008ED26F /* Asphalt */ = {
 			isa = PBXGroup;
 			children = (
-				9D3977C519E7B0EC008ED26F /* black.png */,
 				9D3977A119E7B0C1008ED26F /* AppDelegate.swift */,
 				9D3977A319E7B0C1008ED26F /* GameScene.sks */,
 				9D3977A519E7B0C1008ED26F /* GameScene.swift */,
@@ -98,6 +99,8 @@
 				9D39779F19E7B0C1008ED26F /* Supporting Files */,
 				9D3D7CBF19E9B15600A36405 /* Background.swift */,
 				9D4AF95119EAADAF0087FEAB /* Marker.swift */,
+				9D45F20F19EE6C8B00EC0575 /* Achievements.swift */,
+				9D45F21119EE6EFE00EC0575 /* GameManager.swift */,
 			);
 			path = Asphalt;
 			sourceTree = "<group>";
@@ -211,7 +214,6 @@
 				9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */,
 				9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */,
 				9D3977AB19E7B0C1008ED26F /* Main.storyboard in Resources */,
-				9D3977C619E7B0EC008ED26F /* black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +232,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D3977A619E7B0C1008ED26F /* GameScene.swift in Sources */,
+				9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */,
 				9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */,
+				9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */,
 				9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */,
 				9D3D7CC019E9B15600A36405 /* Background.swift in Sources */,
 				9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */,
