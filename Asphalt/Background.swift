@@ -11,7 +11,9 @@ import SpriteKit
 class Background {
     
     private var tileRows : [SKNode] = []
-    private var originalTile : SKSpriteNode! = nil;
+    private var originalTile : SKSpriteNode!
+    private var originalTilerow : SKNode!
+    
     private var screenSize: CGSize = CGSize(width: 0, height: 0)
     
     private var tileMaxY: CGFloat = 0;
@@ -23,17 +25,18 @@ class Background {
     init(backgroundTileSprite tile: SKSpriteNode, screenSize: CGSize) {
         self.screenSize = screenSize
         originalTile = tile
-        tileMinY = -screenSize.height / 2 - tile.size.height / 2
+        tileMinY = -screenSize.height / 2 - tile.size.height
         tileMaxY = screenSize.height / 2 + tile.size.height / 2
 
-        let tileRow = tileRowWith(tile, forScreenWidth: screenSize.width)
-        buildTileMapWith(tileRow, forScreenHeight: screenSize.height)
+        originalTilerow = tileRowWith(tile, forScreenWidth: screenSize.width)
+        buildTileMapWith(originalTilerow, forScreenHeight: screenSize.height)
     }
     
     private func tileRowWith(background: SKSpriteNode, forScreenWidth screenWidth: CGFloat) -> SKNode {
         
         var partsToAdd = Int(screenWidth) / Int(background.size.width);
-        partsToAdd /= 2;
+        partsToAdd = (partsToAdd / 2) + 1;
+        
         
         var leftPosition = background.position;
         var rightPosition = background.position;
@@ -105,22 +108,70 @@ class Background {
         }
     }
     
+    private var tilerowsCount = 0
+    
     private func addTileRowIfNeeded() {
         if let lastRow = tileRows.last {
             if lastRow.position.y <= tileMaxY {
-                if let rowCopy = lastRow.copy() as? SKNode {
+                if let rowCopy = originalTilerow.copy() as? SKNode {
                     var position = lastRow.position
                     position.y += originalTile.size.height
                     rowCopy.position = position
                     if rowCopy.parent != nil {
                         rowCopy.removeFromParent()
                     }
+                    
+                    ++tilerowsCount
+                    addDrawingToTileRawIfNeeded(tileRow: rowCopy, number: tilerowsCount)
+                    
                     lastRow.parent!.addChild(rowCopy)
                     tileRows.append(rowCopy)
                     println("New tile row at X: \(position.x) Y: \(position.y)")
                 }
             }
         }
+    }
+    
+    
+    
+    private var picturesAttributes: NSArray!
+    private var drawingsAtlas: SKTextureAtlas!
+    
+    private func addDrawingToTileRawIfNeeded(#tileRow: SKNode, number: Int) {
+        if picturesAttributes == nil {
+            if let path = NSBundle.mainBundle().pathForResource("DrawingsAttributes", ofType: "plist") {
+                picturesAttributes = NSArray(contentsOfFile: path)
+            }
+        }
+        
+        if drawingsAtlas == nil {
+            drawingsAtlas = SKTextureAtlas(named: "Drawings")
+        }
+        
+        for pictureAttributes in picturesAttributes {
+            let dictionary = pictureAttributes as NSDictionary
+            let pictureTileNumber = dictionary.objectForKey("Tile number") as String
+            
+            let intValue = pictureTileNumber.toInt()
+            if number == intValue {
+                let name = dictionary.objectForKey("Name") as String
+                println("Insert \(name) into tile number \(number)")
+                
+                let anchorX = (dictionary.objectForKey("Name") as NSString).floatValue
+                let drawing = SKSpriteNode(texture: drawingsAtlas.textureNamed(name))
+                insertDrawing(drawing, toNode: tileRow, anchorX: anchorX)
+            }
+        }
+    }
+    
+    private func insertDrawing(drawing: SKSpriteNode, toNode node: SKNode, var anchorX: Float?) {
+        if anchorX == nil {
+            anchorX = 0
+        }
+        anchorX = (anchorX! - 0.5) * 2
+        var x = (screenSize.width * 0.5 - drawing.size.width) * CGFloat(anchorX!)
+        drawing.position = CGPoint(x: x, y: 0);
+        node.addChild(drawing)
     }
     
     private func removeTileRowIfNeeded() {

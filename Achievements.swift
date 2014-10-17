@@ -8,11 +8,22 @@
 
 import Foundation
 
-var localBestResult: Int {
-set {
-    NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "localBestResult")
-}
-get {
-    return NSUserDefaults.standardUserDefaults().integerForKey("localBestResult")
-}
+struct Results {
+    
+    static func commitNewLocalBest(result: Int) {
+        let currentBest = localBestResult
+        if result > currentBest {
+            localBestResult = result
+        }
+    }
+    
+    static var localBestResult: Int {
+        set {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "localBestResult")
+        }
+        get {
+//            return 5
+            return NSUserDefaults.standardUserDefaults().integerForKey("localBestResult")
+        }
+    }
 }

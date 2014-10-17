@@ -13,7 +13,7 @@ import SpriteKit
 
 class GameScene: SKScene, GameManagerProtocol {
     
-    let initialSpeed: CGFloat = -3
+    let initialSpeed: CGFloat = -4
     var scoresLabel: SKLabelNode!
     
     var scrollSpeed: CGFloat = 0
@@ -31,7 +31,12 @@ class GameScene: SKScene, GameManagerProtocol {
         scoresLabel.verticalAlignmentMode = .Bottom
         scoresLabel.horizontalAlignmentMode = .Left
         scoresLabel.text = "0"
-        scoresLabel.position = CGPoint(x: -self.view!.bounds.size.width / 2, y: -self.view!.bounds.size.height / 2)
+        
+        println("Self.size: x = \(self.size.width), y = \(self.size.height)")
+        println("Self.view?.frame.size: x = \(self.view?.frame.size.width), y = \(self.view?.frame.size.height)")
+        println("Self.view!.bounds.size: x = \(self.view?.bounds.size.width), y = \(self.view?.bounds.size.width)")
+
+        scoresLabel.position = CGPoint(x: -self.size.width / 2, y: -self.size.height / 2)
         self.addChild(scoresLabel)
         
         gameManager = GameManager(delegate: self)
@@ -47,6 +52,10 @@ class GameScene: SKScene, GameManagerProtocol {
         startSpeedIncreaser()
     }
     
+//    override func didApplyConstraints() {
+//        println("Did apply constraints")
+//    }
+    
     func fillScreenWithBackground() {
         
         if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
@@ -58,7 +67,7 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     func addMarkers() {
-        markers = Markers(screenSize: self.view!.bounds.size, markersDelegate: gameManager)
+        markers = Markers(screenSize: self.size, markersDelegate: gameManager)
         if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
             markers.addTo(backgroundLayer)
         }
@@ -69,6 +78,11 @@ class GameScene: SKScene, GameManagerProtocol {
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
+            let touchprint = Touchprint.touchprintWithTouchLocation(location)
+            touchprint.position = location
+            
+            self.addChild(touchprint)
+
             gameOver()
         }
     }
@@ -96,13 +110,19 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     private func increaseSpeed() {
-        speedMultiplier *= 1.05
+        speedMultiplier *= 1.03
         scrollSpeed = initialSpeed * speedMultiplier
         markers.scrollSpeed = scrollSpeed
         background.scrollSpeed = scrollSpeed
     }
     
     func gameOver() {
+        let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
+        gameOverLabel.text = "Game Over"
+        self.addChild(gameOverLabel)
+
+        Results.commitNewLocalBest(gameManager.score)
+        
         background.scrollingEnabled = false
         markers.scrollingEnabled = false
     }

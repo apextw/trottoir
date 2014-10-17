@@ -17,7 +17,7 @@ protocol MarkerActivationProtocol {
 class Marker : SKSpriteNode {
     
     class internal func markerWithLabel(label: String, number: Int) -> Marker {
-        let marker = Marker(color: SKColor.grayColor(), size: CGSize(width: 100, height: 100))
+        let marker = Marker(imageNamed: "square", normalMapped: false)
         marker.userInteractionEnabled = true
         marker.name = "marker"
         marker.zPosition = 1
@@ -58,12 +58,11 @@ class Marker : SKSpriteNode {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         activateMarker()
         for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
+            let touchLocationInScene = touch.locationInNode(self.scene!)
+            let touchprint = Touchprint.touchprintWithTouchLocation(touchLocationInScene)
             
-            let touchprintTexture = SKTexture(imageNamed: "touchprint")
-            let touchprint = SKSpriteNode(texture: touchprintTexture)
-            touchprint.position = location
-            touchprint.zRotation = touchprintAngle()
+            let touchLocation = touch.locationInNode(self)
+            touchprint.position = touchLocation
             
             self.addChild(touchprint)
         }
@@ -78,9 +77,9 @@ class Marker : SKSpriteNode {
     
     func activateMarker() {
         if !isActivated {
-            self.color = SKColor.redColor()
-            self.colorBlendFactor = 1
-            applyFilterToLabel()
+            self.color = SKColor.blackColor()
+            self.colorBlendFactor = 0.1
+//            applyFilterToLabel()
         } else if delegate != nil {
             delegate.markedDidActivatedSecondTime(self)
             return
@@ -94,9 +93,6 @@ class Marker : SKSpriteNode {
     }
     
     func applyFilterToLabel() {
-        
-        return
-        
         let effectNode = SKEffectNode()
         let externalEffectNode = SKEffectNode()
         
@@ -106,25 +102,25 @@ class Marker : SKSpriteNode {
         filter.setValue(1, forKey: "inputScale")
         effectNode.filter = filter
 
-//        let externalFilter = CIFilter(name: "CISharpenLuminance")
-//        externalFilter.setDefaults()
-//        externalFilter.setValue(10, forKey: "inputSharpness")
-//        externalEffectNode.filter = externalFilter
+        let externalFilter = CIFilter(name: "CISharpenLuminance")
+        externalFilter.setDefaults()
+        externalFilter.setValue(10, forKey: "inputSharpness")
+        externalEffectNode.filter = externalFilter
 
-//        self.addChild(externalEffectNode)
-//        externalEffectNode.addChild(effectNode)
+        self.addChild(externalEffectNode)
+        externalEffectNode.addChild(effectNode)
         label.removeFromParent()
 //        label.setScale(1.2)
         effectNode.addChild(label)
-        self.addChild(effectNode)
+//        self.addChild(effectNode)
         
         effectNode.shouldCenterFilter = true
         effectNode.shouldEnableEffects = true
         effectNode.shouldRasterize = true
         
-//        externalEffectNode.shouldCenterFilter = true
-//        externalEffectNode.shouldEnableEffects = true
-//        externalEffectNode.shouldRasterize = true
+        externalEffectNode.shouldCenterFilter = true
+        externalEffectNode.shouldEnableEffects = true
+        externalEffectNode.shouldRasterize = true
     }
 }
 
@@ -132,8 +128,10 @@ class Markers {
     private var markers : [Marker] = []
     var markerDelegate: MarkerActivationProtocol!
     
-    private var maxY: CGFloat = 0;
-    private var minY: CGFloat = 0;
+    private var labels: [SKLabelNode] = []
+    
+    private let maxY: CGFloat!;
+    private let minY: CGFloat!;
     
     private var screenSize = CGSize(width: 0, height: 0)
     
@@ -142,13 +140,12 @@ class Markers {
     
     private let border: CGFloat = 10
     private var counter = 0
-    
 
     init(screenSize: CGSize, markersDelegate: MarkerActivationProtocol) {
         self.screenSize = screenSize
         println("Screen size for markers: width: \(screenSize.width) height: \(screenSize.height)")
         maxY = screenSize.height * 0.5 + Marker.size.height * 0.5
-        minY = -maxY - Marker.size.height
+        minY = -maxY
         
         self.markerDelegate = markersDelegate
         
@@ -182,13 +179,19 @@ class Markers {
             shift()
             addMarkerIfNeeded()
             removeMarkerIfNeeded()
+            removeLabelIfNeeded()
         }
     }
     
     private func shift() {
         for marker in markers {
             if marker.parent != nil {
-                marker.position = CGPointMake(marker.position.x, marker.position.y + scrollSpeed)
+                marker.position = CGPoint(x: marker.position.x, y: marker.position.y + scrollSpeed)
+            }
+        }
+        for label in labels {
+            if label.parent != nil {
+                label.position = CGPoint(x: label.position.x, y: label.position.y + scrollSpeed)
             }
         }
     }
@@ -221,6 +224,16 @@ class Markers {
                 if firstMarker.isActivated == false && markerDelegate != nil {
                     markerDelegate.markerWillHideUnactivated(firstMarker)
                 }
+            }
+        }
+    }
+    
+    private func removeLabelIfNeeded() {
+        if let firstLabel = labels.first {
+            if firstLabel.position.y < minY {
+                println("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
+                labels.removeAtIndex(0)
+                firstLabel.removeFromParent()
             }
         }
     }
@@ -323,6 +336,8 @@ extension Markers {
         let marker = addSingleMarkerTo(node)
         marker.position = position
         
+        showAchievementForMarkerIfNeeded(marker: marker)
+        
         println("New marker \(counter) at at X: \(position.x) Y: \(position.y)")
 
         return marker
@@ -355,6 +370,9 @@ extension Markers {
         leftMarker.doubledMarker = rightMarker
         rightMarker.doubledMarker = leftMarker
         
+        showAchievementForMarkerIfNeeded(marker: leftMarker)
+        showAchievementForMarkerIfNeeded(marker: rightMarker)
+        
         println("New double marker \(counter - 1)-\(counter) at at Y: \(position.y)")
         return (leftMarker, rightMarker)
     }
@@ -370,7 +388,7 @@ extension Markers {
             xShift *= -1
         }
         
-        let maxX = (screenSize.width * 0.5) //- (Marker.size.width * 0.5) - border
+        let maxX = (screenSize.width * 0.5) - (Marker.size.width * 0.5) - border
 
         for _ in 0 ..< count {
             
@@ -396,6 +414,8 @@ extension Markers {
             marker.position = CGPoint(x: xCoordinate, y: yCoordinate)
             yCoordinate += Marker.size.height + border
             
+            showAchievementForMarkerIfNeeded(marker: marker)
+            
             println("Zigzag queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
         }
     }
@@ -404,7 +424,7 @@ extension Markers {
         var xCoordinate: CGFloat = 0
         var yCoordinate: CGFloat = initialY;
         
-        let maxX = (screenSize.width * 0.5) //- (Marker.size.width * 0.5) - border
+        let maxX = (screenSize.width * 0.5) - (Marker.size.width * 0.5) - border
         
         for _ in 0 ..< count {
             xCoordinate = CGFloat(arc4random() % 1000) % maxX
@@ -416,7 +436,42 @@ extension Markers {
             marker.position = CGPoint(x: xCoordinate, y: yCoordinate)
             yCoordinate += Marker.size.height + border
             
+            showAchievementForMarkerIfNeeded(marker: marker)
+
             println("Random queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
         }
+    }
+}
+
+// MARK: Achievements
+extension Markers {
+    private func showAchievementForMarkerIfNeeded(#marker: Marker) -> SKNode? {
+        let number = marker.number
+        if number == Results.localBestResult {
+            return showAchievementString("Local best", nearMarker: marker)
+        }
+        return nil
+    }
+    
+    private func showAchievementString(label: String, nearMarker marker: Marker) -> SKNode {
+        
+        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
+        labelNode.text = label
+        labelNode.verticalAlignmentMode = .Center
+        
+        let xShift = screenSize.width * 0.5 - border
+        if marker.position.x <= 0 {
+            labelNode.horizontalAlignmentMode = .Right
+            labelNode.position = CGPoint(x: xShift, y: marker.position.y)
+        } else {
+            labelNode.horizontalAlignmentMode = .Left
+            labelNode.position = CGPoint(x: -xShift, y: marker.position.y)
+        }
+
+        let layer = marker.parent!
+        layer.addChild(labelNode)
+        
+        labels.append(labelNode)
+        return labelNode
     }
 }
