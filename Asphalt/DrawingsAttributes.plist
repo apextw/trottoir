@@ -6,9 +6,9 @@
 		<key>Name</key>
 		<string>picture-1</string>
 		<key>Tile number</key>
-		<string>0</string>
+		<string>1</string>
 		<key>anchorX</key>
-		<string>0</string>
+		<string>-1</string>
 	</dict>
 	<dict>
 		<key>Name</key>
@@ -16,7 +16,7 @@
 		<key>Tile number</key>
 		<string>2</string>
 		<key>anchorX</key>
-		<string>0</string>
+		<string>1</string>
 	</dict>
 </array>
 </plist>

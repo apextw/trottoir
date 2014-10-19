@@ -14,10 +14,24 @@ protocol MarkerActivationProtocol {
     func markedDidActivatedSecondTime(sender: Marker)
 }
 
+struct SquareTexture {
+    static private let texture1 = SKTextureAtlas(named: "Asphalt").textureNamed("square-1")
+    static private let texture2 = SKTextureAtlas(named: "Asphalt").textureNamed("square-2")
+    static private let texture3 = SKTextureAtlas(named: "Asphalt").textureNamed("square-3")
+    static private let textures = [texture1, texture2, texture3]
+    
+    static var texture: SKTexture {
+        get {
+            let index = Int(arc4random() % 3)
+            return textures[index]
+        }
+    }
+}
+
 class Marker : SKSpriteNode {
     
     class internal func markerWithLabel(label: String, number: Int) -> Marker {
-        let marker = Marker(imageNamed: "square", normalMapped: false)
+        let marker = Marker(texture: SquareTexture.texture, size: Marker.size)
         marker.userInteractionEnabled = true
         marker.name = "marker"
         marker.zPosition = 1
@@ -26,6 +40,27 @@ class Marker : SKSpriteNode {
         
         return marker
     }
+    
+    override var color: SKColor {
+        set {
+            super.color = newValue
+            label.color = newValue
+        }
+        get {
+            return super.color
+        }
+    }
+    
+    override var colorBlendFactor: CGFloat {
+        set {
+            super.colorBlendFactor = newValue
+            label.colorBlendFactor = newValue
+        }
+        get {
+            return super.colorBlendFactor
+        }
+    }
+
     
     var doubledMarker: Marker? = nil
     var delegate: MarkerActivationProtocol!
@@ -128,7 +163,7 @@ class Markers {
     private var markers : [Marker] = []
     var markerDelegate: MarkerActivationProtocol!
     
-    private var labels: [SKLabelNode] = []
+    private var labels: [SKNode] = []
     
     private let maxY: CGFloat!;
     private let minY: CGFloat!;
@@ -138,8 +173,11 @@ class Markers {
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
     
-    private let border: CGFloat = 10
+    private let border: CGFloat = 1
     private var counter = 0
+    
+    private var colorAttributes: NSArray!
+    var color = SKColor.whiteColor()
 
     init(screenSize: CGSize, markersDelegate: MarkerActivationProtocol) {
         self.screenSize = screenSize
@@ -345,8 +383,11 @@ extension Markers {
     
     private func addSingleMarkerTo(node: SKNode) -> Marker {
         ++counter
+        updateColor()
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
+        marker.color = color
+        marker.colorBlendFactor = 1
         markers.append(marker)
         node.addChild(marker)
         
@@ -448,30 +489,70 @@ extension Markers {
     private func showAchievementForMarkerIfNeeded(#marker: Marker) -> SKNode? {
         let number = marker.number
         if number == Results.localBestResult {
-            return showAchievementString("Local best", nearMarker: marker)
+            let label = localBestLabel()
+            return showAchievementLabel(label, nearMarker: marker)
         }
         return nil
     }
     
-    private func showAchievementString(label: String, nearMarker marker: Marker) -> SKNode {
-        
-        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
-        labelNode.text = label
-        labelNode.verticalAlignmentMode = .Center
-        
+    private func showAchievementLabel(label: SKNode, nearMarker marker: Marker) -> SKNode {
         let xShift = screenSize.width * 0.5 - border
-        if marker.position.x <= 0 {
-            labelNode.horizontalAlignmentMode = .Right
-            labelNode.position = CGPoint(x: xShift, y: marker.position.y)
+        if marker.position.x <= 0 && marker.doubledMarker == nil ||
+            marker.position.x > 0 && marker.doubledMarker != nil {
+            label.position = CGPoint(x: (screenSize.width * 0.5 + marker.position.x) * 0.5, y: marker.position.y)
+            label.zRotation = -0.2
         } else {
-            labelNode.horizontalAlignmentMode = .Left
-            labelNode.position = CGPoint(x: -xShift, y: marker.position.y)
+            label.position = CGPoint(x: (-screenSize.width * 0.5 + marker.position.x) * 0.5, y: marker.position.y)
+            label.zRotation = 0.2
         }
 
         let layer = marker.parent!
-        layer.addChild(labelNode)
+        layer.addChild(label)
         
-        labels.append(labelNode)
-        return labelNode
+        labels.append(label)
+        println("Add your best label")
+        return label
+    }
+    
+    private func localBestLabel() -> SKNode {
+        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
+        labelNode.text = "Your"
+        labelNode.verticalAlignmentMode = .Bottom
+        labelNode.horizontalAlignmentMode = .Center
+        
+        let secondRow = labelNode.copy() as SKLabelNode
+        secondRow.text = "best"
+        secondRow.verticalAlignmentMode = .Top
+        
+        let node = SKNode()
+        node.addChild(labelNode)
+        node.addChild(secondRow)
+        
+        return node
+    }
+}
+
+// MARK: Markers color
+extension Markers {
+    
+    private func updateColor() {
+        if colorAttributes == nil {
+            if let path = NSBundle.mainBundle().pathForResource("Colors", ofType: "plist") {
+                colorAttributes = NSArray(contentsOfFile: path)
+            }
+        }
+        
+        for element in colorAttributes {
+            let dictionary = element as NSDictionary
+            let number = Int(dictionary.objectForKey("Number") as NSNumber)
+            if counter == number {
+                let red = CGFloat(dictionary.objectForKey("Red") as NSNumber)
+                let green = CGFloat(dictionary.objectForKey("Green") as NSNumber)
+                let blue = CGFloat(dictionary.objectForKey("Blue") as NSNumber)
+                
+                color = SKColor(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: 1)
+                println("New color with red: \(red), green: \(green), blue: \(blue)")
+            }
+        }
     }
 }

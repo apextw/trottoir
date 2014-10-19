@@ -132,8 +132,6 @@ class Background {
         }
     }
     
-    
-    
     private var picturesAttributes: NSArray!
     private var drawingsAtlas: SKTextureAtlas!
     
@@ -155,22 +153,30 @@ class Background {
             let intValue = pictureTileNumber.toInt()
             if number == intValue {
                 let name = dictionary.objectForKey("Name") as String
-                println("Insert \(name) into tile number \(number)")
-                
-                let anchorX = (dictionary.objectForKey("Name") as NSString).floatValue
+                let anchorX = (dictionary.objectForKey("anchorX") as NSString).floatValue
                 let drawing = SKSpriteNode(texture: drawingsAtlas.textureNamed(name))
                 insertDrawing(drawing, toNode: tileRow, anchorX: anchorX)
+                println("Insert \(name) into tile number \(number) with anchorX \(anchorX)")
             }
         }
     }
     
     private func insertDrawing(drawing: SKSpriteNode, toNode node: SKNode, var anchorX: Float?) {
         if anchorX == nil {
-            anchorX = 0
+            anchorX = -1
         }
-        anchorX = (anchorX! - 0.5) * 2
-        var x = (screenSize.width * 0.5 - drawing.size.width) * CGFloat(anchorX!)
+        
+        if anchorX < -1 {
+            anchorX = -1
+            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
+        } else if anchorX > 1 {
+            anchorX = 1
+            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
+        }
+        
+        let x = (screenSize.width * 0.5 - drawing.size.width / 2) * CGFloat(anchorX!)
         drawing.position = CGPoint(x: x, y: 0);
+        drawing.zPosition = 1
         node.addChild(drawing)
     }
     

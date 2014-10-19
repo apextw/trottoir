@@ -52,10 +52,6 @@ class GameScene: SKScene, GameManagerProtocol {
         startSpeedIncreaser()
     }
     
-//    override func didApplyConstraints() {
-//        println("Did apply constraints")
-//    }
-    
     func fillScreenWithBackground() {
         
         if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
