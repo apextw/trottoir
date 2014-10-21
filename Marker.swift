@@ -34,7 +34,7 @@ class Marker : SKSpriteNode {
         let marker = Marker(texture: SquareTexture.texture, size: Marker.size)
         marker.userInteractionEnabled = true
         marker.name = "marker"
-        marker.zPosition = 1
+        marker.zPosition = 5
         marker.title = label
         marker.number = number
         
@@ -187,7 +187,8 @@ class Markers {
         
         self.markerDelegate = markersDelegate
         
-        addInitialMarkers()
+//        addInitialMarkers()
+        addFirstMarker()
     }
 
     private func addInitialMarkers() {
@@ -200,6 +201,14 @@ class Markers {
             marker.position = position
             markers.append(marker)
         }
+    }
+    
+    private func addFirstMarker() {
+        counter = 1
+        let marker = Marker.markerWithLabel("\(counter)", number: counter)
+        marker.delegate = markerDelegate
+        marker.position = CGPoint(x: 0, y: maxY)
+        markers.append(marker)
     }
     
     func addTo(node: SKNode) {

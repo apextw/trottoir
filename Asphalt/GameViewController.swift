@@ -16,7 +16,7 @@ extension SKNode {
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as SKScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+        if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
             // Configure the view.
             let skView = self.view as SKView
             skView.showsFPS = true
@@ -38,13 +38,13 @@ class GameViewController: UIViewController {
             skView.showsDrawCount = true
             skView.showsQuadCount = true
             
-            scene.size = skView.frame.size
             Touchprint.screenSize = skView.frame.size
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
+            scene.size = skView.frame.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
             
             skView.presentScene(scene)

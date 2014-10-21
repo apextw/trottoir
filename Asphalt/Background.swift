@@ -91,6 +91,13 @@ class Background {
         }
     }
     
+    func removeFromParent() {
+        for tileRow in tileRows {
+            if tileRow.parent != nil {
+                tileRow.removeFromParent()
+            }
+        }
+    }
     
     func update() {
         if scrollingEnabled {
@@ -122,7 +129,7 @@ class Background {
                     }
                     
                     ++tilerowsCount
-                    addDrawingToTileRawIfNeeded(tileRow: rowCopy, number: tilerowsCount)
+                    addDrawingToTileRowIfNeeded(tileRow: rowCopy, number: tilerowsCount)
                     
                     lastRow.parent!.addChild(rowCopy)
                     tileRows.append(rowCopy)
@@ -135,7 +142,7 @@ class Background {
     private var picturesAttributes: NSArray!
     private var drawingsAtlas: SKTextureAtlas!
     
-    private func addDrawingToTileRawIfNeeded(#tileRow: SKNode, number: Int) {
+    private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
         if picturesAttributes == nil {
             if let path = NSBundle.mainBundle().pathForResource("DrawingsAttributes", ofType: "plist") {
                 picturesAttributes = NSArray(contentsOfFile: path)
@@ -188,5 +195,15 @@ class Background {
                 firstRow.removeFromParent()
             }
         }
+    }
+    
+    func insertNodeToTheLastRow(node: SKNode) -> SKNode {
+        if node.parent != nil {
+            node.removeFromParent()
+        }
+        
+        let lastRow = tileRows.last!
+        lastRow.addChild(node)
+        return lastRow
     }
 }

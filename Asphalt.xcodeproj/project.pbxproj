@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
+		9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D910819F34308002D92CA /* MainMenuScene.swift */; };
 		9D3049CA19EF0CF800A93BF7 /* DrawingsAttributes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */; };
 		9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977A119E7B0C1008ED26F /* AppDelegate.swift */; };
 		9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977A319E7B0C1008ED26F /* GameScene.sks */; };
@@ -21,6 +23,8 @@
 		9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F20F19EE6C8B00EC0575 /* Achievements.swift */; };
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
+		9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA29FF119F3FCDF00756D31 /* AudioManager.swift */; };
+		9DA29FF419F3FD2000756D31 /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA29FF319F3FD2000756D31 /* song.caf */; };
 		9DC9581219F161790097FA83 /* Touchprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC9581119F161790097FA83 /* Touchprint.swift */; };
 		9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581419F1D5740097FA83 /* Asphalt.atlas */; };
 		9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581619F1DCEC0097FA83 /* Colors.plist */; };
@@ -37,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D1D910619F34152002D92CA /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		9D1D910819F34308002D92CA /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DrawingsAttributes.plist; sourceTree = "<group>"; };
 		9D39779C19E7B0C1008ED26F /* Asphalt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Asphalt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3977A019E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +61,8 @@
 		9D45F20F19EE6C8B00EC0575 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Achievements.swift; path = ../Achievements.swift; sourceTree = "<group>"; };
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = ../Marker.swift; sourceTree = "<group>"; };
+		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		9DA29FF319F3FD2000756D31 /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
 		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
@@ -100,11 +108,13 @@
 		9D39779E19E7B0C1008ED26F /* Asphalt */ = {
 			isa = PBXGroup;
 			children = (
+				9DA29FF319F3FD2000756D31 /* song.caf */,
+				9D1D910619F34152002D92CA /* MainMenu.sks */,
+				9D3977A319E7B0C1008ED26F /* GameScene.sks */,
 				9DC9581419F1D5740097FA83 /* Asphalt.atlas */,
 				9D3ED40319EF1CA800858D29 /* Drawings.atlas */,
 				9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */,
 				9DC9581619F1DCEC0097FA83 /* Colors.plist */,
-				9D3977A319E7B0C1008ED26F /* GameScene.sks */,
 				9D3977A919E7B0C1008ED26F /* Main.storyboard */,
 				9D3977AC19E7B0C1008ED26F /* Images.xcassets */,
 				9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */,
@@ -143,12 +153,14 @@
 			children = (
 				9D3977A119E7B0C1008ED26F /* AppDelegate.swift */,
 				9D3977A719E7B0C1008ED26F /* GameViewController.swift */,
+				9D1D910819F34308002D92CA /* MainMenuScene.swift */,
 				9D3977A519E7B0C1008ED26F /* GameScene.swift */,
 				9D3D7CBF19E9B15600A36405 /* Background.swift */,
 				9D4AF95119EAADAF0087FEAB /* Marker.swift */,
 				9D45F21119EE6EFE00EC0575 /* GameManager.swift */,
 				9DC9581119F161790097FA83 /* Touchprint.swift */,
 				9D45F20F19EE6C8B00EC0575 /* Achievements.swift */,
+				9DA29FF119F3FCDF00756D31 /* AudioManager.swift */,
 			);
 			name = Source;
 			path = Asphalt;
@@ -236,7 +248,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */,
+				9D1D910719F34152002D92CA /* MainMenu.sks in Resources */,
 				9D3977B019E7B0C1008ED26F /* LaunchScreen.xib in Resources */,
+				9DA29FF419F3FD2000756D31 /* song.caf in Resources */,
 				9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */,
 				9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */,
 				9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */,
@@ -263,10 +277,12 @@
 				9D3977A619E7B0C1008ED26F /* GameScene.swift in Sources */,
 				9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */,
 				9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */,
+				9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */,
 				9DC9581219F161790097FA83 /* Touchprint.swift in Sources */,
 				9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */,
 				9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */,
 				9D3D7CC019E9B15600A36405 /* Background.swift in Sources */,
+				9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */,
 				9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
