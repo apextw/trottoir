@@ -22,6 +22,17 @@ class Background {
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
     
+    var currentDrawingTileNumber = 0
+    
+    init(screenSize: CGSize) {
+        self.screenSize = screenSize
+        originalTile = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 100, height: 100))
+        tileMinY = -screenSize.height / 2 - originalTile.size.height
+        tileMaxY = screenSize.height / 2 + originalTile.size.height / 2
+        originalTilerow = tileRowWith(originalTile, forScreenWidth: screenSize.width)
+        buildTileMapWith(originalTilerow, forScreenHeight: screenSize.height)
+    }
+    
     init(backgroundTileSprite tile: SKSpriteNode, screenSize: CGSize) {
         self.screenSize = screenSize
         originalTile = tile
@@ -143,28 +154,12 @@ class Background {
     private var drawingsAtlas: SKTextureAtlas!
     
     private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
-        if picturesAttributes == nil {
-            if let path = NSBundle.mainBundle().pathForResource("DrawingsAttributes", ofType: "plist") {
-                picturesAttributes = NSArray(contentsOfFile: path)
-            }
-        }
         
-        if drawingsAtlas == nil {
-            drawingsAtlas = SKTextureAtlas(named: "Drawings")
-        }
-        
-        for pictureAttributes in picturesAttributes {
-            let dictionary = pictureAttributes as NSDictionary
-            let pictureTileNumber = dictionary.objectForKey("Tile number") as String
-            
-            let intValue = pictureTileNumber.toInt()
-            if number == intValue {
-                let name = dictionary.objectForKey("Name") as String
-                let anchorX = (dictionary.objectForKey("anchorX") as NSString).floatValue
-                let drawing = SKSpriteNode(texture: drawingsAtlas.textureNamed(name))
-                insertDrawing(drawing, toNode: tileRow, anchorX: anchorX)
-                println("Insert \(name) into tile number \(number) with anchorX \(anchorX)")
-            }
+        if let drawing = Drawings.drawingForTileNumber(number) {
+            let sprite = SKSpriteNode(texture: drawing.texture)
+            insertDrawing(sprite, toNode: tileRow, anchorX: drawing.anchorX)
+            println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
+            currentDrawingTileNumber = number
         }
     }
     
@@ -206,4 +201,17 @@ class Background {
         lastRow.addChild(node)
         return lastRow
     }
+    
+    deinit {
+        for backgorundRow in tileRows {
+            for child in backgorundRow.children {
+                child.removeFromParent()
+            }
+            if backgorundRow.parent != nil {
+                backgorundRow.removeFromParent()
+            }
+        }
+        println("Background deinit")
+    }
+
 }

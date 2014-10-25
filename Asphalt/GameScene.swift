@@ -6,15 +6,11 @@
 //  Copyright (c) 2014 Alexander Bekert. All rights reserved.
 //
 
-var scrollSpeed: CGFloat = -2
-var speedMultiplier: CGFloat = 1
-
 import SpriteKit
 
 class GameScene: SKScene, GameManagerProtocol {
     
     private let initialSpeed: CGFloat = -4
-    private var scoresLabel: SKLabelNode!
     
     private var scrollSpeed: CGFloat = 0
     private var speedMultiplier: CGFloat = 1
@@ -25,22 +21,14 @@ class GameScene: SKScene, GameManagerProtocol {
     private var gameManager: GameManager!
     
     private var isGameOver = false
-    private var audioManager = AudioManager()
     
     override func didMoveToView(view: SKView) {
         resetSpeed()
-        
-        scoresLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoresLabel.verticalAlignmentMode = .Bottom
-        scoresLabel.horizontalAlignmentMode = .Left
-        scoresLabel.text = "0"
         
         println("Self.size: x = \(self.size.width), y = \(self.size.height)")
         println("Self.view?.frame.size: x = \(self.view?.frame.size.width), y = \(self.view?.frame.size.height)")
         println("Self.view!.bounds.size: x = \(self.view?.bounds.size.width), y = \(self.view?.bounds.size.width)")
 
-        scoresLabel.position = CGPoint(x: -self.size.width / 2, y: -self.size.height / 2)
-        self.addChild(scoresLabel)
         
         gameManager = GameManager(delegate: self)
         
@@ -54,7 +42,7 @@ class GameScene: SKScene, GameManagerProtocol {
         markers.scrollingEnabled = true
         
         startSpeedIncreaser()
-        audioManager.play()
+        AudioManager.sharedInstance.play()
     }
     
     func fillScreenWithBackground() {
@@ -71,6 +59,10 @@ class GameScene: SKScene, GameManagerProtocol {
                 background.addTo(backgroundLayer)
                 return
             }
+            
+            background = Background(screenSize: self.size)
+            background.addTo(backgroundLayer)
+            return
         }
     }
     
@@ -84,10 +76,6 @@ class GameScene: SKScene, GameManagerProtocol {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
-        if isGameOver {
-            presentMainMenu()
-        }
-
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             let touchprint = Touchprint.touchprintWithTouchLocation(location)
@@ -98,21 +86,13 @@ class GameScene: SKScene, GameManagerProtocol {
             gameOver()
         }
     }
-    
-    private func presentMainMenu() {
-        if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
-            scene.size = self.size
-            scene.scaleMode = SKSceneScaleMode.ResizeFill
-            let transition = SKTransition.pushWithDirection(SKTransitionDirection.Left, duration: 1)
-            self.view!.presentScene(scene, transition: transition)
-        }
-    }
-
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        background.update()
-        markers.update()
+        if !isGameOver {
+            background.update()
+            markers.update()
+        }
     }
     
     private func resetSpeed() {
@@ -141,38 +121,46 @@ class GameScene: SKScene, GameManagerProtocol {
         if audioSpeed == 2 {
             println("Audio speed is at maximum — 2")
         }
-        audioManager.setRate(audioSpeed)
+        AudioManager.sharedInstance.setRate(audioSpeed)
     }
     
     func gameOver() {
         
         if isGameOver {
-            presentMainMenu()
+            return
         }
         
-        audioManager.stop()
-        shake()
+        removeAllActions()
         
-        let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
-        gameOverLabel.text = "Game Over"
-        self.addChild(gameOverLabel)
+        let reachedNewDrawing = Drawings.submitMenuDrawingWithTileNumber(background.currentDrawingTileNumber)
+
+        AudioManager.sharedInstance.stop()
+        let animationDuration = shake()
+        let waitAction = SKAction.waitForDuration(animationDuration)
+        self.runAction(waitAction, completion: { () -> Void in
+            self.presentMainMenu(showNewLabel: reachedNewDrawing)
+        })
+        
+//        let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
+//        gameOverLabel.text = "Game Over"
+//        self.addChild(gameOverLabel)
 
         Results.commitNewLocalBest(gameManager.score)
-        
         background.scrollingEnabled = false
         markers.scrollingEnabled = false
         
         isGameOver = true
     }
     
-    private func shake() {
-        
+    private func shake() -> NSTimeInterval {
+        let iterationsCount = 7
+        let duration = 0.1
         let range: CGFloat = 25
         var moves: [SKAction] = []
-        for _ in 0...4 {
+        for _ in 0...iterationsCount {
             let rndX = CGFloat(arc4random() % UInt32(range * 100) / 100) - range / 2
             let rndY = CGFloat(arc4random() % UInt32(range * 100) / 100) - range / 2
-            let move = SKAction.moveByX(rndX, y: rndY, duration: 0.1)
+            let move = SKAction.moveByX(rndX, y: rndY, duration: duration)
             move.timingMode = SKActionTimingMode.EaseOut
             moves.append(move)
             let move2 = SKAction.moveByX(-rndX, y: -rndY, duration: 0.1)
@@ -183,10 +171,54 @@ class GameScene: SKScene, GameManagerProtocol {
         for child in self.children {
             child.runAction(moveSequence)
         }
+        
+        return duration * NSTimeInterval(iterationsCount)
+    }
+    
+    private func presentMainMenu(#showNewLabel: Bool) {
+        if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
+            scene.size = self.size
+            scene.scaleMode = SKSceneScaleMode.ResizeFill
+            scene.score = gameManager.score
+            scene.showNewLabel = showNewLabel
+            let duration = 0.5
+            let transition = SKTransition.pushWithDirection(SKTransitionDirection.Left, duration: duration)
+            self.view!.presentScene(scene, transition: transition)
+            
+            delay(duration, closure: { () -> () in
+                self.freeObjects()
+            })
+//            markers = nil
+//            background = nil
+//            gameManager = nil
+        }
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
+    private func freeObjects() {
+        self.markers.markerDelegate = nil
+        self.markers = nil
+        
+        self.background.removeFromParent()
+        self.background = nil
+        self.gameManager.delegate = nil
+        self.gameManager = nil
     }
     
     func setScore(newScore: Int) {
-        scoresLabel.text = newScore.description
+//        scoresLabel.text = newScore.description
+    }
+    
+    deinit {
+        println("Game Scene deinit")
     }
 
 }

@@ -67,4 +67,9 @@ class GameManager: MarkerActivationProtocol {
             delegate.gameOver()
         }
     }
+    
+    deinit {
+        println("Game Manager deinit")
+    }
+
 }

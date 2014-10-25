@@ -10,15 +10,42 @@ import AVFoundation
 
 class AudioManager: NSObject, AVAudioPlayerDelegate {
     
+    class var sharedInstance: AudioManager {
+        struct Singleton {
+            static let instance = AudioManager()
+        }
+        
+        return Singleton.instance
+    }
+    
     private let songName = "song"
+    
+    var musicEnabled: Bool {
+        set {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: "Music Enabled")
+            if newValue == true && player == nil {
+                configureAudioSession()
+                configureAudioPlayer()
+            }
+        }
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey("Music Enabled")
+        }
+    }
+    
+    func switchMusicEnabled() {
+        musicEnabled = musicEnabled ? false : true
+    }
     
     var player: AVAudioPlayer!
     private var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
     
     override init() {
         super.init()
-        configureAudioSession()
-        configureAudioPlayer()
+        if musicEnabled {
+            configureAudioSession()
+            configureAudioPlayer()
+        }
     }
     
     private func configureAudioSession() {
@@ -51,14 +78,22 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
     }
     
     func play() {
-        player.play()
+        if musicEnabled {
+            player.play()
+        }
     }
     
     func stop() {
-        player.stop()
+        if player != nil {
+            player.pause()
+            player.rate = 1
+            player.currentTime = 0
+        }
     }
     
     func setRate(newRate: Float) {
-        player.rate = newRate
+        if musicEnabled {
+            player.rate = newRate
+        }
     }
 }

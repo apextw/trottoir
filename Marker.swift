@@ -98,6 +98,8 @@ class Marker : SKSpriteNode {
             
             let touchLocation = touch.locationInNode(self)
             touchprint.position = touchLocation
+            touchprint.colorBlendFactor = self.colorBlendFactor
+            touchprint.color = self.color
             
             self.addChild(touchprint)
         }
@@ -112,8 +114,16 @@ class Marker : SKSpriteNode {
     
     func activateMarker() {
         if !isActivated {
-            self.color = SKColor.blackColor()
-            self.colorBlendFactor = 0.1
+            
+//            let cicolor = self.color.CIColor
+//            let red = cicolor.red() - 0.1
+//            let green = cicolor.green() - 0.1
+//            let blue = cicolor.blue() - 0.1
+//            
+//            let newColor = SKColor(red: red, green: green, blue: blue, alpha: 1)
+//            
+//            self.color = newColor
+//            self.colorBlendFactor = 0.1
 //            applyFilterToLabel()
         } else if delegate != nil {
             delegate.markedDidActivatedSecondTime(self)
@@ -156,6 +166,10 @@ class Marker : SKSpriteNode {
         externalEffectNode.shouldCenterFilter = true
         externalEffectNode.shouldEnableEffects = true
         externalEffectNode.shouldRasterize = true
+    }
+    
+    deinit {
+        println("Marker \(number) deinit")
     }
 }
 
@@ -283,6 +297,14 @@ class Markers {
                 firstLabel.removeFromParent()
             }
         }
+    }
+    
+    deinit {
+        for marker in markers {
+            marker.removeFromParent()
+            marker.delegate = nil
+        }
+        println("Markers deinit")
     }
 }
 
@@ -543,7 +565,6 @@ extension Markers {
 
 // MARK: Markers color
 extension Markers {
-    
     private func updateColor() {
         if colorAttributes == nil {
             if let path = NSBundle.mainBundle().pathForResource("Colors", ofType: "plist") {
