@@ -8,8 +8,18 @@
 
 import SpriteKit
 
+protocol SceneShowingAdProtocol {
+    func prepareForShowingAdWithSize(size: CGSize)
+    func prepareForHidingAd()
+    var scene: SKScene {
+        get
+    }
+}
+
 class MainMenuScene: SKScene {
 
+    var adDelegate: adProtocol!
+    
     private var background: Background!
     private var uiLayer: SKNode!
     
@@ -18,6 +28,11 @@ class MainMenuScene: SKScene {
     private let musicSwitcher = Button(fontNamed: "Chalkduster")
     private let startButton = Button(fontNamed: "Chalkduster")
     private let gameCenterButton = Button(fontNamed: "Chalkduster")
+
+//    private let performShiftDownSelector: Selector = "performShiftDown:"
+//    private let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
+    private var swipeUpRecognizer: UISwipeGestureRecognizer!
+    private var swipeDownRecognizer: UISwipeGestureRecognizer!
 
     private var isShowingResult = false
     var score: Int! = nil {
@@ -28,7 +43,9 @@ class MainMenuScene: SKScene {
     var showNewLabel = false
     
     private var fingerprints: [SKSpriteNode] = []
-    private let maxFingerprintsCount = 50
+    private let maxFingerprintsCount = 150
+    
+    private var adBannerSize = CGSize()
     
     override func didMoveToView(view: SKView) {
         uiLayer = self.childNodeWithName("UI Layer")
@@ -44,7 +61,12 @@ class MainMenuScene: SKScene {
             if showNewLabel {
                 addNewLabel()
             }
+            if adDelegate != nil {
+                adDelegate.showAd(scene: self)
+            }
         }
+        
+        addSwipeUpRecognizer()
     }
     
     private func fillScreenWithBackground() {
@@ -81,18 +103,23 @@ class MainMenuScene: SKScene {
         var position = CGPoint(x: -self.size.width * 0.5, y: -self.size.height * 0.5)
         position.x += musicSwitcher.frame.size.width * 0.5 + labelLeftBorder
         position.y += musicSwitcher.frame.size.height * 0.5
+        position.y += adBannerSize.height
         musicSwitcher.position = position
     }
     
     private func initGameCenterButton() {
         gameCenterButton.text = "Game Center"
 //        gameCenterButton.fontSize = 72
+        updateGameCenterButtonPosition()
+        gameCenterButton.delegate = self
+        uiLayer.addChild(gameCenterButton)
+    }
+    
+    private func updateGameCenterButtonPosition() {
         var position = musicSwitcher.position
         position.y += musicSwitcher.frame.size.height / 2 + gameCenterButton.frame.size.height;
         position.x = -self.size.width * 0.5 + gameCenterButton.frame.size.width * 0.5 + labelLeftBorder;
         gameCenterButton.position = position
-        gameCenterButton.delegate = self
-        uiLayer.addChild(gameCenterButton)
     }
     
     private func addWhiteStripe() {
@@ -172,10 +199,18 @@ class MainMenuScene: SKScene {
     
     private func presentGameScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+            
+            if adDelegate != nil {
+                adDelegate.hideAd(scene: self)
+                scene.adDelegate = adDelegate
+            }
+            
             scene.size = self.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
 
             disableButtons()
+            disableRecognizers()
+            
             uiLayer.removeFromParent()
             let backgroundRow = background.insertNodeToTheLastRow(uiLayer)
             uiLayer.position = CGPoint(x: 0, y: -backgroundRow.position.y)
@@ -217,6 +252,7 @@ class MainMenuScene: SKScene {
             uiLayer.addChild(touchprint)
             fingerprints.append(touchprint)
         }
+//        performShiftDown()
     }
     
     private func fingerprintColor() -> SKColor {
@@ -225,6 +261,12 @@ class MainMenuScene: SKScene {
         let blue = CGFloat(arc4random() % 100) * 0.003 + 0.7
 
         return SKColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+    
+    override func didChangeSize(oldSize: CGSize) {
+        println("New scene size. Width: \(size.width), height: \(size.height)")
+        updateMusicSwitcherPosition()
+        updateGameCenterButtonPosition()
     }
     
     deinit {
@@ -250,3 +292,80 @@ extension MainMenuScene: ButtonProtocol {
     }
 }
 
+extension MainMenuScene {
+    
+    func addSwipeUpRecognizer() {
+        if swipeDownRecognizer != nil {
+            self.view!.removeGestureRecognizer(swipeDownRecognizer)
+        }
+        
+        if swipeUpRecognizer == nil {
+            swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
+            swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        }
+        self.view!.addGestureRecognizer(swipeUpRecognizer)
+    }
+    
+    func addSwipeDownRecognizer() {
+        if swipeUpRecognizer != nil {
+            self.view!.removeGestureRecognizer(swipeUpRecognizer)
+        }
+        
+        if swipeDownRecognizer == nil {
+            swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftUp:")
+            swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        }
+        self.view!.addGestureRecognizer(swipeDownRecognizer)
+    }
+    
+    func disableRecognizers () {
+        self.view!.removeGestureRecognizer(swipeDownRecognizer)
+        swipeDownRecognizer = nil
+        self.view!.removeGestureRecognizer(swipeUpRecognizer)
+        swipeUpRecognizer = nil
+    }
+
+    func performShiftDown(sender: AnyObject) {
+        addSwipeDownRecognizer()
+        
+        background.prepareScreenBelow()
+        let shiftAction = SKAction.moveByX(0, y: self.size.height, duration: 0.5)
+        shiftAction.timingMode = SKActionTimingMode.EaseOut
+        uiLayer.runAction(shiftAction)
+        let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
+        backgroundLayer.runAction(shiftAction)
+    }
+
+    func performShiftUp(sender: AnyObject) {
+        self.view!.removeGestureRecognizer(swipeDownRecognizer)
+        self.view!.addGestureRecognizer(swipeUpRecognizer)
+        
+        let shiftAction = SKAction.moveByX(0, y: -self.size.height, duration: 0.5)
+        shiftAction.timingMode = SKActionTimingMode.EaseOut
+        uiLayer.runAction(shiftAction)
+        let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
+        backgroundLayer.runAction(shiftAction, completion: { () -> Void in
+            self.background.removeInvisibleRows()
+        })
+    }
+}
+
+extension MainMenuScene: SceneShowingAdProtocol {
+    func prepareForHidingAd() {
+        adBannerSize = CGSize(width: 0, height: 0)
+        updateMusicSwitcherPosition()
+        updateGameCenterButtonPosition()
+    }
+    
+    func prepareForShowingAdWithSize(size: CGSize) {
+        adBannerSize = size
+        updateMusicSwitcherPosition()
+        updateGameCenterButtonPosition()
+    }
+    
+    override var scene: SKScene {
+        get {
+            return self
+        }
+    }
+}

@@ -10,6 +10,8 @@ import SpriteKit
 
 class GameScene: SKScene, GameManagerProtocol {
     
+    var adDelegate: adProtocol!
+
     private let initialSpeed: CGFloat = -4
     
     private var scrollSpeed: CGFloat = 0
@@ -117,11 +119,11 @@ class GameScene: SKScene, GameManagerProtocol {
         markers.scrollSpeed = scrollSpeed
         background.scrollSpeed = scrollSpeed
         
-        let audioSpeed = min(2, Float(pow(speedMultiplier, 0.25)))
-        if audioSpeed == 2 {
-            println("Audio speed is at maximum — 2")
-        }
-        AudioManager.sharedInstance.setRate(audioSpeed)
+//        let audioSpeed = min(2, Float(pow(speedMultiplier, 0.25)))
+//        if audioSpeed == 2 {
+//            println("Audio speed is at maximum — 2")
+//        }
+//        AudioManager.sharedInstance.setRate(audioSpeed)
     }
     
     func gameOver() {
@@ -177,6 +179,8 @@ class GameScene: SKScene, GameManagerProtocol {
     
     private func presentMainMenu(#showNewLabel: Bool) {
         if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
+            scene.adDelegate = adDelegate
+            
             scene.size = self.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
             scene.score = gameManager.score
@@ -220,5 +224,4 @@ class GameScene: SKScene, GameManagerProtocol {
     deinit {
         println("Game Scene deinit")
     }
-
 }

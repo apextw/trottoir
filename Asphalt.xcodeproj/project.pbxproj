@@ -20,6 +20,7 @@
 		9D3977BC19E7B0C1008ED26F /* AsphaltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */; };
 		9D3D7CC019E9B15600A36405 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3D7CBF19E9B15600A36405 /* Background.swift */; };
 		9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED40319EF1CA800858D29 /* Drawings.atlas */; };
+		9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9D4065B619FD2CDC00543DCE /* song-1.caf */; };
 		9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F20F19EE6C8B00EC0575 /* Achievements.swift */; };
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4648DD19F6A93A004D2CF6 /* Button.swift */; };
@@ -61,6 +62,7 @@
 		9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsphaltTests.swift; sourceTree = "<group>"; };
 		9D3D7CBF19E9B15600A36405 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		9D3ED40319EF1CA800858D29 /* Drawings.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Drawings.atlas; sourceTree = "<group>"; };
+		9D4065B619FD2CDC00543DCE /* song-1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "song-1.caf"; sourceTree = "<group>"; };
 		9D45F20F19EE6C8B00EC0575 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Achievements.swift; path = ../Achievements.swift; sourceTree = "<group>"; };
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		9D39779319E7B0C1008ED26F = {
 			isa = PBXGroup;
 			children = (
+				9D4065B619FD2CDC00543DCE /* song-1.caf */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Asphalt */,
 				9D3977B819E7B0C1008ED26F /* AsphaltTests */,
@@ -121,11 +124,11 @@
 				9D3ED40319EF1CA800858D29 /* Drawings.atlas */,
 				9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */,
 				9DC9581619F1DCEC0097FA83 /* Colors.plist */,
+				9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */,
 				9D3977A919E7B0C1008ED26F /* Main.storyboard */,
 				9D3977AC19E7B0C1008ED26F /* Images.xcassets */,
 				9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */,
 				9D39779F19E7B0C1008ED26F /* Supporting Files */,
-				9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */,
 			);
 			path = Asphalt;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */,
 				9D1D910719F34152002D92CA /* MainMenu.sks in Resources */,
 				9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */,
+				9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */,
 				9D3977B019E7B0C1008ED26F /* LaunchScreen.xib in Resources */,
 				9DA29FF419F3FD2000756D31 /* song.caf in Resources */,
 				9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */,

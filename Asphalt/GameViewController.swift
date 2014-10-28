@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import iAd
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -25,10 +26,22 @@ extension SKNode {
     }
 }
 
+protocol adProtocol {
+    func showAd(#scene: SceneShowingAdProtocol)
+    func hideAd(#scene: SceneShowingAdProtocol)
+}
+
 class GameViewController: UIViewController {
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    var adBannerView: ADBannerView!
+    
+    var wantsToShowAd = false
+    var readyToShowAd = false
+    var sceneToShowAd: SceneShowingAdProtocol?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadAds()
         
         // Configure the view.
         let skView = self.view as SKView
@@ -41,20 +54,29 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         
         Touchprint.screenSize = skView.frame.size
-
-        if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
+        
+        if let menuScene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
             /* Set the scale mode to scale to fit the window */
-            scene.size = skView.frame.size
-            scene.scaleMode = SKSceneScaleMode.ResizeFill
+            menuScene.size = skView.frame.size
+            menuScene.scaleMode = SKSceneScaleMode.ResizeFill
+            menuScene.adDelegate = self
             
-            skView.presentScene(scene)
+            skView.presentScene(menuScene)
         }
     }
     
-    override func shouldAutorotate() -> Bool {
-        return true
+    func loadAds() {
+        adBannerView = ADBannerView(frame: CGRect.zeroRect)
+        adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
+        adBannerView.delegate = self
+        adBannerView.hidden = true
+        view.addSubview(adBannerView)
     }
-
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
@@ -70,5 +92,57 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+}
+
+extension GameViewController: ADBannerViewDelegate {
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("banner View Will Load Ad")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("banner View Did Load Ad")
+        readyToShowAd = true
+        if wantsToShowAd && sceneToShowAd != nil {
+            showAd(scene: sceneToShowAd!)
+        }
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+        println("banner View Action Should Begin")
+        let skView = self.view as SKView
+        skView.paused = true
+        return true
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("banner View Action Did Finish")
+        let skView = self.view as SKView
+        skView.paused = false
+    }
+    
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("banner View did Fail To Receive Ad With Error")
+    }
+}
+
+extension GameViewController: adProtocol {
+    func showAd(#scene: SceneShowingAdProtocol) {
+        wantsToShowAd = true
+        sceneToShowAd = scene
+        if readyToShowAd {
+            scene.prepareForShowingAdWithSize(adBannerView.frame.size)
+            adBannerView.hidden = false
+        }
+    }
+    
+    func hideAd(#scene: SceneShowingAdProtocol) {
+        wantsToShowAd = false
+        sceneToShowAd = nil
+
+        adBannerView.hidden = true
+        scene.prepareForHidingAd()
     }
 }

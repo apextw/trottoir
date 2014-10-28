@@ -185,7 +185,7 @@ class Background {
     private func removeTileRowIfNeeded() {
         if let firstRow = tileRows.first {
             if firstRow.position.y <= tileMinY {
-                println("Remove first tile row")
+                println("Background: remove first tile row")
                 tileRows.removeAtIndex(0)
                 firstRow.removeFromParent()
             }
@@ -202,7 +202,18 @@ class Background {
         return lastRow
     }
     
+    
     deinit {
+        if originalTile.parent != nil {
+            originalTile.removeFromParent()
+        }
+        originalTile = nil
+        
+        if originalTilerow.parent != nil {
+            originalTilerow.removeFromParent()
+        }
+        originalTilerow = nil
+        
         for backgorundRow in tileRows {
             for child in backgorundRow.children {
                 child.removeFromParent()
@@ -213,5 +224,43 @@ class Background {
         }
         println("Background deinit")
     }
+}
 
+extension Background {
+    func prepareScreenBelow() {
+        let minY = tileMinY - screenSize.height
+        var position = CGPoint(x: 0, y: tileMinY)
+        let parent = tileRows.last!.parent!
+        
+        do {
+            let tilerow = originalTilerow.copy() as SKNode
+            position.y -= originalTile.size.height
+            parent.addChild(tilerow)
+            tileRows.insert(tilerow, atIndex: 0)
+        } while position.y - originalTile.size.height > minY
+    }
+
+    func removeInvisibleRows() {
+        
+        var removedCount = 0
+        var needToCheckOneMoreTime = true
+
+        do {
+            if let firstRow = tileRows.first {
+                if firstRow.position.y <= tileMinY {
+                    println("Remove first tile row")
+                    tileRows.removeAtIndex(0)
+                    firstRow.removeFromParent()
+                    
+                    ++removedCount
+                } else {
+                    needToCheckOneMoreTime = false
+                }
+            } else {
+                needToCheckOneMoreTime = false
+            }
+        } while needToCheckOneMoreTime
+        
+        println("Background: removed \(removedCount) first tilerows.")
+    }
 }
