@@ -288,13 +288,20 @@ extension MainMenuScene: ButtonProtocol {
             presentGameScene()
         } else if sender === gameCenterButton {
             println("Open Game Center")
+        } else if let senderName = sender.name {
+            if senderName == "Push Out button" {
+                let link = "itms-apps://itunes.apple.com/us/app/push-out-friends-competition/id899582393?ls=1&mt=8"
+                if let url = NSURL(string: link) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            }
         }
     }
 }
 
 extension MainMenuScene {
     
-    func addSwipeUpRecognizer() {
+    private func addSwipeUpRecognizer() {
         if swipeDownRecognizer != nil {
             self.view!.removeGestureRecognizer(swipeDownRecognizer)
         }
@@ -306,7 +313,7 @@ extension MainMenuScene {
         self.view!.addGestureRecognizer(swipeUpRecognizer)
     }
     
-    func addSwipeDownRecognizer() {
+    private func addSwipeDownRecognizer() {
         if swipeUpRecognizer != nil {
             self.view!.removeGestureRecognizer(swipeUpRecognizer)
         }
@@ -318,25 +325,110 @@ extension MainMenuScene {
         self.view!.addGestureRecognizer(swipeDownRecognizer)
     }
     
-    func disableRecognizers () {
+    private func disableRecognizers () {
         self.view!.removeGestureRecognizer(swipeDownRecognizer)
         swipeDownRecognizer = nil
         self.view!.removeGestureRecognizer(swipeUpRecognizer)
         swipeUpRecognizer = nil
     }
 
-    func performShiftDown(sender: AnyObject) {
+    internal func performShiftDown(sender: AnyObject) {
         addSwipeDownRecognizer()
         
         background.prepareScreenBelow()
+        addInformation()
+        
         let shiftAction = SKAction.moveByX(0, y: self.size.height, duration: 0.5)
         shiftAction.timingMode = SKActionTimingMode.EaseOut
         uiLayer.runAction(shiftAction)
         let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
         backgroundLayer.runAction(shiftAction)
     }
+    
+    private func addInformation() {
+        let informationLayer = SKNode()
+        informationLayer.name = "Information layer"
+        
+        let checkOutGameButton = checkOutButton()
+        informationLayer.addChild(checkOutGameButton)
 
-    func performShiftUp(sender: AnyObject) {
+        
+        informationLayer.position = CGPoint(x: 0, y: -self.size.height)
+        uiLayer.addChild(informationLayer)
+    }
+    
+    private func checkOutButton() -> SKNode {
+        let buttonLayer = SKNode()
+        buttonLayer.name = "Check out layer"
+        var position = CGPoint()
+        let blueColor = SKColor(red: 178 / 255.0, green: 247 / 255.0, blue: 251 / 255.0, alpha: 1)
+        let yellowColor = SKColor(red: 251 / 255.0, green: 250 / 255.0, blue: 178 / 255.0, alpha: 1)
+        let basicSize: CGFloat = 20.0
+        
+        let row1 = Button(fontNamed: "Chalkduster")
+        row1.text = "Check out"
+        row1.name = "Push Out button"
+        row1.delegate = self
+        row1.fontColor = blueColor
+        row1.fontSize = 2.2 * basicSize
+        position.y = 1.5 * row1.frame.size.height
+        row1.position = position
+        row1.zRotation = 0.2
+        
+        let row2 = Button(fontNamed: "Chalkduster")
+        row2.text = "our competition"
+        row2.name = "Push Out button"
+        row2.delegate = self
+        row2.fontColor = blueColor
+        row2.fontSize = 1.2 * basicSize
+        position.y = 0.4 * row1.position.y
+        position.x = -0.1 * row2.frame.size.width
+        row2.position = position
+        row2.zRotation = 0.16
+
+        let row3 = Button(fontNamed: "Chalkduster")
+        row3.text = "game"
+        row3.name = "Push Out button"
+        row3.delegate = self
+        row3.fontColor = blueColor
+        row3.fontSize = 2 * basicSize
+        position.y = 0.2 * row3.frame.size.height
+        position.x = row2.position.x + 0.5 * row2.frame.size.width
+        row3.position = position
+        row3.zRotation = 0.08
+        
+        let row4 = Button(fontNamed: "Chalkduster")
+        row4.text = "Push Out"
+        row4.name = "Push Out button"
+        row4.delegate = self
+        row4.fontColor = yellowColor
+        row4.fontSize = 2.5 * basicSize
+        position.x = -0.1 * row4.frame.size.width
+        position.y = -1 * row4.frame.size.height
+        row4.position = position
+        row4.zRotation = 0.1
+
+        let row5 = Button(fontNamed: "Chalkduster")
+        row5.text = "only on the App Store"
+        row5.name = "Push Out button"
+        row5.delegate = self
+        row5.fontColor = SKColor.whiteColor()
+        row5.fontSize = basicSize
+        position.y = row4.position.y - (row4.frame.size.height * 0.4) //- row5.frame.size.height / 2
+        position.x = 0
+        row5.position = position
+        row5.zRotation = 0.05
+        
+        buttonLayer.addChild(row1)
+        buttonLayer.addChild(row2)
+        buttonLayer.addChild(row3)
+        buttonLayer.addChild(row4)
+        buttonLayer.addChild(row5)
+        
+        return buttonLayer
+    }
+    
+    internal func performShiftUp(sender: AnyObject) {
         self.view!.removeGestureRecognizer(swipeDownRecognizer)
         self.view!.addGestureRecognizer(swipeUpRecognizer)
         
@@ -346,7 +438,14 @@ extension MainMenuScene {
         let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
         backgroundLayer.runAction(shiftAction, completion: { () -> Void in
             self.background.removeInvisibleRows()
+            self.removeInformation()
         })
+    }
+
+    private func removeInformation() {
+        if let informationLayer = uiLayer.childNodeWithName("Information layer") {
+            informationLayer.removeFromParent()
+        }
     }
 }
 
