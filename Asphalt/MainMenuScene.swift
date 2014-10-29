@@ -44,6 +44,7 @@ class MainMenuScene: SKScene {
     
     private var fingerprints: [SKSpriteNode] = []
     private let maxFingerprintsCount = 150
+    private var tapsCounter = 0
     
     private var adBannerSize = CGSize()
     
@@ -236,6 +237,8 @@ class MainMenuScene: SKScene {
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
+            ++tapsCounter
+            
             let location = touch.locationInNode(uiLayer)
             let touchprint = Touchprint.touchprintWithTouchLocation(location)
             touchprint.position = location
@@ -251,6 +254,9 @@ class MainMenuScene: SKScene {
             
             uiLayer.addChild(touchprint)
             fingerprints.append(touchprint)
+            
+            let dictionary: [NSObject: AnyObject] = ["Count" : tapsCounter]
+            Flurry.logEvent("Left_a_fingerprint_in_menu", withParameters: dictionary)
         }
 //        performShiftDown()
     }
@@ -290,6 +296,7 @@ extension MainMenuScene: ButtonProtocol {
             println("Open Game Center")
         } else if let senderName = sender.name {
             if senderName == "Push Out button" {
+                Flurry.logEvent("Opened_Push_Out_link")
                 let link = "itms-apps://itunes.apple.com/us/app/push-out-friends-competition/id899582393?ls=1&mt=8"
                 if let url = NSURL(string: link) {
                     UIApplication.sharedApplication().openURL(url)
@@ -326,10 +333,14 @@ extension MainMenuScene {
     }
     
     private func disableRecognizers () {
-        self.view!.removeGestureRecognizer(swipeDownRecognizer)
-        swipeDownRecognizer = nil
-        self.view!.removeGestureRecognizer(swipeUpRecognizer)
-        swipeUpRecognizer = nil
+        if (swipeDownRecognizer != nil) {
+            self.view!.removeGestureRecognizer(swipeDownRecognizer)
+            swipeDownRecognizer = nil
+        }
+        if (swipeUpRecognizer != nil) {
+            self.view!.removeGestureRecognizer(swipeUpRecognizer)
+            swipeUpRecognizer = nil
+        }
     }
 
     internal func performShiftDown(sender: AnyObject) {
@@ -343,6 +354,8 @@ extension MainMenuScene {
         uiLayer.runAction(shiftAction)
         let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
         backgroundLayer.runAction(shiftAction)
+        
+        Flurry.logEvent("Shifted_to_information_screen")
     }
     
     private func addInformation() {
@@ -440,6 +453,8 @@ extension MainMenuScene {
             self.background.removeInvisibleRows()
             self.removeInformation()
         })
+        
+        Flurry.logEvent("Shifted_back_to_menu")
     }
 
     private func removeInformation() {

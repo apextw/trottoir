@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        Flurry.startSession("DKTXFY7966KD7KRR48SM")
+        
         // Register default preferences plist
         if let defaultPrefsFile = NSBundle.mainBundle().URLForResource("DefaultPreferences", withExtension: "plist") {
             let dictionary = NSDictionary(contentsOfURL: defaultPrefsFile)!

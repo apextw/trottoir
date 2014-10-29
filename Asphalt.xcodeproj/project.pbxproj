@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
 		9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D910819F34308002D92CA /* MainMenuScene.swift */; };
+		9D2698941A00DBA6002FF873 /* libFlurry_5.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */; };
 		9D3049CA19EF0CF800A93BF7 /* DrawingsAttributes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */; };
 		9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977A119E7B0C1008ED26F /* AppDelegate.swift */; };
 		9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977A319E7B0C1008ED26F /* GameScene.sks */; };
@@ -25,12 +26,15 @@
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4648DD19F6A93A004D2CF6 /* Button.swift */; };
 		9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */; };
+		9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C71A00FC7C007F6DF9 /* Security.framework */; };
+		9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
 		9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA29FF119F3FCDF00756D31 /* AudioManager.swift */; };
 		9DA29FF419F3FD2000756D31 /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA29FF319F3FD2000756D31 /* song.caf */; };
 		9DC9581219F161790097FA83 /* Touchprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC9581119F161790097FA83 /* Touchprint.swift */; };
 		9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581419F1D5740097FA83 /* Asphalt.atlas */; };
 		9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581619F1DCEC0097FA83 /* Colors.plist */; };
+		9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */; };
 		9DF7752319F79C750096FF30 /* Drawings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF7752219F79C750096FF30 /* Drawings.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +51,9 @@
 /* Begin PBXFileReference section */
 		9D1D910619F34152002D92CA /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		9D1D910819F34308002D92CA /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Flurry-Bridging-Header.h"; sourceTree = "<group>"; };
+		9D2698921A00DBA6002FF873 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.4.0.a; sourceTree = "<group>"; };
 		9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DrawingsAttributes.plist; sourceTree = "<group>"; };
 		9D39779C19E7B0C1008ED26F /* Asphalt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Asphalt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3977A019E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -67,12 +74,15 @@
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
+		9D47F4C71A00FC7C007F6DF9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = ../Marker.swift; sourceTree = "<group>"; };
 		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		9DA29FF319F3FD2000756D31 /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
 		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
+		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
 		9DF7752219F79C750096FF30 /* Drawings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */,
+				9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */,
+				9D2698941A00DBA6002FF873 /* libFlurry_5.4.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,9 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D2698901A00DBA6002FF873 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */,
+				9D47F4C71A00FC7C007F6DF9 /* Security.framework */,
+				9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */,
+				9D2698921A00DBA6002FF873 /* Flurry.h */,
+				9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
 		9D39779319E7B0C1008ED26F = {
 			isa = PBXGroup;
 			children = (
+				9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */,
+				9D2698901A00DBA6002FF873 /* Flurry */,
 				9D4065B619FD2CDC00543DCE /* song-1.caf */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Asphalt */,
@@ -293,6 +320,7 @@
 				9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */,
 				9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */,
 				9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */,
+				9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */,
 				9DC9581219F161790097FA83 /* Touchprint.swift in Sources */,
 				9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */,
 				9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */,
@@ -423,24 +451,39 @@
 		9D3977C019E7B0C1008ED26F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Flurry",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
 			};
 			name = Debug;
 		};
 		9D3977C119E7B0C1008ED26F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Flurry",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
 			};
 			name = Release;
 		};

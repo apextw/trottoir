@@ -45,6 +45,10 @@ class GameScene: SKScene, GameManagerProtocol {
         
         startSpeedIncreaser()
         AudioManager.sharedInstance.play()
+        
+        Results.attempt += 1
+        let dictionary: [NSObject: AnyObject] = ["Attempt" : Results.attempt, "Sound_is_on" : AudioManager.sharedInstance.musicEnabled]
+        Flurry.logEvent("Game_started", withParameters: dictionary, timed: true)
     }
     
     func fillScreenWithBackground() {
@@ -152,6 +156,9 @@ class GameScene: SKScene, GameManagerProtocol {
         markers.scrollingEnabled = false
         
         isGameOver = true
+        
+        let dictionary: [NSObject: AnyObject] = ["score" : gameManager.score]
+        Flurry.endTimedEvent("Game_started", withParameters: dictionary)
     }
     
     private func shake() -> NSTimeInterval {

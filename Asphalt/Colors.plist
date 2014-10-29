@@ -6,21 +6,41 @@
 		<key>Number</key>
 		<integer>8</integer>
 		<key>Red</key>
-		<integer>255</integer>
+		<real>0.973</real>
 		<key>Green</key>
-		<integer>150</integer>
+		<real>0.97</real>
 		<key>Blue</key>
-		<integer>150</integer>
+		<real>0.775</real>
 	</dict>
 	<dict>
 		<key>Number</key>
-		<integer>10</integer>
+		<integer>15</integer>
 		<key>Red</key>
-		<integer>150</integer>
+		<real>0.98</real>
 		<key>Green</key>
-		<integer>255</integer>
+		<real>0.98</real>
 		<key>Blue</key>
-		<integer>255</integer>
+		<real>0.72</real>
+	</dict>
+	<dict>
+		<key>Number</key>
+		<integer>20</integer>
+		<key>Red</key>
+		<real>0.892</real>
+		<key>Green</key>
+		<real>0.9399999999999999</real>
+		<key>Blue</key>
+		<real>0.715</real>
+	</dict>
+	<dict>
+		<key>Number</key>
+		<integer>30</integer>
+		<key>Red</key>
+		<real>0.7</real>
+		<key>Green</key>
+		<real>0.844</real>
+		<key>Blue</key>
+		<real>0.748</real>
 	</dict>
 </array>
 </plist>

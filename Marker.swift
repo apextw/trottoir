@@ -522,6 +522,12 @@ extension Markers {
         if number == Results.localBestResult {
             let label = localBestLabel()
             return showAchievementLabel(label, nearMarker: marker)
+        } else if number == Results.todayBestResult {
+            let label = todayBestLabel()
+            return showAchievementLabel(label, nearMarker: marker)
+        } else if number == Results.previousResult {
+            let label = previousLabel()
+            return showAchievementLabel(label, nearMarker: marker)
         }
         return nil
     }
@@ -561,6 +567,33 @@ extension Markers {
         
         return node
     }
+    
+    private func todayBestLabel() -> SKNode {
+        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
+        labelNode.text = "Today"
+        labelNode.verticalAlignmentMode = .Bottom
+        labelNode.horizontalAlignmentMode = .Center
+        
+        let secondRow = labelNode.copy() as SKLabelNode
+        secondRow.text = "best"
+        secondRow.verticalAlignmentMode = .Top
+        
+        let node = SKNode()
+        node.addChild(labelNode)
+        node.addChild(secondRow)
+        
+        return node
+    }
+
+    private func previousLabel() -> SKNode {
+        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
+        labelNode.fontSize = 25
+        labelNode.text = "Previous"
+        labelNode.verticalAlignmentMode = .Center
+        labelNode.horizontalAlignmentMode = .Center
+        
+        return labelNode
+    }
 }
 
 // MARK: Markers color
@@ -580,7 +613,7 @@ extension Markers {
                 let green = CGFloat(dictionary.objectForKey("Green") as NSNumber)
                 let blue = CGFloat(dictionary.objectForKey("Blue") as NSNumber)
                 
-                color = SKColor(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: 1)
+                color = SKColor(red: red, green: green, blue: blue, alpha: 1)
                 println("New color with red: \(red), green: \(green), blue: \(blue)")
             }
         }
