@@ -9,8 +9,8 @@
 import SpriteKit
 
 protocol ButtonProtocol {
-    func didTouchDownButton(sender: Button)
-    func didTouchUpInsideButton(sender: Button)
+    func didTouchDownButton(sender: Button, position: CGPoint)
+    func didTouchUpInsideButton(sender: Button, position: CGPoint)
 }
 
 class Button: SKLabelNode {
@@ -48,13 +48,15 @@ class Button: SKLabelNode {
     }
     
     override internal func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        delegate?.didTouchDownButton(self)
+        let touch = touches.anyObject() as UITouch
+        let touchPoint = touch.locationInNode(self)
+        delegate?.didTouchDownButton(self, position: touchPoint)
 //        setSelected(true)
     }
     
     override internal func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let touchPoint = touch.locationInNode(self.parent)
+//        let touch = touches.anyObject() as UITouch
+//        let touchPoint = touch.locationInNode(self.parent)
 //        if CGRectContainsPoint(self.frame, touchPoint) {
 //            setSelected(true)
 //        } else {
@@ -67,7 +69,7 @@ class Button: SKLabelNode {
         let touchPoint = touch.locationInNode(self.parent)
 //        setSelected(false)
         if delegate != nil && CGRectContainsPoint(self.frame, touchPoint) {
-            delegate!.didTouchUpInsideButton(self)
+            delegate!.didTouchUpInsideButton(self, position: touchPoint)
         }
     }
 }

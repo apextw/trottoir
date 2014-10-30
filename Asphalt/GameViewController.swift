@@ -41,6 +41,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GameCenterManager.sharedInstance.gameViewController = self
         loadAds()
         
         // Configure the view.

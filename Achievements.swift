@@ -11,6 +11,7 @@ import Foundation
 struct Results {
     
     static func commitNewLocalBest(result: Int) {
+
         previousResult = result
 
         if result > localBestResult {
@@ -19,6 +20,14 @@ struct Results {
         
         if result > todayBestResult {
             todayBestResult = result
+        }
+        
+        if result > globalTodayBestResult || result > friendsOnlyAllTimeBestResult.score {
+            GameCenterManager.sharedInstance.reportScore(result, completion: { () -> () in
+                GameCenterManager.sharedInstance.updateResults()
+            })
+        } else {
+            GameCenterManager.sharedInstance.reportScore(result, completion: nil)
         }
     }
     
@@ -60,4 +69,35 @@ struct Results {
     }
     
     static var attempt = 0
+    
+    static var globalAllTimeBestResult: Int {
+        get {
+            return NSUserDefaults.standardUserDefaults().integerForKey("Global AllTime Best")
+        }
+    }
+    
+    static var globalWeekBestResult: Int {
+        get {
+            return NSUserDefaults.standardUserDefaults().integerForKey("Global Week Best")
+        }
+    }
+    
+    static var globalTodayBestResult: Int {
+        get {
+            return NSUserDefaults.standardUserDefaults().integerForKey("Global Today Best")
+        }
+    }
+
+    static var friendsOnlyAllTimeBestResult: (score: Int, name: String) {
+        get {
+            let score = NSUserDefaults.standardUserDefaults().integerForKey("FriendsOnly AllTime Best Score")
+            let name = NSUserDefaults.standardUserDefaults().objectForKey("FriendsOnly AllTime Best Name") as String?
+            
+            if name == nil {
+                return (score, "")
+            } else {
+                return (score, name!)
+            }
+        }
+    }
 }

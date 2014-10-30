@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Start Game Center autentication
+        GameCenterManager.sharedInstance.autenticatePlayer()
         
+        // Start Flurry Analytics session
         Flurry.startSession("DKTXFY7966KD7KRR48SM")
         
         // Register default preferences plist

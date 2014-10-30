@@ -28,7 +28,11 @@
 		9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */; };
 		9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C71A00FC7C007F6DF9 /* Security.framework */; };
 		9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */; };
+		9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
+		9D50D5EF1A02C19B00AB3BEA /* Markers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50D5EE1A02C19B00AB3BEA /* Markers.swift */; };
+		9D50D5F11A02C2F800AB3BEA /* MarkersLabelsAndColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */; };
+		9D9B958F1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */; };
 		9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA29FF119F3FCDF00756D31 /* AudioManager.swift */; };
 		9DA29FF419F3FD2000756D31 /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA29FF319F3FD2000756D31 /* song.caf */; };
 		9DC9581219F161790097FA83 /* Touchprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC9581119F161790097FA83 /* Touchprint.swift */; };
@@ -76,13 +80,17 @@
 		9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
 		9D47F4C71A00FC7C007F6DF9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = ../Marker.swift; sourceTree = "<group>"; };
+		9D50D5EE1A02C19B00AB3BEA /* Markers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markers.swift; sourceTree = "<group>"; };
+		9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkersLabelsAndColors.swift; sourceTree = "<group>"; };
+		9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuSceneExtensions.swift; sourceTree = "<group>"; };
 		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		9DA29FF319F3FD2000756D31 /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
 		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
-		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
+		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterManager.swift; path = ../GameCenterManager.swift; sourceTree = "<group>"; };
 		9DF7752219F79C750096FF30 /* Drawings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +102,7 @@
 				9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */,
 				9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */,
 				9D2698941A00DBA6002FF873 /* libFlurry_5.4.0.a in Frameworks */,
+				9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +131,7 @@
 		9D39779319E7B0C1008ED26F = {
 			isa = PBXGroup;
 			children = (
-				9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */,
+				9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */,
 				9D2698901A00DBA6002FF873 /* Flurry */,
 				9D4065B619FD2CDC00543DCE /* song-1.caf */,
 				9DC9581319F16E500097FA83 /* Source */,
@@ -191,13 +200,17 @@
 				9D3977A119E7B0C1008ED26F /* AppDelegate.swift */,
 				9D3977A719E7B0C1008ED26F /* GameViewController.swift */,
 				9D1D910819F34308002D92CA /* MainMenuScene.swift */,
+				9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */,
 				9D3977A519E7B0C1008ED26F /* GameScene.swift */,
 				9D3D7CBF19E9B15600A36405 /* Background.swift */,
 				9D4AF95119EAADAF0087FEAB /* Marker.swift */,
+				9D50D5EE1A02C19B00AB3BEA /* Markers.swift */,
+				9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */,
 				9D45F21119EE6EFE00EC0575 /* GameManager.swift */,
 				9DC9581119F161790097FA83 /* Touchprint.swift */,
 				9D45F20F19EE6C8B00EC0575 /* Achievements.swift */,
 				9DA29FF119F3FCDF00756D31 /* AudioManager.swift */,
+				9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */,
 				9D4648DD19F6A93A004D2CF6 /* Button.swift */,
 				9DF7752219F79C750096FF30 /* Drawings.swift */,
 			);
@@ -255,6 +268,11 @@
 					9D39779B19E7B0C1008ED26F = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = MLXPDYN59V;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					9D3977B419E7B0C1008ED26F = {
 						CreatedOnToolsVersion = 6.1;
@@ -319,6 +337,7 @@
 				9D3977A619E7B0C1008ED26F /* GameScene.swift in Sources */,
 				9D45F21019EE6C8B00EC0575 /* Achievements.swift in Sources */,
 				9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */,
+				9D50D5F11A02C2F800AB3BEA /* MarkersLabelsAndColors.swift in Sources */,
 				9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */,
 				9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */,
 				9DC9581219F161790097FA83 /* Touchprint.swift in Sources */,
@@ -327,7 +346,9 @@
 				9D3D7CC019E9B15600A36405 /* Background.swift in Sources */,
 				9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */,
 				9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */,
+				9D9B958F1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift in Sources */,
 				9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */,
+				9D50D5EF1A02C19B00AB3BEA /* Markers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +475,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -464,6 +486,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
 			};
 			name = Debug;
@@ -474,6 +497,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -483,6 +507,7 @@
 					"$(PROJECT_DIR)/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
 			};
 			name = Release;
