@@ -15,6 +15,10 @@ protocol GameManagerProtocol {
 
 class GameManager: MarkerActivationProtocol {
     
+    class var godMode: Bool {
+        return false
+    }
+    
     init(delegate: GameManagerProtocol) {
         self.delegate = delegate
     }

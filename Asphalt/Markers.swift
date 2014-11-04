@@ -8,7 +8,12 @@
 
 import SpriteKit
 
+struct MarkersColor {
+    static var color = SKColor.whiteColor()
+}
+
 class Markers {
+    
     private var markers : [Marker] = []
     var markerDelegate: MarkerActivationProtocol!
     
@@ -16,6 +21,7 @@ class Markers {
     
     private let maxY: CGFloat!;
     private let minY: CGFloat!;
+    private let markerInvisibleMaxY: CGFloat!
     
     internal var screenSize = CGSize(width: 0, height: 0)
     
@@ -26,16 +32,16 @@ class Markers {
     internal var counter = 0
     
     internal var colorAttributes: NSArray!
-    var color = SKColor.whiteColor()
     
     init(screenSize: CGSize, markersDelegate: MarkerActivationProtocol) {
         self.screenSize = screenSize
         println("Screen size for markers: width: \(screenSize.width) height: \(screenSize.height)")
-        maxY = screenSize.height * 0.5 + Marker.size.height * 0.5
-        minY = -maxY
-        
+        maxY = screenSize.height * 0.5 - Marker.size.height * 0.5
+        minY = -screenSize.height * 0.5 - Marker.size.height * 0.5
+        markerInvisibleMaxY = screenSize.height * 0.5 + Marker.size.height * 0.5
         self.markerDelegate = markersDelegate
         
+        MarkersColor.color = SKColor.whiteColor()
         //        addInitialMarkers()
         addFirstMarker()
     }
@@ -56,7 +62,7 @@ class Markers {
         counter = 1
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
-        marker.position = CGPoint(x: 0, y: maxY)
+        marker.position = CGPoint(x: 0, y: maxY + Marker.size.height)
         markers.append(marker)
     }
     
@@ -82,7 +88,14 @@ class Markers {
     private func shift() {
         for marker in markers {
             if marker.parent != nil {
-                marker.position = CGPoint(x: marker.position.x, y: marker.position.y + scrollSpeed)
+                let newPosition = CGPoint(x: marker.position.x, y: marker.position.y + scrollSpeed)
+                
+                // Check and fix color on first marker appear
+                if marker.position.y >= markerInvisibleMaxY && newPosition.y < markerInvisibleMaxY {
+                    marker.color = MarkersColor.color
+                }
+
+                marker.position = newPosition
             }
         }
         for label in labels {
@@ -249,10 +262,10 @@ extension Markers {
     
     private func addSingleMarkerTo(node: SKNode) -> Marker {
         ++counter
-        updateColor()
+//        updateColor()
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
-        marker.color = color
+        marker.color = MarkersColor.color
         marker.colorBlendFactor = 1
         markers.append(marker)
         node.addChild(marker)

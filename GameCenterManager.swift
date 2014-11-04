@@ -36,13 +36,16 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             if viewController != nil {
                 println("Game Center: Need to Log In")
                 if self.gameViewController != nil {
+                    self.pauseCurrentScene()
                     self.gameViewController.presentViewController(viewController, animated: true, completion: nil)
                 }
             } else if localPlayer.authenticated {
                 println("Game Center: Successfully autenticated")
                 self.updateResults()
+                self.resumeCurrentScene()
             } else {
                 println("Game Center: Autentication failed")
+                self.resumeCurrentScene()
             }
         }
     }
@@ -60,9 +63,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             return
         }
         
-        // Pause scene
-        let skView = self.gameViewController.view as SKView
-        skView.paused = true
+        pauseCurrentScene()
         
         // Present View Controller
         let gcvc = GKGameCenterViewController()
@@ -72,12 +73,22 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         gameViewController.presentViewController(gcvc, animated: true, completion: nil)
     }
     
+    private func pauseCurrentScene() {
+        let skView = self.gameViewController.view as SKView
+        skView.paused = true
+    }
+    
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
         gameViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
-            let skView = self.gameViewController.view as SKView
-            skView.paused = false
+            self.resumeCurrentScene()
         })
     }
+    
+    private func resumeCurrentScene() {
+        let skView = self.gameViewController.view as SKView
+        skView.paused = false
+    }
+
     
     func reportScore(scoreValue: Int, completion: (() -> ())?) {
         let score = GKScore(leaderboardIdentifier: defaultLeaderboardId)
@@ -134,7 +145,8 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let score = scores.first as? GKScore {
+            if let firstElement: AnyObject = scores?.first {
+                let score = firstElement as GKScore
                 let scoreValue = Int(score.value)
                 NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global AllTime Best")
                 println("Game Center: Successfully received global alltime best. It is \(scoreValue)")
@@ -157,7 +169,8 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let score = scores.first as? GKScore {
+            if let firstElement: AnyObject = scores?.first {
+                let score = firstElement as GKScore
                 let scoreValue = Int(score.value)
                 NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global Week Best")
                 println("Game Center: Successfully received global week best. It is \(scoreValue)")
@@ -180,7 +193,8 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let score = scores.first as? GKScore {
+            if let firstElement: AnyObject = scores?.first {
+                let score = firstElement as GKScore
                 let scoreValue = Int(score.value)
                 NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global Today Best")
                 println("Game Center: Successfully received global today best. It is \(scoreValue)")
@@ -203,7 +217,8 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let score = scores.first as? GKScore {
+            if let firstElement: AnyObject = scores?.first {
+                let score = firstElement as GKScore
                 let scoreValue = Int(score.value)
                 let name = score.player.displayName
                 NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "FriendsOnly AllTime Best Score")

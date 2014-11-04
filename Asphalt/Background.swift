@@ -27,8 +27,8 @@ class Background {
     init(screenSize: CGSize) {
         self.screenSize = screenSize
         originalTile = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 100, height: 100))
-        tileMinY = -screenSize.height / 2 - originalTile.size.height
-        tileMaxY = screenSize.height / 2 + originalTile.size.height / 2
+        tileMinY = -screenSize.height / 2 + originalTile.size.height / 2
+        tileMaxY = screenSize.height / 2 - originalTile.size.height / 2
         originalTilerow = tileRowWith(originalTile, forScreenWidth: screenSize.width)
         buildTileMapWith(originalTilerow, forScreenHeight: screenSize.height)
     }
@@ -160,6 +160,9 @@ class Background {
             insertDrawing(sprite, toNode: tileRow, anchorX: drawing.anchorX)
             println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
             currentDrawingTileNumber = number
+            if drawing.color != nil {
+                MarkersColor.color = drawing.color!
+            }
         }
     }
     
@@ -168,16 +171,17 @@ class Background {
             anchorX = -1
         }
         
-        if anchorX < -1 {
-            anchorX = -1
-            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
-        } else if anchorX > 1 {
-            anchorX = 1
-            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
-        }
+//        if anchorX < -1 {
+//            anchorX = -1
+//            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
+//        } else if anchorX > 1 {
+//            anchorX = 1
+//            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
+//        }
         
         let x = (screenSize.width * 0.5 - drawing.size.width / 2) * CGFloat(anchorX!)
-        drawing.position = CGPoint(x: x, y: 0);
+        let y = -originalTile.size.height * 0.5// + drawing.size.height * 0.5
+        drawing.position = CGPoint(x: x, y: y);
         drawing.zPosition = 1
         node.addChild(drawing)
     }
@@ -226,6 +230,7 @@ class Background {
     }
 }
 
+// MARK: Screem below
 extension Background {
     func prepareScreenBelow() {
         let minY = tileMinY - screenSize.height

@@ -82,6 +82,19 @@ class GameScene: SKScene, GameManagerProtocol {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
+        if GameManager.godMode {
+            let enabled = !background.scrollingEnabled
+            
+            background.scrollingEnabled = enabled
+            markers.scrollingEnabled = enabled
+            if enabled {
+                startSpeedIncreaser()
+            } else {
+                self.removeActionForKey("Speed increaser")
+            }
+            return
+        }
+        
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             let touchprint = Touchprint.touchprintWithTouchLocation(location)
@@ -122,15 +135,12 @@ class GameScene: SKScene, GameManagerProtocol {
         scrollSpeed = initialSpeed * speedMultiplier
         markers.scrollSpeed = scrollSpeed
         background.scrollSpeed = scrollSpeed
-        
-//        let audioSpeed = min(2, Float(pow(speedMultiplier, 0.25)))
-//        if audioSpeed == 2 {
-//            println("Audio speed is at maximum — 2")
-//        }
-//        AudioManager.sharedInstance.setRate(audioSpeed)
     }
     
     func gameOver() {
+        if GameManager.godMode {
+            return
+        }
         
         if isGameOver {
             return
@@ -147,10 +157,6 @@ class GameScene: SKScene, GameManagerProtocol {
             self.presentMainMenu(showNewLabel: reachedNewDrawing)
         })
         
-//        let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
-//        gameOverLabel.text = "Game Over"
-//        self.addChild(gameOverLabel)
-
         Results.commitNewLocalBest(gameManager.score)
         background.scrollingEnabled = false
         markers.scrollingEnabled = false
@@ -199,9 +205,6 @@ class GameScene: SKScene, GameManagerProtocol {
             delay(duration, closure: { () -> () in
                 self.freeObjects()
             })
-//            markers = nil
-//            background = nil
-//            gameManager = nil
         }
     }
     

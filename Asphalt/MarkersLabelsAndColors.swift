@@ -193,6 +193,7 @@ extension Markers {
 
 }
 
+/*
 // MARK: Markers color
 extension Markers {
     internal func updateColor() {
@@ -216,3 +217,4 @@ extension Markers {
         }
     }
 }
+*/

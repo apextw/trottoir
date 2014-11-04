@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Music Enabled</key>
-	<false/>
+	<true/>
 	<key>Current Menu Picture</key>
-	<string>picture-1</string>
+	<string>little-mushrooms</string>
 	<key>Current Drawing Number</key>
 	<integer>0</integer>
 </dict>

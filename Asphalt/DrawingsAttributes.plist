@@ -4,19 +4,299 @@
 <array>
 	<dict>
 		<key>Name</key>
-		<string>picture-1</string>
-		<key>Tile number</key>
-		<string>1</string>
-		<key>anchorX</key>
-		<string>-1</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>picture-2</string>
+		<string>schoolgirl</string>
 		<key>Tile number</key>
 		<string>2</string>
 		<key>anchorX</key>
 		<string>1</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>255</integer>
+		<key>Blue</key>
+		<integer>255</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>sun</string>
+		<key>Tile number</key>
+		<string>3</string>
+		<key>anchorX</key>
+		<string>-1.2</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>255</integer>
+		<key>Blue</key>
+		<integer>223</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>blue-cloud</string>
+		<key>Tile number</key>
+		<string>5</string>
+		<key>anchorX</key>
+		<string>1.05</string>
+		<key>Red</key>
+		<integer>165</integer>
+		<key>Green</key>
+		<integer>211</integer>
+		<key>Blue</key>
+		<integer>223</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>girl-with-butterfly</string>
+		<key>Tile number</key>
+		<string>6</string>
+		<key>anchorX</key>
+		<string>-1.1</string>
+		<key>Red</key>
+		<integer>215</integer>
+		<key>Green</key>
+		<integer>255</integer>
+		<key>Blue</key>
+		<integer>240</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>thunder-cloud</string>
+		<key>Tile number</key>
+		<string>8</string>
+		<key>anchorX</key>
+		<string>1.2</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>umbrella</string>
+		<key>Tile number</key>
+		<string>9</string>
+		<key>anchorX</key>
+		<string>-1.05</string>
+		<key>Red</key>
+		<integer>240</integer>
+		<key>Green</key>
+		<integer>202</integer>
+		<key>Blue</key>
+		<integer>212</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>little-mushrooms</string>
+		<key>Tile number</key>
+		<string>11</string>
+		<key>anchorX</key>
+		<string>1</string>
+		<key>Red</key>
+		<integer>196</integer>
+		<key>Green</key>
+		<integer>240</integer>
+		<key>Blue</key>
+		<integer>202</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>berry</string>
+		<key>Tile number</key>
+		<string>12</string>
+		<key>anchorX</key>
+		<string>-1</string>
+		<key>Red</key>
+		<integer>164</integer>
+		<key>Green</key>
+		<integer>246</integer>
+		<key>Blue</key>
+		<integer>205</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>flower</string>
+		<key>Tile number</key>
+		<string>14</string>
+		<key>anchorX</key>
+		<string>1</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>255</integer>
+		<key>Blue</key>
+		<integer>250</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>boy-with-dog</string>
+		<key>Tile number</key>
+		<string>15</string>
+		<key>anchorX</key>
+		<string>-1.02</string>
+		<key>Red</key>
+		<integer>195</integer>
+		<key>Green</key>
+		<integer>200</integer>
+		<key>Blue</key>
+		<integer>255</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>cherries</string>
+		<key>Tile number</key>
+		<string>17</string>
+		<key>anchorX</key>
+		<string>1</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>200</integer>
+		<key>Blue</key>
+		<integer>200</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>twisted-giraffe</string>
+		<key>Tile number</key>
+		<string>18</string>
+		<key>anchorX</key>
+		<string>-1.05</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>240</integer>
+		<key>Blue</key>
+		<integer>200</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>biker</string>
+		<key>Tile number</key>
+		<string>20</string>
+		<key>anchorX</key>
+		<string>1</string>
+		<key>Red</key>
+		<integer>253</integer>
+		<key>Green</key>
+		<integer>247</integer>
+		<key>Blue</key>
+		<integer>254</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>cat-with-milk</string>
+		<key>Tile number</key>
+		<string>21</string>
+		<key>anchorX</key>
+		<string>-1.1</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>icecream</string>
+		<key>Tile number</key>
+		<string>23</string>
+		<key>anchorX</key>
+		<string>1</string>
+		<key>Red</key>
+		<integer>254</integer>
+		<key>Green</key>
+		<integer>251</integer>
+		<key>Blue</key>
+		<integer>214</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>boy-riding-skateboard</string>
+		<key>Tile number</key>
+		<string>24</string>
+		<key>anchorX</key>
+		<string>-1.05</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>170</integer>
+		<key>Blue</key>
+		<integer>255</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>donut</string>
+		<key>Tile number</key>
+		<string>26</string>
+		<key>anchorX</key>
+		<string>1.05</string>
+		<key>Red</key>
+		<integer>250</integer>
+		<key>Green</key>
+		<integer>230</integer>
+		<key>Blue</key>
+		<integer>200</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>fish-in-aquarium</string>
+		<key>Tile number</key>
+		<string>27</string>
+		<key>anchorX</key>
+		<string>-1.05</string>
+		<key>Red</key>
+		<integer>203</integer>
+		<key>Green</key>
+		<integer>229</integer>
+		<key>Blue</key>
+		<integer>232</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>sheep</string>
+		<key>Tile number</key>
+		<string>29</string>
+		<key>anchorX</key>
+		<string>1.3</string>
+		<key>Red</key>
+		<integer>252</integer>
+		<key>Green</key>
+		<integer>250</integer>
+		<key>Blue</key>
+		<integer>250</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>pink-pony</string>
+		<key>Tile number</key>
+		<string>31</string>
+		<key>anchorX</key>
+		<string>-1.05</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>210</integer>
+		<key>Blue</key>
+		<integer>240</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>rainbow</string>
+		<key>Tile number</key>
+		<string>33</string>
+		<key>anchorX</key>
+		<string>0</string>
+		<key>Red</key>
+		<integer>255</integer>
+		<key>Green</key>
+		<integer>255</integer>
+		<key>Blue</key>
+		<integer>255</integer>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>fairy</string>
+		<key>Tile number</key>
+		<string>35</string>
+		<key>anchorX</key>
+		<string>-1.23</string>
+		<key>Red</key>
+		<integer>220</integer>
+		<key>Green</key>
+		<integer>230</integer>
+		<key>Blue</key>
+		<integer>255</integer>
 	</dict>
 </array>
 </plist>

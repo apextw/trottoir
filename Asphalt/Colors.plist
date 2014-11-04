@@ -4,33 +4,33 @@
 <array>
 	<dict>
 		<key>Number</key>
-		<integer>8</integer>
+		<integer>10</integer>
 		<key>Red</key>
-		<real>0.973</real>
+		<integer>97</integer>
 		<key>Green</key>
-		<real>0.97</real>
+		<integer>76</integer>
 		<key>Blue</key>
-		<real>0.775</real>
+		<integer>49</integer>
 	</dict>
 	<dict>
 		<key>Number</key>
 		<integer>15</integer>
 		<key>Red</key>
-		<real>0.98</real>
+		<integer>245</integer>
 		<key>Green</key>
-		<real>0.98</real>
+		<integer>246</integer>
 		<key>Blue</key>
-		<real>0.72</real>
+		<integer>198</integer>
 	</dict>
 	<dict>
 		<key>Number</key>
-		<integer>20</integer>
+		<integer>15</integer>
 		<key>Red</key>
-		<real>0.892</real>
+		<integer>170</integer>
 		<key>Green</key>
-		<real>0.9399999999999999</real>
+		<integer>200</integer>
 		<key>Blue</key>
-		<real>0.715</real>
+		<integer>215</integer>
 	</dict>
 	<dict>
 		<key>Number</key>
