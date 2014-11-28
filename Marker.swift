@@ -37,6 +37,7 @@ class Marker : SKSpriteNode {
         marker.zPosition = 5
         marker.title = label
         marker.number = number
+//        marker.setScale(DisplayHelper.MarkerSizeMultiplier)
         
         return marker
     }
@@ -86,7 +87,10 @@ class Marker : SKSpriteNode {
     
     class var size: CGSize {
         get {
-            return CGSize(width: 100, height: 100)
+            return SquareTexture.texture1.size()
+//            let textureSize = SquareTexture.texture1.size()
+//            let multiplier = DisplayHelper.MarkerSizeMultiplier
+//            return CGSize(width: textureSize.width * multiplier, height: textureSize.height * multiplier)
         }
     }
     

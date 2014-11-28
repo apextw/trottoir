@@ -73,9 +73,13 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     func addMarkers() {
-        markers = Markers(screenSize: self.size, markersDelegate: gameManager)
+        let screenSize = CGSize(width: self.size.width / DisplayHelper.MarkerSizeMultiplier, height: self.size.height / DisplayHelper.MarkerSizeMultiplier)
+        markers = Markers(screenSize: screenSize, markersDelegate: gameManager)
         if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
-            markers.addTo(backgroundLayer)
+            let markersLayer = SKNode()
+            markersLayer.setScale(DisplayHelper.MarkerSizeMultiplier)
+            markers.addTo(markersLayer)
+            backgroundLayer.addChild(markersLayer)
         }
     }
     
@@ -98,9 +102,11 @@ class GameScene: SKScene, GameManagerProtocol {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             let touchprint = Touchprint.touchprintWithTouchLocation(location)
+            touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
             touchprint.position = location
-            
-            self.addChild(touchprint)
+            if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
+                backgroundLayer.addChild(touchprint)
+            }
 
             gameOver()
         }
@@ -134,7 +140,7 @@ class GameScene: SKScene, GameManagerProtocol {
         speedMultiplier *= 1.03
         scrollSpeed = initialSpeed * speedMultiplier
         markers.scrollSpeed = scrollSpeed
-        background.scrollSpeed = scrollSpeed
+        background.scrollSpeed = scrollSpeed * DisplayHelper.MarkerSizeMultiplier
     }
     
     func gameOver() {

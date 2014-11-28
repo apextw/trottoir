@@ -86,6 +86,7 @@ class MainMenuScene: SKScene {
     }
 
     private func initMusicSwitcher() {
+        musicSwitcher.fontSize = 32 * DisplayHelper.FontScale
         updateMusicSwitcherText()
         musicSwitcher.delegate = self
         uiLayer.addChild(musicSwitcher)
@@ -111,7 +112,7 @@ class MainMenuScene: SKScene {
     
     private func initGameCenterButton() {
         gameCenterButton.text = "Game Center"
-//        gameCenterButton.fontSize = 72
+        gameCenterButton.fontSize = 32 * DisplayHelper.FontScale
         updateGameCenterButtonPosition()
         gameCenterButton.delegate = self
         uiLayer.addChild(gameCenterButton)
@@ -129,6 +130,7 @@ class MainMenuScene: SKScene {
 //        let texture = SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe")
 //        whiteStripe = SKSpriteNode(texture: texture)
         let position = CGPoint(x: 0, y: self.size.height * 0.4)
+        whiteStripe.setScale(DisplayHelper.MainMenuScale)
         whiteStripe.position = position
         uiLayer.addChild(whiteStripe)
     }
@@ -139,7 +141,7 @@ class MainMenuScene: SKScene {
         } else {
             startButton.text = "StaRt"
         }
-        startButton.fontSize = 72
+        startButton.fontSize = 72 * DisplayHelper.MainMenuScale
         startButton.setScale(whiteStripe.size.width / startButton.frame.size.width)
         
         var position = whiteStripe.position
@@ -159,9 +161,11 @@ class MainMenuScene: SKScene {
             if drawing.parent != nil {
                 drawing.removeFromParent()
             }
-            drawing.position = CGPoint(x: self.size.width / 2 - drawing.size.width / 2, y: 0)
+            drawing.setScale(DisplayHelper.MainMenuScale)
+            drawing.position = CGPoint(x: self.size.width / 2 - drawing.size.width / 2 -  DisplayHelper.DrawingsBorderShift, y: 0)
         } else {
             drawing = Drawings.mainMenuDrawing;
+            drawing.setScale(DisplayHelper.MainMenuScale)
             drawing.position = CGPoint(x: 0, y: 0)
         }
         uiLayer.addChild(drawing)
@@ -170,11 +174,12 @@ class MainMenuScene: SKScene {
     private func showScores() {
         let gameOver1 = SKLabelNode(fontNamed: "Chalkduster")
         gameOver1.text = "Game"
-        gameOver1.fontSize = 36
+        gameOver1.fontSize = 36 * DisplayHelper.FontScale
         
         let gameOver2 = gameOver1.copy() as SKLabelNode
         gameOver2.text = "over"
         gameOver2.horizontalAlignmentMode = .Left
+        gameOver2.fontSize = 32 * DisplayHelper.FontScale
         
         gameOver1.zRotation = 0.2
         gameOver2.zRotation = 0.1
@@ -187,7 +192,7 @@ class MainMenuScene: SKScene {
         
         let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.text = "\(score)"
-        scoreLabel.fontSize = 65
+        scoreLabel.fontSize = 65 * DisplayHelper.FontScale
         scoreLabel.position = CGPoint(x: 0, y: -scoreLabel.frame.size.height * 0.6)
         scoreLabel.zRotation = 0.1
 
@@ -195,7 +200,12 @@ class MainMenuScene: SKScene {
         node.addChild(gameOver1)
         node.addChild(gameOver2)
         node.addChild(scoreLabel)
-        node.position = CGPoint(x: -self.size.width * 0.2, y: 0)
+        if drawing != nil {
+            node.position = CGPoint(x: -self.size.width * 0.2, y: 0)
+        } else {
+            node.position = CGPoint.zeroPoint
+        }
+        node.zPosition = 1
         uiLayer.addChild(node)
     }
     
@@ -265,6 +275,7 @@ class MainMenuScene: SKScene {
         touchprint.color = fingerprintColor()
         touchprint.colorBlendFactor = 1
         touchprint.zPosition = 1
+        touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
         
         if fingerprints.count == maxFingerprintsCount {
             let firstTouch = fingerprints.first!

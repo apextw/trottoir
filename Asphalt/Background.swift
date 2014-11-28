@@ -183,7 +183,9 @@ public class Background {
 //            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
 //        }
         
-        let x = (screenSize.width * 0.5 - drawing.size.width / 2) * CGFloat(anchorX!)
+        drawing.setScale(DisplayHelper.DrawingsSizeMultiplier)
+        
+        let x = (screenSize.width * 0.5 - drawing.size.width / 2 - DisplayHelper.DrawingsBorderShift) * CGFloat(anchorX!)
         let y = -originalTile.size.height * 0.5// + drawing.size.height * 0.5
         drawing.position = CGPoint(x: x, y: y);
         drawing.zPosition = 1
@@ -266,10 +268,11 @@ extension Background {
         
         do {
             let tilerow = originalTilerow.copy() as SKNode
-            position.y -= originalTile.size.height
+            tilerow.position = position
             parent.addChild(tilerow)
             tileRows.insert(tilerow, atIndex: 0)
-        } while position.y - originalTile.size.height > minY
+            position.y -= originalTile.size.height
+        } while position.y > minY
     }
 
     func removeInvisibleRows() {

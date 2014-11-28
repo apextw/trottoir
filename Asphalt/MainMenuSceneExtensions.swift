@@ -71,7 +71,7 @@ extension MainMenuScene {
         var position = CGPoint()
         let blueColor = SKColor(red: 178 / 255.0, green: 247 / 255.0, blue: 251 / 255.0, alpha: 1)
         let yellowColor = SKColor(red: 251 / 255.0, green: 250 / 255.0, blue: 178 / 255.0, alpha: 1)
-        let basicSize: CGFloat = 20.0
+        let basicSize: CGFloat = 20.0 * DisplayHelper.FontScale
         
         let row1 = Button(fontNamed: "Chalkduster")
         row1.text = "Check out"

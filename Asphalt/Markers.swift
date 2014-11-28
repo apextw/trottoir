@@ -28,7 +28,7 @@ class Markers {
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
     
-    internal let border: CGFloat = 1
+    internal let border: CGFloat = 1 //* DisplayHelper.MarkerSizeMultiplier
     internal var counter = 0
     
     internal var colorAttributes: NSArray!
@@ -166,9 +166,8 @@ extension Markers {
         switch randomValue {
         case 0...10:
             // Zigzag queue
-            var initialPosition = lastMarker.position
-            initialPosition.y += Marker.size.height + border
-            addMarkersZigzagStyle(elementsCount: 5, toNode: layer, withInitialY: initialPosition.y, chanceOfDoubleMarker: 0.1)
+            let initialPosition = positionForNewMarkerBasedOnLastMarker(lastMarker)
+            addMarkersZigzagStyle(elementsCount: 5, toNode: layer, withInitialPosition: initialPosition, chanceOfDoubleMarker: 0.1)
         case 11...30:
             // Double marker
             addDoubleMarkerTo(layer, withLastMarkerPosition: lastMarker.position)
@@ -190,9 +189,8 @@ extension Markers {
         switch randomValue {
         case 0...20:
             // Zigzag queue
-            var initialPosition = lastMarker.position
-            initialPosition.y += Marker.size.height + border
-            addMarkersZigzagStyle(elementsCount: 11, toNode: layer, withInitialY: initialPosition.y, chanceOfDoubleMarker: 0.25)
+            let initialPosition = positionForNewMarkerBasedOnLastMarker(lastMarker)
+            addMarkersZigzagStyle(elementsCount: 11, toNode: layer, withInitialPosition: initialPosition, chanceOfDoubleMarker: 0.25)
         case 21...50:
             // Double marker
             addDoubleMarkerTo(layer, withLastMarkerPosition: lastMarker.position)
@@ -214,9 +212,8 @@ extension Markers {
         switch randomValue {
         case 0...25:
             // Zigzag queue
-            var initialPosition = lastMarker.position
-            initialPosition.y += Marker.size.height + border
-            addMarkersZigzagStyle(elementsCount: 11, toNode: layer, withInitialY: initialPosition.y, chanceOfDoubleMarker: 0.3)
+            let initialPosition = positionForNewMarkerBasedOnLastMarker(lastMarker)
+            addMarkersZigzagStyle(elementsCount: 11, toNode: layer, withInitialPosition: initialPosition, chanceOfDoubleMarker: 0.3)
         case 26...50:
             // Double marker
             addDoubleMarkerTo(layer, withLastMarkerPosition: lastMarker.position)
@@ -297,11 +294,26 @@ extension Markers {
         return (leftMarker, rightMarker)
     }
     
-    
-    private func addMarkersZigzagStyle(elementsCount count: Int, toNode node: SKNode, withInitialY initialY: CGFloat, chanceOfDoubleMarker: CGFloat) {
+    private func positionForNewMarkerBasedOnLastMarker(lastMarker: Marker) -> CGPoint {
+        let y = lastMarker.position.y + Marker.size.height + border
         
-        var xCoordinate: CGFloat = 0
-        var yCoordinate: CGFloat = initialY;
+        // If last marker is a Double marker then calculate X between markers
+        if let leftDoubledMarker = lastMarker.doubledMarker {
+            let rightDoubledMarker = lastMarker
+            let x = (leftDoubledMarker.position.x + rightDoubledMarker.position.x) / 2
+            return CGPoint(x: x, y: y)
+        }
+        
+        // Last marker is a plain Single marker
+        let x = lastMarker.position.x
+        return CGPoint(x: x, y: y)
+    }
+    
+    
+    private func addMarkersZigzagStyle(elementsCount count: Int, toNode node: SKNode, withInitialPosition initialPosition: CGPoint, chanceOfDoubleMarker: CGFloat) {
+        
+        var xCoordinate: CGFloat = initialPosition.x
+        var yCoordinate: CGFloat = initialPosition.y
         
         var xShift = Marker.size.width / 2
         if arc4random() % 2 == 0 {
@@ -311,13 +323,6 @@ extension Markers {
         let maxX = (screenSize.width * 0.5) - (Marker.size.width * 0.5) - border
         
         for _ in 0 ..< count {
-            
-            xCoordinate += xShift
-            if abs(xCoordinate) > maxX {
-                xCoordinate -= 2 * xShift
-                xShift *= -1;
-            }
-            
             let enoughSpaceForDoubleMarker = abs(xCoordinate) + Marker.size.width + (border / 2) <= maxX
             if enoughSpaceForDoubleMarker {
                 let rndValue = CGFloat(arc4random() % 100) / 100.0
@@ -337,6 +342,12 @@ extension Markers {
             showAchievementForMarkerIfNeeded(marker: marker)
             
             println("Zigzag queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
+            
+            xCoordinate += xShift
+            if abs(xCoordinate) > maxX {
+                xCoordinate -= 2 * xShift
+                xShift *= -1;
+            }
         }
     }
     

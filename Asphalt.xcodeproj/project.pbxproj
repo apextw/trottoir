@@ -35,6 +35,7 @@
 		9D9B958F1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */; };
 		9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA29FF119F3FCDF00756D31 /* AudioManager.swift */; };
 		9DA29FF419F3FD2000756D31 /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA29FF319F3FD2000756D31 /* song.caf */; };
+		9DB100DB1A2858D0006083D6 /* DisplayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */; };
 		9DC9581219F161790097FA83 /* Touchprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC9581119F161790097FA83 /* Touchprint.swift */; };
 		9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581419F1D5740097FA83 /* Asphalt.atlas */; };
 		9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581619F1DCEC0097FA83 /* Colors.plist */; };
@@ -87,6 +88,7 @@
 		9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuSceneExtensions.swift; sourceTree = "<group>"; };
 		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		9DA29FF319F3FD2000756D31 /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
+		9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayHelper.swift; sourceTree = "<group>"; };
 		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */,
 				9D4648DD19F6A93A004D2CF6 /* Button.swift */,
 				9DF7752219F79C750096FF30 /* Drawings.swift */,
+				9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */,
 			);
 			name = Source;
 			path = Asphalt;
@@ -345,6 +348,7 @@
 				9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */,
 				9D3D7CC019E9B15600A36405 /* Background.swift in Sources */,
 				9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */,
+				9DB100DB1A2858D0006083D6 /* DisplayHelper.swift in Sources */,
 				9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */,
 				9D9B958F1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift in Sources */,
 				9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */,
@@ -488,7 +492,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -510,7 +514,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flurry/Flurry-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
