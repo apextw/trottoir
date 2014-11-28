@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Background {
+public class Background {
     
     private var tileRows : [SKNode] = []
     private var originalTile : SKSpriteNode!
@@ -115,6 +115,7 @@ class Background {
             shiftTileRows()
             addTileRowIfNeeded()
             removeTileRowIfNeeded()
+            updateCurrentDrawingIfNeeded()
         }
     }
     
@@ -153,11 +154,14 @@ class Background {
     private var picturesAttributes: NSArray!
     private var drawingsAtlas: SKTextureAtlas!
     
+    public var currentDrawing: SKSpriteNode!
+    private var recentlyLoadedDrawing: SKSpriteNode!
+    
     private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
         
         if let drawing = Drawings.drawingForTileNumber(number) {
-            let sprite = SKSpriteNode(texture: drawing.texture)
-            insertDrawing(sprite, toNode: tileRow, anchorX: drawing.anchorX)
+            recentlyLoadedDrawing = SKSpriteNode(texture: drawing.texture)
+            insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
             println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
             currentDrawingTileNumber = number
             if drawing.color != nil {
@@ -196,6 +200,29 @@ class Background {
         }
     }
     
+    private func updateCurrentDrawingIfNeeded() {
+        if recentlyLoadedDrawing === currentDrawing {
+            return
+        }
+        
+        let scene = recentlyLoadedDrawing.scene!
+        let positionInScene = scene.convertPoint(recentlyLoadedDrawing.position, fromNode: recentlyLoadedDrawing.parent!)
+        let drawingBottomY = positionInScene.y - (recentlyLoadedDrawing.size.height * recentlyLoadedDrawing.anchorPoint.y)
+        
+        let sceneSize = scene.size
+        let sceneAnchor = scene.anchorPoint
+        let isOnScreen = drawingBottomY < sceneSize.height * (1 - sceneAnchor.y)
+        
+//        if positionInScene.y < scene._bounds.size.height * (1 - scene.anchorPoint.y) {
+        if isOnScreen {
+            currentDrawing = recentlyLoadedDrawing
+        }
+
+        
+//        if let scene = recentlyLoadedDrawing.scene {
+//        }
+    }
+    
     func insertNodeToTheLastRow(node: SKNode) -> SKNode {
         if node.parent != nil {
             node.removeFromParent()
@@ -230,7 +257,7 @@ class Background {
     }
 }
 
-// MARK: Screem below
+// MARK: Screen below
 extension Background {
     func prepareScreenBelow() {
         let minY = tileMinY - screenSize.height

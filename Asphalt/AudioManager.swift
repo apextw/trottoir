@@ -71,7 +71,7 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
                 player.rate = 1
                 player.delegate = self
                 player.numberOfLoops = -1
-                player.volume = 0.1
+                player.volume = 0.8
                 player.prepareToPlay()
             }
         }

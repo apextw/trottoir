@@ -19,11 +19,11 @@ protocol SceneShowingAdProtocol {
 class MainMenuScene: SKScene {
 
     var adDelegate: adProtocol!
+    var drawing: SKSpriteNode!
     
     internal var background: Background!
     internal var uiLayer: SKNode!
     
-    private let drawing = Drawings.mainMenuDrawing;
     private let whiteStripe = SKSpriteNode(texture: SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe"))
     private let musicSwitcher = Button(fontNamed: "Chalkduster")
     private let startButton = Button(fontNamed: "Chalkduster")
@@ -89,7 +89,7 @@ class MainMenuScene: SKScene {
         updateMusicSwitcherText()
         musicSwitcher.delegate = self
         uiLayer.addChild(musicSwitcher)
-        musicSwitcher.zPosition = 1
+        musicSwitcher.zPosition = 5
     }
     
     private func updateMusicSwitcherText() {
@@ -115,7 +115,7 @@ class MainMenuScene: SKScene {
         updateGameCenterButtonPosition()
         gameCenterButton.delegate = self
         uiLayer.addChild(gameCenterButton)
-        gameCenterButton.zPosition = 1
+        gameCenterButton.zPosition = 5
     }
     
     internal func updateGameCenterButtonPosition() {
@@ -148,13 +148,20 @@ class MainMenuScene: SKScene {
         startButton.delegate = self
         uiLayer.addChild(startButton)
         
-        startButton.zPosition = 1
+        startButton.zPosition = 5
     }
     
     private func addDrawing() {
         if isShowingResult {
+            if drawing == nil {
+                return
+            }
+            if drawing.parent != nil {
+                drawing.removeFromParent()
+            }
             drawing.position = CGPoint(x: self.size.width / 2 - drawing.size.width / 2, y: 0)
         } else {
+            drawing = Drawings.mainMenuDrawing;
             drawing.position = CGPoint(x: 0, y: 0)
         }
         uiLayer.addChild(drawing)

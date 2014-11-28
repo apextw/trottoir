@@ -196,6 +196,7 @@ class GameScene: SKScene, GameManagerProtocol {
             
             scene.size = self.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
+            scene.drawing = background.currentDrawing
             scene.score = gameManager.score
             scene.showNewLabel = showNewLabel
             let duration = 0.5
