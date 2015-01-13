@@ -36,14 +36,30 @@ class Markers {
     init(screenSize: CGSize, markersDelegate: MarkerActivationProtocol) {
         self.screenSize = screenSize
         println("Screen size for markers: width: \(screenSize.width) height: \(screenSize.height)")
-        maxY = screenSize.height * 0.5 - Marker.size.height * 0.5
+        // Normally, maxY should be 'screenSize.height * 0.5 - Marker.size.height * 0.5'
+        // We set 0.3 to allow it appear a little bit earlier
+        // We need it to spawn labels, that intersect the lower bound of marker
+        maxY = screenSize.height * 0.5 - Marker.size.height * 0.3
         minY = -screenSize.height * 0.5 - Marker.size.height * 0.5
         markerInvisibleMaxY = screenSize.height * 0.5 + Marker.size.height * 0.5
         self.markerDelegate = markersDelegate
         
         MarkersColor.color = SKColor.whiteColor()
-        //        addInitialMarkers()
+//        addInitialMarkers()
+        if Results.attempt > 1 {
+            addAttemptLabel()
+        }
         addFirstMarker()
+    }
+    
+    private func addAttemptLabel() {
+        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
+        labelNode.text = "Attempt \(Results.attempt)"
+        labelNode.verticalAlignmentMode = .Center
+        labelNode.horizontalAlignmentMode = .Center
+        labelNode.fontSize = 32 * DisplayHelper.MainMenuScale
+        labelNode.position = CGPoint(x: 0, y: screenSize.height / 2 + labelNode.frame.size.height / 2)
+        labels.append(labelNode)
     }
     
     private func addInitialMarkers() {
@@ -62,7 +78,12 @@ class Markers {
         counter = 1
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
-        marker.position = CGPoint(x: 0, y: maxY + Marker.size.height)
+        
+        if let attemptLabel = labels.first {
+            marker.position = CGPoint(x: 0, y: attemptLabel.position.y + Marker.size.height)
+        } else {
+            marker.position = CGPoint(x: 0, y: maxY + Marker.size.height)
+        }
         markers.append(marker)
     }
     
@@ -72,6 +93,12 @@ class Markers {
                 marker.removeFromParent()
             }
             node.addChild(marker)
+        }
+        for label in labels {
+            if label.parent != nil {
+                label.removeFromParent()
+            }
+            node.addChild(label)
         }
     }
     

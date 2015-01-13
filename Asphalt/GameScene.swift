@@ -33,7 +33,7 @@ class GameScene: SKScene, GameManagerProtocol {
 
         
         gameManager = GameManager(delegate: self)
-        
+        Results.attempt += 1
         
         fillScreenWithBackground()
         background.scrollSpeed = scrollSpeed
@@ -46,7 +46,6 @@ class GameScene: SKScene, GameManagerProtocol {
         startSpeedIncreaser()
         AudioManager.sharedInstance.play()
         
-        Results.attempt += 1
         let dictionary: [NSObject: AnyObject] = ["Attempt" : Results.attempt, "Sound_is_on" : AudioManager.sharedInstance.musicEnabled]
         Flurry.logEvent("Game_started", withParameters: dictionary, timed: true)
     }
@@ -202,7 +201,9 @@ class GameScene: SKScene, GameManagerProtocol {
             
             scene.size = self.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
-            scene.drawing = background.currentDrawing
+            if background.currentDrawing != nil {
+                scene.drawing = background.currentDrawing.copy() as SKSpriteNode
+            }
             scene.score = gameManager.score
             scene.showNewLabel = showNewLabel
             let duration = 0.5

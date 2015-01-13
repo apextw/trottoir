@@ -104,7 +104,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             completion?()
         })
     }
-    
+        
     func updateResults() {
         GKLeaderboard.loadLeaderboardsWithCompletionHandler { (leaderboards, error) -> Void in
             if error != nil {
@@ -125,10 +125,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     }
     
     private func retreiveDataFromLeaderboard(leaderboard: GKLeaderboard) {
-        loadFriendsAlltimeBestFromLeaderboard(leaderboard, completion: { () -> () in
-            self.loadGlobalTodayBestFromLeaderboard(leaderboard, completion: { () -> () in
-                self.loadGlobalWeekBestFromLeaderboard(leaderboard, completion: { () -> () in
-                    self.loadGlobalAlltimeBestFromLeaderboard(leaderboard, completion: { () -> () in })
+        loadFriendsAlltimeTop10FromLeaderboard(leaderboard, completion: { () -> () in
+            self.loadFriendsWeekTop10FromLeaderboard(leaderboard, completion: { () -> () in
+                self.loadFriendsTodayTop10FromLeaderboard(leaderboard, completion: { () -> () in
+                    self.loadGlobalTodayBestFromLeaderboard(leaderboard, completion: { () -> () in
+                        self.loadGlobalWeekBestFromLeaderboard(leaderboard, completion: { () -> () in
+                            self.loadGlobalAlltimeBestFromLeaderboard(leaderboard, completion: { () -> () in })
+                        })
+                    })
                 })
             })
         })
@@ -147,9 +151,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             
             if let firstElement: AnyObject = scores?.first {
                 let score = firstElement as GKScore
-                let scoreValue = Int(score.value)
-                NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global AllTime Best")
-                println("Game Center: Successfully received global alltime best. It is \(scoreValue)")
+                let result = Result(score: score)
+                result.saveToUserDefaultsWithKey("Global AllTime Best")
+                println("Game Center: Successfully received global alltime best. It is \(result.score) by \(result.name)")
             } else {
                 println("Game Center: Global alltime best does not exist")
             }
@@ -171,9 +175,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             
             if let firstElement: AnyObject = scores?.first {
                 let score = firstElement as GKScore
-                let scoreValue = Int(score.value)
-                NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global Week Best")
-                println("Game Center: Successfully received global week best. It is \(scoreValue)")
+                let result = Result(score: score)
+                result.saveToUserDefaultsWithKey("Global Week Best")
+                println("Game Center: Successfully received global week best. It is \(result.score) by \(result.name)")
             } else {
                 println("Game Center: Global week best does not exist")
             }
@@ -195,9 +199,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             
             if let firstElement: AnyObject = scores?.first {
                 let score = firstElement as GKScore
-                let scoreValue = Int(score.value)
-                NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "Global Today Best")
-                println("Game Center: Successfully received global today best. It is \(scoreValue)")
+                let result = Result(score: score)
+                result.saveToUserDefaultsWithKey("Global Today Best")
+                println("Game Center: Successfully received global today best. It is \(result.score) by \(result.name)")
             } else {
                 println("Game Center: Global today best does not exist")
             }
@@ -206,9 +210,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadFriendsAlltimeBestFromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
+    private func loadFriendsAlltimeTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
         leaderboard.playerScope = .FriendsOnly
-        let range = NSRange(location: 1, length: 1)
+        let range = NSRange(location: 1, length: 10)
         leaderboard.range = range
         leaderboard.timeScope = .AllTime
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
@@ -217,20 +221,92 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as GKScore
-                let scoreValue = Int(score.value)
-                let name = score.player.displayName
-                NSUserDefaults.standardUserDefaults().setInteger(scoreValue, forKey: "FriendsOnly AllTime Best Score")
-                NSUserDefaults.standardUserDefaults().setObject(name, forKey: "FriendsOnly AllTime Best Name")
-                println("Game Center: Successfully received friendsonly today best. It is \(scoreValue)")
-            } else {
-                println("Game Center: friendsonly alltime best does not exist")
+            var friendsResults: [Result] = []
+            
+            for object in scores {
+                let score = object as GKScore
+                let result = Result(score: score)
+                let rank = score.rank
+                if result.name == GKLocalPlayer.localPlayer().displayName {
+                    println("Game Center: Friendsonly alltime Top 10. My place is #\(rank) with score \(result.score)")
+                } else {
+                    friendsResults.append(result)
+                    println("Game Center: Friendsonly alltime Top 10. #\(rank) is \(result.score) by \(result.name)")
+                }
             }
+            
+            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
+            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Alltime Top 10")
             
             completion()
         }
     }
+    
+    private func loadFriendsWeekTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
+        leaderboard.playerScope = .FriendsOnly
+        let range = NSRange(location: 1, length: 10)
+        leaderboard.range = range
+        leaderboard.timeScope = GKLeaderboardTimeScope.Week
+        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+            if error != nil {
+                println("Game Center: Error during receiving friendsonly alltime best.  \(error.description)")
+                return
+            }
+            
+            var friendsResults: [Result] = []
+            
+            for object in scores {
+                let score = object as GKScore
+                let result = Result(score: score)
+                let rank = score.rank
+                if result.name == GKLocalPlayer.localPlayer().displayName {
+                    println("Game Center: Friendsonly week Top 10. My place is #\(rank) with score \(result.score)")
+                } else {
+                    friendsResults.append(result)
+                    println("Game Center: Friendsonly week Top 10. #\(rank) is \(result.score) by \(result.name)")
+                }
+            }
+            
+            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
+            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Week Top 10")
+            
+            completion()
+        }
+    }
+    
+    private func loadFriendsTodayTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
+        leaderboard.playerScope = .FriendsOnly
+        let range = NSRange(location: 1, length: 10)
+        leaderboard.range = range
+        leaderboard.timeScope = GKLeaderboardTimeScope.Today
+        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+            if error != nil {
+                println("Game Center: Error during receiving friendsonly alltime best.  \(error.description)")
+                return
+            }
+            
+            var friendsResults: [Result] = []
+            
+            for object in scores {
+                let score = object as GKScore
+                let result = Result(score: score)
+                let rank = score.rank
+                if result.name == GKLocalPlayer.localPlayer().displayName {
+                    println("Game Center: Friendsonly today Top 10. My place is #\(rank) with score \(result.score)")
+                } else {
+                    friendsResults.append(result)
+                    println("Game Center: Friendsonly today Top 10. #\(rank) is \(result.score) by \(result.name)")
+                }
+            }
+            
+            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
+            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Today Top 10")
+            
+            completion()
+        }
+    }
+
+
 }
 
 

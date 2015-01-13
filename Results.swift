@@ -12,17 +12,29 @@ struct Results {
     
     static func commitNewLocalBest(result: Int) {
 
-        previousResult = result
-
+        var needToReportScore = false
+        
         if result > localBestResult {
             localBestResult = result
+            needToReportScore = true
         }
         
         if result > todayBestResult {
             todayBestResult = result
+            needToReportScore = true
         }
         
-        if result > globalTodayBestResult || result > friendsOnlyAllTimeBestResult.score {
+        if result > friendsTodayTop10.last?.score {
+            needToReportScore = true
+        }
+        
+        if result < previousResult {
+            needToReportScore = false
+        }
+        
+        previousResult = result
+        
+        if needToReportScore {
             GameCenterManager.sharedInstance.reportScore(result, completion: { () -> () in
                 GameCenterManager.sharedInstance.updateResults()
             })
@@ -70,34 +82,55 @@ struct Results {
     
     static var attempt = 0
     
-    static var globalAllTimeBestResult: Int {
+    static var globalAllTimeBestResult: Result {
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey("Global AllTime Best")
+            return Result.loadFromUserDefaultsForKey("Global AllTime Best");
         }
     }
     
-    static var globalWeekBestResult: Int {
+    static var globalWeekBestResult: Result {
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey("Global Week Best")
+            return Result.loadFromUserDefaultsForKey("Global Week Best");
         }
     }
     
-    static var globalTodayBestResult: Int {
+    static var globalTodayBestResult: Result {
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey("Global Today Best")
+            return Result.loadFromUserDefaultsForKey("Global Today Best");
+        }
+    }
+    
+    static var friendsAlltimeTop10: [Result] {
+        get {
+            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Alltime Top 10") as? NSData {
+                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
+                    return results
+                }
+            }
+            return []
+        }
+    }
+    
+    static var friendsWeekTop10: [Result] {
+        get {
+            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Week Top 10") as? NSData {
+                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
+                    return results
+                }
+            }
+            return []
         }
     }
 
-    static var friendsOnlyAllTimeBestResult: (score: Int, name: String) {
+    static var friendsTodayTop10: [Result] {
         get {
-            let score = NSUserDefaults.standardUserDefaults().integerForKey("FriendsOnly AllTime Best Score")
-            let name = NSUserDefaults.standardUserDefaults().objectForKey("FriendsOnly AllTime Best Name") as String?
-            
-            if name == nil {
-                return (score, "")
-            } else {
-                return (score, name!)
+            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Today Top 10") as? NSData {
+                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
+                    return results
+                }
             }
+            return []
         }
     }
+
 }
