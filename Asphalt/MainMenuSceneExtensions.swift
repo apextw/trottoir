@@ -57,10 +57,21 @@ extension MainMenuScene {
         let informationLayer = SKNode()
         informationLayer.name = "Information layer"
         
+        // Push Out Checkout Button
         let checkOutGameButton = checkOutButton()
+        checkOutGameButton.position = CGPoint(x: 0, y: -size.height * 0.27)
         informationLayer.addChild(checkOutGameButton)
         
+        // Game By Info
+        let gameByInfoLayer = gameByInfo()
+        gameByInfoLayer.position = CGPoint(x: 0, y: size.height / 2.7)
+        informationLayer.addChild(gameByInfoLayer)
         
+        // Drawings By Info
+        let drawingsByInfoLayer = drawingsByInfo()
+        drawingsByInfoLayer.position = CGPoint(x: 0, y: size.height / 8)
+        informationLayer.addChild(drawingsByInfoLayer)
+
         informationLayer.position = CGPoint(x: 0, y: -self.size.height)
         uiLayer.addChild(informationLayer)
     }
@@ -136,6 +147,129 @@ extension MainMenuScene {
         return buttonLayer
     }
     
+    private func gameByInfo() -> SKNode {
+        let gameByLayer = SKNode()
+        
+//        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-with-laptop") {
+        if let giraffeTexture = SKTexture(imageNamed: "giraffe-with-laptop") {
+            let giraffe = SKSpriteNode(texture: giraffeTexture)
+            let x = -size.width * 0.3
+            giraffe.position = CGPoint(x: x, y: 0)
+            gameByLayer.addChild(giraffe)
+        }
+        
+        let fontName = "Chalkduster"
+        let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
+        let angle: CGFloat = -0.1
+
+        let gameByLabel = SKLabelNode(fontNamed: fontName)
+        gameByLabel.text = "Game by"
+        gameByLabel.fontColor = SKColor.whiteColor()
+        gameByLabel.fontSize = 1.2 * basicSize
+        gameByLabel.verticalAlignmentMode = .Bottom
+        gameByLabel.horizontalAlignmentMode = .Left
+        var x = -size.width * 0.035
+        var y = gameByLabel.frame.size.height * 0.6
+        gameByLabel.position = CGPoint(x: x, y: y)
+        gameByLabel.zRotation = angle
+
+        let nameLabel = SKLabelNode(fontNamed: fontName)
+        nameLabel.text = "Alexander"
+        nameLabel.fontColor = SKColor(red: 0.6, green: 1, blue: 1, alpha: 1)
+        nameLabel.fontSize = 2 * basicSize
+        nameLabel.verticalAlignmentMode = .Bottom
+        nameLabel.horizontalAlignmentMode = .Left
+        x = -size.width * 0.12
+        y = 0
+        nameLabel.position = CGPoint(x: x, y: y)
+        nameLabel.zRotation = angle
+        
+        let surnameLabel = SKLabelNode(fontNamed: fontName)
+        surnameLabel.text = "Bekert"
+        surnameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
+        surnameLabel.fontSize = 2 * basicSize
+        surnameLabel.verticalAlignmentMode = .Bottom
+        surnameLabel.horizontalAlignmentMode = .Left
+        x = -size.width * 0.07
+        y = -surnameLabel.frame.size.height
+        surnameLabel.position = CGPoint(x: x, y: y)
+        surnameLabel.zRotation = angle
+
+        gameByLayer.addChild(gameByLabel)
+        gameByLayer.addChild(nameLabel)
+        gameByLayer.addChild(surnameLabel)
+        
+        return gameByLayer
+    }
+    
+    private func drawingsByInfo() -> SKNode {
+        let drawingsByLayer = SKNode()
+        
+//        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-painter") {
+        if let giraffeTexture = SKTexture(imageNamed: "giraffe-painter") {
+            let giraffe = SKSpriteNode(texture: giraffeTexture)
+            let x = size.width * 0.3
+            giraffe.position = CGPoint(x: x, y: 0)
+            drawingsByLayer.addChild(giraffe)
+        }
+        
+        let fontName = "Chalkduster"
+        let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
+        let angle: CGFloat = 0.19
+        
+        let shinyLabel = SKLabelNode(fontNamed: fontName)
+        shinyLabel.text = "Shiny"
+        shinyLabel.fontColor = SKColor.whiteColor()
+        shinyLabel.fontSize = 1.2 * basicSize
+        shinyLabel.verticalAlignmentMode = .Bottom
+        shinyLabel.horizontalAlignmentMode = .Left
+        var x = -size.width * 0.4
+        var y = shinyLabel.frame.size.height * 0.17
+        shinyLabel.position = CGPoint(x: x, y: y)
+        shinyLabel.zRotation = angle
+        
+        let drawingsByLabel = SKLabelNode(fontNamed: fontName)
+        drawingsByLabel.text = "drawings by"
+        drawingsByLabel.fontColor = SKColor.whiteColor()
+        drawingsByLabel.fontSize = 1.2 * basicSize
+        drawingsByLabel.verticalAlignmentMode = .Bottom
+        drawingsByLabel.horizontalAlignmentMode = .Left
+        x = -size.width * 0.3
+        y = -drawingsByLabel.frame.size.height * 0.5
+        drawingsByLabel.position = CGPoint(x: x, y: y)
+        drawingsByLabel.zRotation = angle
+        
+        let nameLabel = SKLabelNode(fontNamed: fontName)
+        nameLabel.text = "Tatsiana"
+        nameLabel.fontColor = SKColor(red: 1, green: 1, blue: 0.4, alpha: 1)
+        nameLabel.fontSize = 2 * basicSize
+        nameLabel.verticalAlignmentMode = .Bottom
+        nameLabel.horizontalAlignmentMode = .Left
+        x = -size.width * 0.46
+        y = -nameLabel.frame.size.height * 1.7
+        nameLabel.position = CGPoint(x: x, y: y)
+        nameLabel.zRotation = angle
+        
+        let surnameLabel = SKLabelNode(fontNamed: fontName)
+        surnameLabel.text = "Volkova"
+        surnameLabel.fontColor = SKColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+        surnameLabel.fontSize = 2 * basicSize
+        surnameLabel.verticalAlignmentMode = .Bottom
+        surnameLabel.horizontalAlignmentMode = .Left
+        x = -size.width * 0.35
+        y = -surnameLabel.frame.size.height * 2.4
+        surnameLabel.position = CGPoint(x: x, y: y)
+        surnameLabel.zRotation = angle
+        
+        drawingsByLayer.addChild(shinyLabel)
+        drawingsByLayer.addChild(drawingsByLabel)
+        drawingsByLayer.addChild(nameLabel)
+        drawingsByLayer.addChild(surnameLabel)
+        
+        return drawingsByLayer
+    }
+
+    
     internal func performShiftUp(sender: AnyObject) {
         self.view!.removeGestureRecognizer(swipeDownRecognizer)
         self.view!.addGestureRecognizer(swipeUpRecognizer)
@@ -165,12 +299,14 @@ extension MainMenuScene: SceneShowingAdProtocol {
         adBannerSize = CGSize(width: 0, height: 0)
         updateMusicSwitcherPosition()
         updateGameCenterButtonPosition()
+        updateRateGameButtonPosition()
     }
     
     func prepareForShowingAdWithSize(size: CGSize) {
         adBannerSize = size
         updateMusicSwitcherPosition()
         updateGameCenterButtonPosition()
+        updateRateGameButtonPosition()
     }
     
     override var scene: SKScene {

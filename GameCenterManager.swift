@@ -223,15 +223,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             
             var friendsResults: [Result] = []
             
-            for object in scores {
-                let score = object as GKScore
-                let result = Result(score: score)
-                let rank = score.rank
-                if result.name == GKLocalPlayer.localPlayer().displayName {
-                    println("Game Center: Friendsonly alltime Top 10. My place is #\(rank) with score \(result.score)")
-                } else {
-                    friendsResults.append(result)
-                    println("Game Center: Friendsonly alltime Top 10. #\(rank) is \(result.score) by \(result.name)")
+            if scores != nil {
+                for object in scores {
+                    let score = object as GKScore
+                    let result = Result(score: score)
+                    let rank = score.rank
+                    if result.name == GKLocalPlayer.localPlayer().displayName {
+                        println("Game Center: Friendsonly alltime Top 10. My place is #\(rank) with score \(result.score)")
+                    } else {
+                        friendsResults.append(result)
+                        println("Game Center: Friendsonly alltime Top 10. #\(rank) is \(result.score) by \(result.name)")
+                    }
                 }
             }
             
@@ -255,15 +257,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             
             var friendsResults: [Result] = []
             
-            for object in scores {
-                let score = object as GKScore
-                let result = Result(score: score)
-                let rank = score.rank
-                if result.name == GKLocalPlayer.localPlayer().displayName {
-                    println("Game Center: Friendsonly week Top 10. My place is #\(rank) with score \(result.score)")
-                } else {
-                    friendsResults.append(result)
-                    println("Game Center: Friendsonly week Top 10. #\(rank) is \(result.score) by \(result.name)")
+            if scores != nil {
+                for object in scores {
+                    let score = object as GKScore
+                    let result = Result(score: score)
+                    let rank = score.rank
+                    if result.name == GKLocalPlayer.localPlayer().displayName {
+                        println("Game Center: Friendsonly week Top 10. My place is #\(rank) with score \(result.score)")
+                    } else {
+                        friendsResults.append(result)
+                        println("Game Center: Friendsonly week Top 10. #\(rank) is \(result.score) by \(result.name)")
+                    }
                 }
             }
             
@@ -286,16 +290,18 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             }
             
             var friendsResults: [Result] = []
-            
-            for object in scores {
-                let score = object as GKScore
-                let result = Result(score: score)
-                let rank = score.rank
-                if result.name == GKLocalPlayer.localPlayer().displayName {
-                    println("Game Center: Friendsonly today Top 10. My place is #\(rank) with score \(result.score)")
-                } else {
-                    friendsResults.append(result)
-                    println("Game Center: Friendsonly today Top 10. #\(rank) is \(result.score) by \(result.name)")
+
+            if scores != nil {
+                for object in scores {
+                    let score = object as GKScore
+                    let result = Result(score: score)
+                    let rank = score.rank
+                    if result.name == GKLocalPlayer.localPlayer().displayName {
+                        println("Game Center: Friendsonly today Top 10. My place is #\(rank) with score \(result.score)")
+                    } else {
+                        friendsResults.append(result)
+                        println("Game Center: Friendsonly today Top 10. #\(rank) is \(result.score) by \(result.name)")
+                    }
                 }
             }
             

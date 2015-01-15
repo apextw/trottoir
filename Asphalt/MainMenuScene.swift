@@ -28,6 +28,8 @@ class MainMenuScene: SKScene {
     private let musicSwitcher = Button(fontNamed: "Chalkduster")
     private let startButton = Button(fontNamed: "Chalkduster")
     private let gameCenterButton = Button(fontNamed: "Chalkduster")
+    private let rateGameButton = Button(fontNamed: "Chalkduster")
+    private var rateGameStars: SKSpriteNode!
 
 //    private let performShiftDownSelector: Selector = "performShiftDown:"
 //    private let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
@@ -56,6 +58,9 @@ class MainMenuScene: SKScene {
         initStartButton()
         initMusicSwitcher()
         initGameCenterButton()
+        if shouldShowRateMeButton {
+            initRateGame()
+        }
         addDrawing()
         if isShowingResult {
             showScores()
@@ -68,6 +73,12 @@ class MainMenuScene: SKScene {
         }
         
         addSwipeUpRecognizer()
+    }
+    
+    private var shouldShowRateMeButton: Bool {
+        let startsCountKey = "Application Starts Count"
+        let startsCount = NSUserDefaults.standardUserDefaults().integerForKey(startsCountKey)
+        return startsCount > 5 && Results.localBestResult > 50 && AppRater.shouldShowRateMeDialog()
     }
     
     private func fillScreenWithBackground() {
@@ -85,6 +96,8 @@ class MainMenuScene: SKScene {
         }
     }
 
+    // MARK: Music Switcher
+    
     private func initMusicSwitcher() {
         musicSwitcher.fontSize = 32 * DisplayHelper.FontScale
         updateMusicSwitcherText()
@@ -110,6 +123,8 @@ class MainMenuScene: SKScene {
         musicSwitcher.position = position
     }
     
+    // MARK: Game Center Button
+    
     private func initGameCenterButton() {
         gameCenterButton.text = "Game Center"
         gameCenterButton.fontSize = 32 * DisplayHelper.FontScale
@@ -125,6 +140,39 @@ class MainMenuScene: SKScene {
         position.x = -self.size.width * 0.5 + gameCenterButton.frame.size.width * 0.5 + labelLeftBorder;
         gameCenterButton.position = position
     }
+    
+    // MARK: Rate Game Button
+    
+    private func initRateGame() {
+        rateGameButton.text = "Please, rate us"
+        rateGameButton.fontSize = 32 * DisplayHelper.FontScale
+
+        if let starsTexture = SKTextureAtlas(named: "Drawings").textureNamed("rating-stars") {
+            rateGameStars = SKSpriteNode(texture: starsTexture)
+            rateGameStars.anchorPoint = CGPoint(x: 0.5, y: 0)
+            uiLayer.addChild(rateGameStars)
+        }
+
+        updateRateGameButtonPosition()
+        rateGameButton.delegate = self
+        uiLayer.addChild(rateGameButton)
+        rateGameButton.zPosition = 5
+    }
+    
+    internal func updateRateGameButtonPosition() {
+        var position = gameCenterButton.position
+        position.y += gameCenterButton.frame.size.height / 2 + rateGameButton.frame.size.height;
+        position.x = -self.size.width * 0.5 + rateGameButton.frame.size.width * 0.5 + labelLeftBorder;
+        rateGameButton.position = position
+        
+        if rateGameStars != nil {
+            let x = rateGameButton.position.x
+            let y = rateGameButton.position.y + rateGameButton.frame.size.height / 2
+            rateGameStars.position = CGPoint(x: x, y: y)
+        }
+    }
+    
+    // MARK: Start Button
     
     private func addWhiteStripe() {
 //        let texture = SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe")
@@ -152,6 +200,8 @@ class MainMenuScene: SKScene {
         
         startButton.zPosition = 5
     }
+    
+    // MARK: After Game Over
     
     private func addDrawing() {
         if isShowingResult {
@@ -254,7 +304,12 @@ class MainMenuScene: SKScene {
         
         gameCenterButton.enabled = false
         gameCenterButton.delegate = nil
+        
+        rateGameButton.enabled = false
+        rateGameButton.delegate = nil
     }
+    
+    //MARK: Fingerprints
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
@@ -294,13 +349,7 @@ class MainMenuScene: SKScene {
 
         return SKColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
-    
-    override func didChangeSize(oldSize: CGSize) {
-        println("New scene size. Width: \(size.width), height: \(size.height)")
-        updateMusicSwitcherPosition()
-        updateGameCenterButtonPosition()
-    }
-    
+        
     deinit {
         println("Menu Scene deinit")
     }
@@ -330,6 +379,13 @@ extension MainMenuScene: ButtonProtocol {
                     UIApplication.sharedApplication().openURL(url)
                 }
             }
+        } else if sender == rateGameButton {
+            println("Rate game pressed")
+            rateGameButton.text = "Thank you ^^"
+            rateGameButton.delegate = nil
+            rateGameButton.enabled = false
+            Flurry.logEvent("Pressed_Rate_Game")
+            AppRater.goToRatingPage()
         }
     }
 }

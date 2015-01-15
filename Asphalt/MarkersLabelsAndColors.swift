@@ -23,25 +23,25 @@ extension Markers {
         var label : SKNode!
         
         // Debug info
-        if number == 3 {
-            label = theWorldRecordLabelWithName("Nickname")
-        } else if number == 4 {
-            label = thisWeekRecordLabelWithName("Nickname")
-        } else if number == 5 {
-            label = todayRecordLabelWithName("Nickname")
-        } else if number == 6 {
-            label = yourAlltimeBestLabel()
-        } else if number == 7 {
-            label = yourTodayBestLabel()
-        } else if number == 8 {
-            label = previousLabel()
-        } else if number == 9 {
-            label = friendsBestLabelWithName("My friend", scope: .alltime)
-        } else if number == 10 {
-            label = friendsBestLabelWithName("My friend", scope: .week)
-        } else if number == 11 {
-            label = friendsBestLabelWithName("My friend", scope: .today)
-        }
+//        if number == 3 {
+//            label = theWorldRecordLabelWithName("Nickname")
+//        } else if number == 4 {
+//            label = thisWeekRecordLabelWithName("Nickname")
+//        } else if number == 5 {
+//            label = todayRecordLabelWithName("Nickname")
+//        } else if number == 6 {
+//            label = yourAlltimeBestLabel()
+//        } else if number == 7 {
+//            label = yourTodayBestLabel()
+//        } else if number == 8 {
+//            label = previousLabel()
+//        } else if number == 9 {
+//            label = friendsBestLabelWithName("My friend", scope: .alltime)
+//        } else if number == 10 {
+//            label = friendsBestLabelWithName("My friend", scope: .week)
+//        } else if number == 11 {
+//            label = friendsBestLabelWithName("My friend", scope: .today)
+//        }
 
         if label != nil {
             return showAchievementLabel(label!, nearMarker: marker)

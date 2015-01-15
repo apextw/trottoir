@@ -2,11 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Application Starts Count</key>
+	<integer>0</integer>
 	<key>Music Enabled</key>
 	<true/>
 	<key>Current Menu Picture</key>
-	<string>little-mushrooms</string>
+	<string>schoolgirl</string>
 	<key>Current Drawing Number</key>
 	<integer>0</integer>
+	<key>User Did Rate App</key>
+	<false/>
 </dict>
 </plist>

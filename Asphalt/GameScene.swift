@@ -153,7 +153,10 @@ class GameScene: SKScene, GameManagerProtocol {
         
         removeAllActions()
         
-        let reachedNewDrawing = Drawings.submitMenuDrawingWithTileNumber(background.currentDrawingTileNumber)
+        var reachedNewDrawing = false
+        if background.currentDrawing != nil {
+            reachedNewDrawing = Drawings.submitMenuDrawingWithTileNumber(background.currentDrawingTileNumber)
+        }
 
         AudioManager.sharedInstance.stop()
         let animationDuration = shake()

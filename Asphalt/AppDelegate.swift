@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
         }
         
+        // Increment Starts Count
+        let startsCountKey = "Application Starts Count"
+        let startsCount = NSUserDefaults.standardUserDefaults().integerForKey(startsCountKey)
+        NSUserDefaults.standardUserDefaults().setInteger(startsCount + 1, forKey: startsCountKey)
+        println("Game was started for the \(startsCount + 1)'th time")
+        
         return true
     }
 
