@@ -78,7 +78,7 @@ class MainMenuScene: SKScene {
     private var shouldShowRateMeButton: Bool {
         let startsCountKey = "Application Starts Count"
         let startsCount = NSUserDefaults.standardUserDefaults().integerForKey(startsCountKey)
-        return startsCount > 5 && Results.localBestResult > 50 && AppRater.shouldShowRateMeDialog()
+        return startsCount > 5 && Results.localBestResult > 60 && AppRater.shouldShowRateMeDialog()
     }
     
     private func fillScreenWithBackground() {
@@ -185,7 +185,7 @@ class MainMenuScene: SKScene {
 
     private func initStartButton() {
         if isShowingResult {
-            startButton.text = "Run Again"
+            startButton.text = "reStaRt"
         } else {
             startButton.text = "StaRt"
         }
@@ -246,10 +246,17 @@ class MainMenuScene: SKScene {
         scoreLabel.position = CGPoint(x: 0, y: -scoreLabel.frame.size.height * 0.6)
         scoreLabel.zRotation = 0.1
 
+        let resultLabel = SKLabelNode(fontNamed: "Chalkduster")
+        resultLabel.text = Results.lastResultDescription
+        resultLabel.fontSize = 16 * DisplayHelper.FontScale
+        resultLabel.position = CGPoint(x: resultLabel.frame.size.width * 0.15, y: scoreLabel.position.y - scoreLabel.frame.size.height * 0.6)
+        resultLabel.zRotation = 0.06
+
         let node = SKNode()
         node.addChild(gameOver1)
         node.addChild(gameOver2)
         node.addChild(scoreLabel)
+        node.addChild(resultLabel)
         if drawing != nil {
             node.position = CGPoint(x: -self.size.width * 0.2, y: 0)
         } else {
@@ -349,9 +356,16 @@ class MainMenuScene: SKScene {
 
         return SKColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
-        
+    
     deinit {
         println("Menu Scene deinit")
+    }
+    
+    internal override func update(currentTime: NSTimeInterval) {
+        if let node = scene.childNodeWithName("Light") {
+            let light = node as SKLightNode
+            light.position = CGPoint(x: light.position.x, y: light.position.y - 0.03)
+        }
     }
 }
 

@@ -152,7 +152,8 @@ class GameScene: SKScene, GameManagerProtocol {
         }
         
         removeAllActions()
-        
+        Results.commitNewLocalBest(self.gameManager.score)
+
         var reachedNewDrawing = false
         if background.currentDrawing != nil {
             reachedNewDrawing = Drawings.submitMenuDrawingWithTileNumber(background.currentDrawingTileNumber)
@@ -165,7 +166,6 @@ class GameScene: SKScene, GameManagerProtocol {
             self.presentMainMenu(showNewLabel: reachedNewDrawing)
         })
         
-        Results.commitNewLocalBest(gameManager.score)
         background.scrollingEnabled = false
         markers.scrollingEnabled = false
         

@@ -24,7 +24,7 @@ struct Drawings {
             let pictureTileNumber = dictionary.objectForKey("Tile number") as String
             
             let intValue = pictureTileNumber.toInt()
-            if number == intValue {
+            if Int(number) == intValue {
                 let name = dictionary.objectForKey("Name") as String
                 let anchorX = (dictionary.objectForKey("anchorX") as NSString).floatValue
                 let texture = Drawings.drawingsAtlas.textureNamed(name)

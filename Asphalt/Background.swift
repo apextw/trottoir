@@ -159,8 +159,18 @@ public class Background {
     
     private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
         
-        if let drawing = Drawings.drawingForTileNumber(number) {
+        // Fix speed of new pictures appear for iPad
+        var fixedNumber: Int = number
+        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+            fixedNumber = Int(Float(number) / 1.3)
+        }
+
+        if let drawing = Drawings.drawingForTileNumber(fixedNumber) {
+            if recentlyLoadedDrawing != nil && drawing.name == recentlyLoadedDrawing.name {
+                return
+            }
             recentlyLoadedDrawing = SKSpriteNode(texture: drawing.texture)
+            recentlyLoadedDrawing.name = drawing.name
             insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
             println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
             currentDrawingTileNumber = number

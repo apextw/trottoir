@@ -59,7 +59,7 @@ extension MainMenuScene {
         
         // Push Out Checkout Button
         let checkOutGameButton = checkOutButton()
-        checkOutGameButton.position = CGPoint(x: 0, y: -size.height * 0.27)
+        checkOutGameButton.position = CGPoint(x: 0, y: -size.height * 0.26)
         informationLayer.addChild(checkOutGameButton)
         
         // Game By Info
@@ -80,9 +80,11 @@ extension MainMenuScene {
         let buttonLayer = SKNode()
         buttonLayer.name = "Check out layer"
         var position = CGPoint()
-        let blueColor = SKColor(red: 178 / 255.0, green: 247 / 255.0, blue: 251 / 255.0, alpha: 1)
-        let yellowColor = SKColor(red: 251 / 255.0, green: 250 / 255.0, blue: 178 / 255.0, alpha: 1)
+        let blueColor = SKColor(red: 0.8, green: 1, blue: 0.8, alpha: 1)
+        let yellowColor = SKColor(red: 1, green: 1, blue: 0.4, alpha: 1)
+
         let basicSize: CGFloat = 20.0 * DisplayHelper.FontScale
+        let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 1.2
         
         let row1 = Button(fontNamed: "Chalkduster")
         row1.text = "Check out"
@@ -90,9 +92,9 @@ extension MainMenuScene {
         row1.delegate = self
         row1.fontColor = blueColor
         row1.fontSize = 2.2 * basicSize
-        position.y = 1.5 * row1.frame.size.height
+        position.y = 1.5 * row1.frame.size.height * marginScale
         row1.position = position
-        row1.zRotation = 0.2
+        row1.zRotation = 0.17
         
         let row2 = Button(fontNamed: "Chalkduster")
         row2.text = "our competition"
@@ -100,8 +102,8 @@ extension MainMenuScene {
         row2.delegate = self
         row2.fontColor = blueColor
         row2.fontSize = 1.2 * basicSize
-        position.y = 0.4 * row1.position.y
-        position.x = -0.1 * row2.frame.size.width
+        position.y = 0.4 * row1.position.y * marginScale
+        position.x = -0.1 * row2.frame.size.width * marginScale
         row2.position = position
         row2.zRotation = 0.16
         
@@ -111,10 +113,10 @@ extension MainMenuScene {
         row3.delegate = self
         row3.fontColor = blueColor
         row3.fontSize = 2 * basicSize
-        position.y = 0.2 * row3.frame.size.height
-        position.x = row2.position.x + 0.5 * row2.frame.size.width
+        position.y = 0.2 * row3.frame.size.height * marginScale
+        position.x = (row2.position.x + 0.5 * row2.frame.size.width) * marginScale
         row3.position = position
-        row3.zRotation = 0.08
+        row3.zRotation = 0.1
         
         let row4 = Button(fontNamed: "Chalkduster")
         row4.text = "Push Out"
@@ -122,10 +124,10 @@ extension MainMenuScene {
         row4.delegate = self
         row4.fontColor = yellowColor
         row4.fontSize = 2.5 * basicSize
-        position.x = -0.1 * row4.frame.size.width
-        position.y = -1 * row4.frame.size.height
+        position.x = -0.08 * row4.frame.size.width * marginScale
+        position.y = -0.95 * row4.frame.size.height * marginScale
         row4.position = position
-        row4.zRotation = 0.1
+        row4.zRotation = 0.075
         
         let row5 = Button(fontNamed: "Chalkduster")
         row5.text = "only on the App Store"
@@ -133,10 +135,10 @@ extension MainMenuScene {
         row5.delegate = self
         row5.fontColor = SKColor.whiteColor()
         row5.fontSize = basicSize
-        position.y = row4.position.y - (row4.frame.size.height * 0.4) //- row5.frame.size.height / 2
+        position.y = (row4.position.y - (row4.frame.size.height * 0.4)) * marginScale //- row5.frame.size.height / 2
         position.x = 0
         row5.position = position
-        row5.zRotation = 0.05
+        row5.zRotation = 0.03
         
         buttonLayer.addChild(row1)
         buttonLayer.addChild(row2)
@@ -175,7 +177,7 @@ extension MainMenuScene {
 
         let nameLabel = SKLabelNode(fontNamed: fontName)
         nameLabel.text = "Alexander"
-        nameLabel.fontColor = SKColor(red: 0.6, green: 1, blue: 1, alpha: 1)
+        nameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
         nameLabel.fontSize = 2 * basicSize
         nameLabel.verticalAlignmentMode = .Bottom
         nameLabel.horizontalAlignmentMode = .Left
@@ -215,6 +217,8 @@ extension MainMenuScene {
         
         let fontName = "Chalkduster"
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
+        let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 0.5
+
         let angle: CGFloat = 0.19
         
         let shinyLabel = SKLabelNode(fontNamed: fontName)
@@ -223,7 +227,7 @@ extension MainMenuScene {
         shinyLabel.fontSize = 1.2 * basicSize
         shinyLabel.verticalAlignmentMode = .Bottom
         shinyLabel.horizontalAlignmentMode = .Left
-        var x = -size.width * 0.4
+        var x = -size.width * 0.4 * marginScale
         var y = shinyLabel.frame.size.height * 0.17
         shinyLabel.position = CGPoint(x: x, y: y)
         shinyLabel.zRotation = angle
@@ -234,29 +238,29 @@ extension MainMenuScene {
         drawingsByLabel.fontSize = 1.2 * basicSize
         drawingsByLabel.verticalAlignmentMode = .Bottom
         drawingsByLabel.horizontalAlignmentMode = .Left
-        x = -size.width * 0.3
+        x = -size.width * 0.3 * marginScale
         y = -drawingsByLabel.frame.size.height * 0.5
         drawingsByLabel.position = CGPoint(x: x, y: y)
         drawingsByLabel.zRotation = angle
         
         let nameLabel = SKLabelNode(fontNamed: fontName)
         nameLabel.text = "Tatsiana"
-        nameLabel.fontColor = SKColor(red: 1, green: 1, blue: 0.4, alpha: 1)
+        nameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
         nameLabel.fontSize = 2 * basicSize
         nameLabel.verticalAlignmentMode = .Bottom
         nameLabel.horizontalAlignmentMode = .Left
-        x = -size.width * 0.46
+        x = -size.width * 0.46 * marginScale
         y = -nameLabel.frame.size.height * 1.7
         nameLabel.position = CGPoint(x: x, y: y)
         nameLabel.zRotation = angle
         
         let surnameLabel = SKLabelNode(fontNamed: fontName)
         surnameLabel.text = "Volkova"
-        surnameLabel.fontColor = SKColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+        surnameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
         surnameLabel.fontSize = 2 * basicSize
         surnameLabel.verticalAlignmentMode = .Bottom
         surnameLabel.horizontalAlignmentMode = .Left
-        x = -size.width * 0.35
+        x = -size.width * 0.35 * marginScale
         y = -surnameLabel.frame.size.height * 2.4
         surnameLabel.position = CGPoint(x: x, y: y)
         surnameLabel.zRotation = angle
