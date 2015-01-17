@@ -22,7 +22,7 @@ public class Background {
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
     
-    var currentDrawingTileNumber = 0
+    var recentlyLoadedDrawingTileNumber = 0
     
     init(screenSize: CGSize) {
         self.screenSize = screenSize
@@ -155,6 +155,7 @@ public class Background {
     private var drawingsAtlas: SKTextureAtlas!
     
     public var currentDrawing: SKSpriteNode!
+    public var currentDrawingTileNumber = 0
     private var recentlyLoadedDrawing: SKSpriteNode!
     
     private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
@@ -173,7 +174,7 @@ public class Background {
             recentlyLoadedDrawing.name = drawing.name
             insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
             println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
-            currentDrawingTileNumber = number
+            recentlyLoadedDrawingTileNumber = number
             if drawing.color != nil {
                 MarkersColor.color = drawing.color!
             }
@@ -228,8 +229,8 @@ public class Background {
 //        if positionInScene.y < scene._bounds.size.height * (1 - scene.anchorPoint.y) {
         if isOnScreen {
             currentDrawing = recentlyLoadedDrawing
+            currentDrawingTileNumber = recentlyLoadedDrawingTileNumber
         }
-
         
 //        if let scene = recentlyLoadedDrawing.scene {
 //        }
