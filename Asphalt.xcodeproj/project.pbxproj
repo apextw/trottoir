@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
 		9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D910819F34308002D92CA /* MainMenuScene.swift */; };
-		9D2698941A00DBA6002FF873 /* libFlurry_5.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */; };
 		9D3049CA19EF0CF800A93BF7 /* DrawingsAttributes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */; };
 		9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977A119E7B0C1008ED26F /* AppDelegate.swift */; };
 		9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977A319E7B0C1008ED26F /* GameScene.sks */; };
@@ -17,7 +16,6 @@
 		9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977A719E7B0C1008ED26F /* GameViewController.swift */; };
 		9D3977AB19E7B0C1008ED26F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977A919E7B0C1008ED26F /* Main.storyboard */; };
 		9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977AC19E7B0C1008ED26F /* Images.xcassets */; };
-		9D3977B019E7B0C1008ED26F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */; };
 		9D3977BC19E7B0C1008ED26F /* AsphaltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */; };
 		9D3D7CC019E9B15600A36405 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3D7CBF19E9B15600A36405 /* Background.swift */; };
 		9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED40319EF1CA800858D29 /* Drawings.atlas */; };
@@ -36,12 +34,13 @@
 		9D99D2791A654DCB00BAE8DF /* AppRater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99D2781A654DCB00BAE8DF /* AppRater.swift */; };
 		9D9B958F1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */; };
 		9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA29FF119F3FCDF00756D31 /* AudioManager.swift */; };
-		9DA29FF419F3FD2000756D31 /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA29FF319F3FD2000756D31 /* song.caf */; };
 		9DB100DB1A2858D0006083D6 /* DisplayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */; };
 		9DC9581219F161790097FA83 /* Touchprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC9581119F161790097FA83 /* Touchprint.swift */; };
 		9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581419F1D5740097FA83 /* Asphalt.atlas */; };
 		9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581619F1DCEC0097FA83 /* Colors.plist */; };
 		9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */; };
+		9DEE89A61A68692900235EDA /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */; };
+		9DEE89A81A6923F600235EDA /* end.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DEE89A71A6923F600235EDA /* end.caf */; };
 		9DF7752319F79C750096FF30 /* Drawings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF7752219F79C750096FF30 /* Drawings.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +58,6 @@
 		9D1D910619F34152002D92CA /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		9D1D910819F34308002D92CA /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Flurry-Bridging-Header.h"; sourceTree = "<group>"; };
-		9D2698921A00DBA6002FF873 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.4.0.a; sourceTree = "<group>"; };
 		9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DrawingsAttributes.plist; sourceTree = "<group>"; };
 		9D39779C19E7B0C1008ED26F /* Asphalt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Asphalt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3977A019E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,13 +67,12 @@
 		9D3977A719E7B0C1008ED26F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9D3977AA19E7B0C1008ED26F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D3977AC19E7B0C1008ED26F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9D3977AF19E7B0C1008ED26F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9D3977B519E7B0C1008ED26F /* AsphaltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsphaltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3977BA19E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsphaltTests.swift; sourceTree = "<group>"; };
 		9D3D7CBF19E9B15600A36405 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		9D3ED40319EF1CA800858D29 /* Drawings.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Drawings.atlas; sourceTree = "<group>"; };
-		9D4065B619FD2CDC00543DCE /* song-1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "song-1.caf"; sourceTree = "<group>"; };
+		9D4065B619FD2CDC00543DCE /* song-1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "song-1.caf"; path = "../song-1.caf"; sourceTree = "<group>"; };
 		9D45F20F19EE6C8B00EC0575 /* Results.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Results.swift; path = ../Results.swift; sourceTree = "<group>"; };
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -91,12 +87,14 @@
 		9D99D2781A654DCB00BAE8DF /* AppRater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRater.swift; sourceTree = "<group>"; };
 		9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuSceneExtensions.swift; sourceTree = "<group>"; };
 		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		9DA29FF319F3FD2000756D31 /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
 		9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayHelper.swift; sourceTree = "<group>"; };
 		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
 		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterManager.swift; path = ../GameCenterManager.swift; sourceTree = "<group>"; };
+		9DEE89A41A68692900235EDA /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.0.0.a; sourceTree = "<group>"; };
+		9DEE89A71A6923F600235EDA /* end.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = end.caf; sourceTree = "<group>"; };
 		9DF7752219F79C750096FF30 /* Drawings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,9 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DEE89A61A68692900235EDA /* libFlurry_6.0.0.a in Frameworks */,
 				9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */,
 				9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */,
-				9D2698941A00DBA6002FF873 /* libFlurry_5.4.0.a in Frameworks */,
 				9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,8 +126,8 @@
 				9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */,
 				9D47F4C71A00FC7C007F6DF9 /* Security.framework */,
 				9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */,
-				9D2698921A00DBA6002FF873 /* Flurry.h */,
-				9D2698931A00DBA6002FF873 /* libFlurry_5.4.0.a */,
+				9DEE89A41A68692900235EDA /* Flurry.h */,
+				9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */,
 			);
 			path = Flurry;
 			sourceTree = "<group>";
@@ -139,7 +137,6 @@
 			children = (
 				9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */,
 				9D2698901A00DBA6002FF873 /* Flurry */,
-				9D4065B619FD2CDC00543DCE /* song-1.caf */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Asphalt */,
 				9D3977B819E7B0C1008ED26F /* AsphaltTests */,
@@ -159,7 +156,8 @@
 		9D39779E19E7B0C1008ED26F /* Asphalt */ = {
 			isa = PBXGroup;
 			children = (
-				9DA29FF319F3FD2000756D31 /* song.caf */,
+				9D4065B619FD2CDC00543DCE /* song-1.caf */,
+				9DEE89A71A6923F600235EDA /* end.caf */,
 				9D1D910619F34152002D92CA /* MainMenu.sks */,
 				9D3977A319E7B0C1008ED26F /* GameScene.sks */,
 				9DC9581419F1D5740097FA83 /* Asphalt.atlas */,
@@ -169,7 +167,6 @@
 				9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */,
 				9D3977A919E7B0C1008ED26F /* Main.storyboard */,
 				9D3977AC19E7B0C1008ED26F /* Images.xcassets */,
-				9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */,
 				9D39779F19E7B0C1008ED26F /* Supporting Files */,
 			);
 			path = Asphalt;
@@ -317,9 +314,8 @@
 				9D1D910719F34152002D92CA /* MainMenu.sks in Resources */,
 				9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */,
 				9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */,
-				9D3977B019E7B0C1008ED26F /* LaunchScreen.xib in Resources */,
-				9DA29FF419F3FD2000756D31 /* song.caf in Resources */,
 				9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */,
+				9DEE89A81A6923F600235EDA /* end.caf in Resources */,
 				9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */,
 				9D3977A419E7B0C1008ED26F /* GameScene.sks in Resources */,
 				9D3977AB19E7B0C1008ED26F /* Main.storyboard in Resources */,
@@ -389,14 +385,6 @@
 				9D3977AA19E7B0C1008ED26F /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9D3977AE19E7B0C1008ED26F /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D3977AF19E7B0C1008ED26F /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -486,6 +474,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;
@@ -509,6 +498,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Asphalt/Info.plist;

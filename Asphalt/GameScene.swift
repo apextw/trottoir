@@ -152,6 +152,13 @@ class GameScene: SKScene, GameManagerProtocol {
         }
         
         removeAllActions()
+
+        if AudioManager.sharedInstance.musicEnabled {
+            let playSound = SKAction.playSoundFileNamed("end.caf", waitForCompletion: true)
+            runAction(playSound)
+            AudioManager.sharedInstance.stop()
+        }
+
         Results.commitNewLocalBest(self.gameManager.score)
 
         var reachedNewDrawing = false
@@ -159,7 +166,6 @@ class GameScene: SKScene, GameManagerProtocol {
             reachedNewDrawing = Drawings.submitMenuDrawingWithTileNumber(background.currentDrawingTileNumber)
         }
 
-        AudioManager.sharedInstance.stop()
         let animationDuration = shake()
         let waitAction = SKAction.waitForDuration(animationDuration)
         self.runAction(waitAction, completion: { () -> Void in
