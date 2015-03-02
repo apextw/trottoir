@@ -108,6 +108,7 @@ extension Markers {
         }
         
         let layer = marker.parent!
+        layer.zPosition = 5
         layer.addChild(label)
         
         labels.append(label)
