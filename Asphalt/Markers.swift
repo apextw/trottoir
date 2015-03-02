@@ -28,7 +28,7 @@ class Markers {
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
     
-    internal let border: CGFloat = 1 //* DisplayHelper.MarkerSizeMultiplier
+    internal let border: CGFloat = 0 //1 * DisplayHelper.MarkerSizeMultiplier
     internal var counter = 0
     
     internal var colorAttributes: NSArray!
