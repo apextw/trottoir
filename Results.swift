@@ -45,94 +45,260 @@ public struct Results {
         }
     }
     
-    private static var _lastResultDescription: String = ""
+    private static var _lastResultDescription: (firstRow: String, secondRow: String) = ("", "")
     
-    public static var lastResultDescription: String {
+    public static var lastResultDescription: (firstRow: String, secondRow: String) {
         get {
             return _lastResultDescription
         }
     }
     
-    private static func lastResultDescriptionForResult(score: Int) -> String {
-        if score > Results.localBestResult {
-            let choise = Int(arc4random() % 3)
-            println(choise)
-            switch choise {
-            case 0:
-                let result = globalTodayBestResult
-                if result.score > 0 && result.name != "" {
-                    if score >= result.score {
-                        return "World record for today!"
-                    } else {
-                        let difference = result.score - score
-                        return "\(difference) more to beat today's world"
-                    }
-                }
-            case 1:
-                let result = globalWeekBestResult
-                if result.score > 0 && result.name != "" {
-                    if score >= result.score {
-                        return "New record of the week!"
-                    } else {
-                        let difference = result.score - score
-                        return "\(difference) more to beat global week"
-                    }
-                }
-            case 2:
-                let result = globalAllTimeBestResult
-                if result.score > 0 && result.name != "" {
-                    if score >= result.score {
-                        return "New World Record!"
-                    } else {
-                        let difference = result.score - score
-                        return "\(difference) more to beat the World #1"
-                    }
-                }
-            default:
-                return "Your new highscore!"
-            }
-            return "Your new highscore!"
+    private static func lastResultDescriptionForResult(score: Int) -> (firstRow: String, secondRow: String) {
+//        return ("many-many-many symbols", "");
+        
+//        return localizedResultDescriptionFor("Less than ten score", score: score)
+//        return localizedResultDescriptionFor("Your best for today!")
+//        return localizedResultDescriptionFor("More score to beat your today's best", score: 43)
+//        return localizedResultDescriptionFor("More score to beat your highscore", score: 43)
+        // World Records
+//        return localizedResultDescriptionFor("The World record for today!")
+//        return localizedResultDescriptionFor("The World record of the week!")
+//        return localizedResultDescriptionFor("The World Record of all time!")
+//        return localizedResultDescriptionFor("More score to beat the World record for today", score: 43)
+//        return localizedResultDescriptionFor("More score to beat the World record of the week", score: 43)
+//        return localizedResultDescriptionFor("More score to beat the World record of all time", score: 43)
+        // Friends
+//        return localizedResultDescriptionFor("Higher than your friend's all time record", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("More score to beat your friend's all time record", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("Higher than your friend's week record", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("More score to beat your friend's week record", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("Higher than your friend's today record", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("More score to beat your friend's today record", score: 43, player: "Peter.Shardiko")
+
+//        return localizedResultDescriptionFor("Higher than your friend #1", player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("More score to beat your friend #1", score: 43, player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("Same as your friend #1", player: "Peter.Shardiko")
+//        return localizedResultDescriptionFor("Tell your friends about it")
+
+        // Compare to previous result
+//        return localizedResultDescriptionFor("Breakthrough!")
+//        return localizedResultDescriptionFor("Much better than previous!")
+//        return localizedResultDescriptionFor("Better than previous!")
+//        return localizedResultDescriptionFor("Slightly better than previous!")
+//        return localizedResultDescriptionFor("The same as before")
+//        return localizedResultDescriptionFor("More score to beat previous", score: 43)
+
+        if score < 10 {
+            return localizedResultDescriptionFor("Less than ten score", score: score)
+        } else if score > Results.localBestResult {
+            resultDescriptionForNewLocalBestScore(score)
         } else {
-            let choise = Int(arc4random() % 4)
-            println(choise)
-            switch choise {
+            var choice : Int
+            if todayBestResult == 0 {
+                choice = Int(arc4random() % 2)
+            } else {
+                choice = Int(arc4random() % 3)
+            }
+            
+            switch choice {
             case 0:
+                resultDescriptionInCompareToPreviousResult(score)
+            case 1:
+                return resultDescriptionInCompareToFriends(score)
+            case 2:
+                // Your today best
                 if score >= todayBestResult {
-                    return "Your best for today!"
+                    return localizedResultDescriptionFor("Your best for today!")
                 } else {
                     let difference = todayBestResult - score
-                    return "\(difference) more to beat today's best"
+                    return localizedResultDescriptionFor("More score to beat your today's best", score: difference)
                 }
-            case 1:
-                if score > previousResult {
-                    return "Better than previous!"
-                } else if score == previousResult {
-                    return "Just like result before"
-                } else {
-                    let difference = previousResult - score
-                    return "\(difference) more to beat previous"
-                }
-            case 2:
-                if let friendNo1 = friendsAlltimeTop10.first {
-                    if friendNo1.score > 0 && friendNo1.name != "" {
-                        if score > friendNo1.score {
-                            return "Better than \(friendNo1.name)"
-                        } else if score < friendNo1.score {
-                            let difference = friendNo1.score - score
-                            return "\(difference) more to beat \(friendNo1.name)"
-                        } else {
-                            return "Same as \(friendNo1)"
-                        }
-                    }
-                }
-                
-                let difference = localBestResult - score
-                return "\(difference) more to beat your high"
             default:
-                let difference = localBestResult - score
-                return "\(difference) more to beat your high"
+                break
             }
         }
+        
+        let difference = localBestResult - score
+        return localizedResultDescriptionFor("More score to beat your highscore", score: difference)
+
+    }
+    
+    static private func localizedResultDescriptionFor(description: String, score: Int? = nil, player: String? = nil) -> (firstRow: String, secondRow: String) {
+        if score == nil && player == nil {
+            let firstRow = NSLocalizedString("Result 1 row: \(description)", comment: description)
+            let secondRow = NSLocalizedString("Result 2 row: \(description)", comment: description)
+            return (firstRow, secondRow)
+        }
+        
+        var firstRow = NSLocalizedString("Result 1 row: \(description)", comment: description)
+        var secondRow = NSLocalizedString("Result 2 row: \(description)", comment: description)
+
+        if score != nil {
+            firstRow = firstRow.stringByReplacingOccurrencesOfString("%score%", withString: score!.description)
+            secondRow = secondRow.stringByReplacingOccurrencesOfString("%score%", withString: score!.description)
+        }
+        
+        if player != nil {
+            firstRow = firstRow.stringByReplacingOccurrencesOfString("%player%", withString: player!)
+            secondRow = secondRow.stringByReplacingOccurrencesOfString("%player%", withString: player!)
+        }
+        
+        return (firstRow, secondRow)
+    }
+    
+    static private func resultDescriptionForNewLocalBestScore(score: Int) -> (firstRow: String, secondRow: String) {
+        
+        var choice = Int(arc4random() % 5)
+        
+        // If you have no friends — don't try to access them
+        if friendsAlltimeTop10.count < 1 {
+            choice = Int(arc4random() % 3)
+        }
+
+        switch choice {
+        case 0:
+            // Today world record
+            let result = globalTodayBestResult
+            if result.score > 0 && result.name != "" {
+                if score >= result.score {
+                    return localizedResultDescriptionFor("The World record for today!")
+                } else {
+                    let difference = result.score - score
+                    return localizedResultDescriptionFor("More score to beat the World record for today", score: difference)
+                }
+            }
+        case 1:
+            // Week world record
+            let result = globalWeekBestResult
+            if result.score > 0 && result.name != "" {
+                if score >= result.score {
+                    return localizedResultDescriptionFor("The World record of the week!")
+                } else {
+                    let difference = result.score - score
+                    return localizedResultDescriptionFor("More score to beat the World record of the week", score: difference)
+                }
+            }
+        case 2:
+            // All time world record
+            let result = globalAllTimeBestResult
+            if result.score > 0 && result.name != "" {
+                if score >= result.score {
+                    return localizedResultDescriptionFor("The World Record of all time!")
+                } else {
+                    let difference = result.score - score
+                    return localizedResultDescriptionFor("More score to beat the World record of all time", score: difference)
+                }
+            }
+        case 3:
+            // Below your closest friend's all time record
+            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsAlltimeTop10)
+            if let resultAbove = closestFriends.resultAbove {
+                if resultAbove.score > score {
+                    let difference = resultAbove.score - score
+                    return localizedResultDescriptionFor("More score to beat your friend's all time record", score: difference, player: resultAbove.name)
+                }
+            }
+            
+        case 4:
+            // Above your closest friend's all time record
+            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsAlltimeTop10)
+            if let resultBelow = closestFriends.resultBelow {
+                if resultBelow.score < score {
+                    let difference = score - resultBelow.score
+                    return localizedResultDescriptionFor("Higher than your friend's all time record", score: difference, player: resultBelow.name)
+                }
+            }
+        default:
+            break
+        }
+        
+        return localizedResultDescriptionFor("Your new highscore!")
+    }
+    
+    static private func resultDescriptionInCompareToPreviousResult(score: Int) -> (firstRow: String, secondRow: String) {
+        let difference = score - previousResult
+        if difference > 100 {
+            return localizedResultDescriptionFor("Breakthrough!")
+        } else if difference > 50 {
+            return localizedResultDescriptionFor("Much better than previous!")
+        } else if difference > 10 {
+            return localizedResultDescriptionFor("Better than previous!")
+        } else if difference > 0 {
+            return localizedResultDescriptionFor("Slightly better than previous!")
+        } else if difference == 0 {
+            return localizedResultDescriptionFor("The same as before")
+        } else {
+            return localizedResultDescriptionFor("More score to beat previous", score: difference)
+        }
+    }
+    
+    static private func resultDescriptionInCompareToFriends(score: Int) -> (firstRow: String, secondRow: String) {
+        if friendsTodayTop10.count > 1 {
+            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsTodayTop10)
+            
+            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
+                // Compare to friend below
+                let difference = score - closestFriends.resultBelow!.score
+                return localizedResultDescriptionFor("Higher than your friend's today record", score: difference, player: closestFriends.resultBelow!.name)
+            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
+                // Compare to friend above
+                let difference = closestFriends.resultAbove!.score - score
+                return localizedResultDescriptionFor("More score to beat your friend's today record", score: difference, player: closestFriends.resultAbove!.name)
+            }
+            
+        } else if friendsWeekTop10.count > 1 {
+            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsWeekTop10)
+            
+            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
+                // Compare to friend below
+                let difference = score - closestFriends.resultBelow!.score
+                return localizedResultDescriptionFor("Higher than your friend's week record", score: difference, player: closestFriends.resultBelow!.name)
+            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
+                // Compare to friend above
+                let difference = closestFriends.resultAbove!.score - score
+                return localizedResultDescriptionFor("More score to beat your friend's week record", score: difference, player: closestFriends.resultAbove!.name)
+            }
+            
+        } else if friendsAlltimeTop10.count > 1 {
+            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsAlltimeTop10)
+            
+            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
+                // Compare to friend below
+                let difference = score - closestFriends.resultBelow!.score
+                return localizedResultDescriptionFor("Higher than your friend's all time record", score: difference, player: closestFriends.resultBelow!.name)
+            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
+                // Compare to friend above
+                let difference = closestFriends.resultAbove!.score - score
+                return localizedResultDescriptionFor("More score to beat your friend's all time record", score: difference, player: closestFriends.resultAbove!.name)
+            }
+        } else if let friendNo1 = friendsAlltimeTop10.first {
+            // Your friend number 1
+            if friendNo1.score > 0 && friendNo1.name != "" {
+                if score > friendNo1.score {
+                    return localizedResultDescriptionFor("Higher than your friend #1", player: friendNo1.name)
+                } else if score < friendNo1.score {
+                    let difference = friendNo1.score - score
+                    return localizedResultDescriptionFor("More score to beat your friend #1", score: difference, player: friendNo1.name)
+                } else {
+                    return localizedResultDescriptionFor("Same as your friend #1", player: friendNo1.name)
+                }
+            }
+        }
+        
+        return localizedResultDescriptionFor("Tell your friends about it")
+    }
+    
+    static private func resultsAboveAndBelowScore(score: Int, fromResults results: [Result]) -> (resultAbove: Result?, resultBelow: Result?) {
+        var resultAbove: Result?
+        var resultBelow: Result?
+        for result in results {
+            resultAbove = resultBelow
+            resultBelow = result
+            if resultBelow?.score < score {
+                break
+            }
+        }
+        return (resultAbove, resultBelow)
     }
     
     static var localBestResult: Int {

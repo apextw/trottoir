@@ -182,26 +182,42 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     private func shake() -> NSTimeInterval {
-        let iterationsCount = 7
-        let duration = 0.1
-        let range: CGFloat = 25
+        let iterationsCount = 4
+        let iterationDuration = 0.1
+        var range: CGFloat = 25
+        var angleRange: CGFloat = 0.1
+
         var moves: [SKAction] = []
         for _ in 0...iterationsCount {
             let rndX = CGFloat(arc4random() % UInt32(range * 100) / 100) - range / 2
             let rndY = CGFloat(arc4random() % UInt32(range * 100) / 100) - range / 2
-            let move = SKAction.moveByX(rndX, y: rndY, duration: duration)
-            move.timingMode = SKActionTimingMode.EaseOut
-            moves.append(move)
-            let move2 = SKAction.moveByX(-rndX, y: -rndY, duration: 0.1)
+            let rndAngle = CGFloat(arc4random() % UInt32(angleRange * 100) / 100) - angleRange / 2
+
+            let move1 = SKAction.moveByX(rndX, y: rndY, duration: iterationDuration)
+            move1.timingMode = SKActionTimingMode.EaseOut
+            let rotate1 = SKAction.rotateByAngle(rndAngle, duration: iterationDuration)
+            rotate1.timingMode = SKActionTimingMode.EaseOut
+            moves.append(SKAction.group([move1, rotate1]))
+            
+            let move2 = SKAction.moveByX(-rndX, y: -rndY, duration: iterationDuration)
             move2.timingMode = SKActionTimingMode.EaseIn
-            moves.append(move2)
+            let rotate2 = SKAction.rotateByAngle(-rndAngle, duration: iterationDuration)
+            rotate2.timingMode = SKActionTimingMode.EaseIn
+            moves.append(SKAction.group([move2, rotate2]))
+            
+            range = max(max(fabs(rndX), fabs(rndY)), 0.5 * range)
+            angleRange /= 1.5
         }
+
         let moveSequence = SKAction.sequence(moves)
+        
+        let duration = iterationDuration * 2 * NSTimeInterval(iterationsCount)
+
         for child in self.children {
             child.runAction(moveSequence)
         }
         
-        return duration * NSTimeInterval(iterationsCount)
+        return duration
     }
     
     private func presentMainMenu(#showNewLabel: Bool) {

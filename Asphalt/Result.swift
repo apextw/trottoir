@@ -29,7 +29,7 @@ class Result : NSObject, NSCoding {
     
     init(score: GKScore) {
         self.score = Int(score.value)
-        self.name = score.player.displayName
+        self.name = score.player.alias
     }
     
     required init(coder decoder: NSCoder) {

@@ -25,11 +25,11 @@ class MainMenuScene: SKScene {
     internal var uiLayer: SKNode!
     
     private let whiteStripe = SKSpriteNode(texture: SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe"))
-    private let musicSwitcher = Button(fontNamed: "Chalkduster")
-    private let startButton = Button(fontNamed: "Chalkduster")
-    private let gameCenterButton = Button(fontNamed: "Chalkduster")
-    private let rateGameButton = Button(fontNamed: "Chalkduster")
-    private var rateGameStars: SKSpriteNode!
+    private let musicSwitcher = Button(fontNamed: DisplayHelper.FontName)
+    private let startButton = Button(fontNamed: DisplayHelper.FontName)
+    private let gameCenterButton = Button(fontNamed: DisplayHelper.FontName)
+    internal let rateGameButton = Button(fontNamed: DisplayHelper.FontName)
+    internal var rateGameStars: SKSpriteNode!
 
 //    private let performShiftDownSelector: Selector = "performShiftDown:"
 //    private let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
@@ -76,9 +76,9 @@ class MainMenuScene: SKScene {
     }
     
     private var shouldShowRateMeButton: Bool {
-        let startsCountKey = "Application Starts Count"
-        let startsCount = NSUserDefaults.standardUserDefaults().integerForKey(startsCountKey)
-        return startsCount > 5 && Results.localBestResult > 60 && AppRater.shouldShowRateMeDialog()
+        let activationsCountKey = "Application activations count"
+        let activationsCount = NSUserDefaults.standardUserDefaults().integerForKey(activationsCountKey)
+        return activationsCount > 10 && Results.localBestResult > 60 && AppRater.shouldShowRateMeDialog()
     }
     
     private func fillScreenWithBackground() {
@@ -108,9 +108,9 @@ class MainMenuScene: SKScene {
     
     private func updateMusicSwitcherText() {
         if AudioManager.sharedInstance.musicEnabled {
-            musicSwitcher.text = "Music ON"
+            musicSwitcher.text = NSLocalizedString("Music ON", comment: "Music ON")
         } else {
-            musicSwitcher.text = "Music OFF"
+            musicSwitcher.text = NSLocalizedString("Music OFF", comment: "Music OFF")
         }
         updateMusicSwitcherPosition()
     }
@@ -144,7 +144,7 @@ class MainMenuScene: SKScene {
     // MARK: Rate Game Button
     
     private func initRateGame() {
-        rateGameButton.text = "Please, rate us"
+        rateGameButton.text = NSLocalizedString("Please, rate us", comment: "Please, rate us")
         rateGameButton.fontSize = 32 * DisplayHelper.FontScale
 
         if let starsTexture = SKTextureAtlas(named: "Drawings").textureNamed("rating-stars") {
@@ -185,9 +185,9 @@ class MainMenuScene: SKScene {
 
     private func initStartButton() {
         if isShowingResult {
-            startButton.text = "reStaRt"
+            startButton.text = NSLocalizedString("Restart Button", comment: "Restart Button")
         } else {
-            startButton.text = "StaRt"
+            startButton.text = NSLocalizedString("Start Button", comment: "Start Button")
         }
         startButton.fontSize = 72 * DisplayHelper.MainMenuScale
         startButton.setScale(whiteStripe.size.width / startButton.frame.size.width)
@@ -222,12 +222,12 @@ class MainMenuScene: SKScene {
     }
     
     private func showScores() {
-        let gameOver1 = SKLabelNode(fontNamed: "Chalkduster")
-        gameOver1.text = "Game"
+        let gameOver1 = SKLabelNode(fontNamed: DisplayHelper.FontName)
+        gameOver1.text = NSLocalizedString("Game over 1'st row", comment: "Game")
         gameOver1.fontSize = 36 * DisplayHelper.FontScale
         
         let gameOver2 = gameOver1.copy() as SKLabelNode
-        gameOver2.text = "over"
+        gameOver2.text = NSLocalizedString("Game over 2'nd row", comment: "over")
         gameOver2.horizontalAlignmentMode = .Left
         gameOver2.fontSize = 32 * DisplayHelper.FontScale
         
@@ -240,23 +240,57 @@ class MainMenuScene: SKScene {
         position.y -= gameOver1.frame.size.height * 0.3
         gameOver2.position = position
         
-        let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        let scoreLabel = SKLabelNode(fontNamed: DisplayHelper.FontName)
         scoreLabel.text = "\(score)"
         scoreLabel.fontSize = 65 * DisplayHelper.FontScale
         scoreLabel.position = CGPoint(x: 0, y: -scoreLabel.frame.size.height * 0.6)
         scoreLabel.zRotation = 0.1
 
-        let resultLabel = SKLabelNode(fontNamed: "Chalkduster")
-        resultLabel.text = Results.lastResultDescription
-        resultLabel.fontSize = 16 * DisplayHelper.FontScale
-        resultLabel.position = CGPoint(x: resultLabel.frame.size.width * 0.15, y: scoreLabel.position.y - scoreLabel.frame.size.height * 0.6)
-        resultLabel.zRotation = 0.06
-
         let node = SKNode()
+
+        let (result1, result2) = Results.lastResultDescription
+        if result2 == "" {
+            
+            let resultLabel = SKLabelNode(fontNamed: DisplayHelper.FontName)
+            resultLabel.text = result1
+            if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+                resultLabel.fontSize = 18 * DisplayHelper.FontScale
+            } else {
+                resultLabel.fontSize = 16 * DisplayHelper.FontScale
+            }
+            let x = score < 8 ? 0 : resultLabel.frame.size.width * 0.15
+
+            resultLabel.position = CGPoint(x: x, y: scoreLabel.position.y - scoreLabel.frame.size.height * 0.6)
+            resultLabel.zRotation = 0.06
+            
+            node.addChild(resultLabel)
+        } else {
+            let resultLabel1 = SKLabelNode(fontNamed: DisplayHelper.FontName)
+            resultLabel1.text = result1
+            var y = scoreLabel.position.y;
+            if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+                resultLabel1.fontSize = 18 * DisplayHelper.FontScale
+                y -= scoreLabel.frame.size.height * 0.5
+            } else {
+                resultLabel1.fontSize = 16 * DisplayHelper.FontScale
+                y -= scoreLabel.frame.size.height * 0.6
+            }
+            let x = score < 8 ? 0 : resultLabel1.frame.size.width * 0.1
+            resultLabel1.position = CGPoint(x: x, y: y)
+            resultLabel1.zRotation = 0.06
+            resultLabel1.verticalAlignmentMode = .Bottom
+            
+            let resultLabel2: SKLabelNode = resultLabel1.copy() as SKLabelNode
+            resultLabel2.text = result2
+            resultLabel2.verticalAlignmentMode = .Top
+            
+            node.addChild(resultLabel1)
+            node.addChild(resultLabel2)
+        }
+
         node.addChild(gameOver1)
         node.addChild(gameOver2)
         node.addChild(scoreLabel)
-        node.addChild(resultLabel)
         if drawing != nil {
             node.position = CGPoint(x: -self.size.width * 0.2, y: 0)
         } else {
@@ -267,11 +301,17 @@ class MainMenuScene: SKScene {
     }
     
     private func addNewLabel() {
-        let newLabel = SKLabelNode(fontNamed: "Chalkduster")
-        newLabel.text = "NEW!"
-        let x = drawing.size.width * 0.5 - newLabel.frame.size.width * 0.5 - 5
-        let y = drawing.size.height * 0.5 - newLabel.frame.size.height * 0.5 - 5
-        newLabel.position = CGPoint(x: x, y: y)
+        let newLabel = SKLabelNode(fontNamed: DisplayHelper.FontName)
+        newLabel.text = NSLocalizedString("New drawing label", comment: "NEW!")
+        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            let x = drawing.size.width * 0.5 - newLabel.frame.size.width * 0.5 - 5
+            let y = drawing.size.height * 0.5 - newLabel.frame.size.height * 0.5 - 5
+            newLabel.position = CGPoint(x: x, y: y)
+        } else {
+            let x = drawing.size.width * 0.5 - newLabel.frame.size.width * 0.5 - 5
+            let y = drawing.size.height * 0.5 - newLabel.frame.size.height * 0.5 - 5
+            newLabel.position = CGPoint(x: x, y: y)
+        }
         newLabel.zRotation = -0.2
         drawing.addChild(newLabel)
     }
@@ -360,13 +400,6 @@ class MainMenuScene: SKScene {
     deinit {
         println("Menu Scene deinit")
     }
-    
-    internal override func update(currentTime: NSTimeInterval) {
-        if let node = scene.childNodeWithName("Light") {
-            let light = node as SKLightNode
-            light.position = CGPoint(x: light.position.x, y: light.position.y - 0.03)
-        }
-    }
 }
 
 // MARK: Button Protocol
@@ -395,7 +428,7 @@ extension MainMenuScene: ButtonProtocol {
             }
         } else if sender == rateGameButton {
             println("Rate game pressed")
-            rateGameButton.text = "Thank you ^^"
+            rateGameButton.text = NSLocalizedString("Thank you for rating us", comment: "Thank you ^^")
             rateGameButton.delegate = nil
             rateGameButton.enabled = false
             Flurry.logEvent("Pressed_Rate_Game")

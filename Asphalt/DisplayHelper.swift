@@ -48,6 +48,13 @@ public struct DisplayHelper {
             return 1.5
         }
     }()
+    
+    public static let FontName: String = {
+        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            return "LCChalk";
+        }
+        return "Chalkduster"
+    }()
 
 
 

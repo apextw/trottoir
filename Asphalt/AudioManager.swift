@@ -67,7 +67,7 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         if let filepath = NSBundle.mainBundle().pathForResource(songName, ofType: "caf") {
             if let url = NSURL(fileURLWithPath: filepath) {
                 player = AVAudioPlayer(contentsOfURL: url, error: nil)
-                player.enableRate = true
+                player.enableRate = false
                 player.rate = 1
                 player.delegate = self
                 player.numberOfLoops = -1
@@ -91,9 +91,9 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func setRate(newRate: Float) {
-        if musicEnabled {
-            player.rate = newRate
-        }
-    }
+//    func setRate(newRate: Float) {
+//        if musicEnabled {
+//            player.rate = newRate
+//        }
+//    }
 }

@@ -1,0 +1,155 @@
+/* 
+  Localizable.strings
+  Asphalt
+
+  Created by Alexander Bekert on 12/02/15.
+  Copyright (c) 2015 Alexander Bekert. All rights reserved.
+*/
+
+// Main Menu
+"Start Button" = "Старт";
+"Restart Button" = "Ещё раз";
+"Music ON" = "Звук Есть";
+"Music OFF" = "Звука Нет";
+"Please, rate us" = "Оцени меня :)";
+"Thank you for rating us" = "Спасибо! ^^";
+"New drawing label" = "Новый!";
+"Game over 1'st row" = "Конец";
+"Game over 2'nd row" = "игры";
+
+// Push Out
+"Push Out 1'st row" = "полностью";
+"Push Out 2'nd row" = "нарисованная";
+"Push Out 3'rd row" = "игра";
+"Push Out title" = "Push  Out";
+"Only on the App Store" = "только в App Store";
+
+// Credits
+// Game by
+"Game by label" = "Игра";
+"Game by first name" = "Александра";
+"Game by last name" = "Бекерта";
+// Drawings by
+"Drawings by label 1'st row" = "Рисовала";
+"Drawings by label 2'nd row" = "мелками";
+"Drawings by first name" = "Татьяна";
+"Drawings by last name" = "Волкова";
+
+// Game Labels
+"Attempt number" = "Попытка номер %number%";
+
+// In-game players markers
+"My all time best 1 row" = "Мой";
+"My all time best 2 row" = "лучший";
+
+"My today best 1 row" = "Мой";
+"My today best 2 row" = "лучший";
+"My today best 3 row" = "за сегодня";
+
+"My previous result 1 row" = "Прошлая";
+"My previous result 2 row" = "попытка";
+
+"My friend's nick-name" = "%player%";
+"today" = "сегодня";
+"week" = "на неделе";
+"all time" = "лучший";
+
+"The World Record of all time 1 row" = "Мировой";
+"The World Record of all time 2 row" = "Рекорд";
+// "The World Record of all time 3 row" = "%player%";
+
+"The World Record of the week 1 row" = "Рекорд";
+"The World Record of the week 2 row" = "недели";
+// "The World Record of the week 3 row" = "%player%";
+
+"The World Record of today 1 row" = "Рекорд";
+"The World Record of today 2 row" = "за сегодня";
+// "The World Record of today 3 row" = "%player%";
+
+
+// Result descriptions
+// Local records
+"Result 1 row: Less than ten score" = "Просто %score%";
+"Result 2 row: Less than ten score" = "";
+
+"Result 1 row: Your best for today!" = "Твой лучший";
+"Result 2 row: Your best for today!" = "за сегодня!";
+
+"Result 1 row: More score to beat your today's best" = "Ещё %score% чтобы побить";
+"Result 2 row: More score to beat your today's best" = "лучший за сегодня";
+
+"Result 1 row: Your new highscore!" = "Это твой новый";
+"Result 2 row: Your new highscore!" = "рекорд!";
+
+"Result 1 row: More score to beat your highscore" = "Ещё %score% чтобы побить";
+"Result 2 row: More score to beat your highscore" = "твой личный рекорд";
+
+// World records
+"Result 1 row: The World record for today!" = "За сегодня это лучший";
+"Result 2 row: The World record for today!" = "результат в мире";
+
+"Result 1 row: More score to beat the World record for today" = "Ещё %score% до лучшего";
+"Result 2 row: More score to beat the World record for today" = "результата за сегодня";
+
+"Result 1 row: The World record of the week!" = "Вау! Да это же";
+"Result 2 row: The World record of the week!" = "рекорд недели!";
+
+"Result 1 row: More score to beat the World record of the week" = "Ещё %score% до рекорда";
+"Result 2 row: More score to beat the World record of the week" = "недели";
+
+"Result 1 row: The World Record of all time!" = "Ух ты!  Это новый";
+"Result 2 row: The World Record of all time!" = "МИРОВОЙ РЕКОРД!";
+
+"Result 1 row: More score to beat the World record of all time" = "%score% до мирового";
+"Result 2 row: More score to beat the World record of all time" = "рекорда";
+
+// Friends
+"Result 1 row: Higher than your friend's all time record" = "На %score% больше, чем";
+"Result 2 row: Higher than your friend's all time record" = "рекорд %player%!";
+
+"Result 1 row: More score to beat your friend's all time record" = "%score% очков до рекорда";
+"Result 2 row: More score to beat your friend's all time record" = "%player%";
+
+"Result 1 row: Higher than your friend's week record" = "На %score% больше рекорда";
+"Result 2 row: Higher than your friend's week record" = "%player% за неделю!";
+
+"Result 1 row: More score to beat your friend's week record" = "Ещё %score% до лучшего";
+"Result 2 row: More score to beat your friend's week record" = "%player% за неделю";
+
+"Result 1 row: Higher than your friend's today record" = "На %score% больше рекорда";
+"Result 2 row: Higher than your friend's today record" = "%player% за сегодня!";
+
+"Result 1 row: More score to beat your friend's today record" = "%score% до сегодняшнего";
+"Result 2 row: More score to beat your friend's today record" = "рекорда %player%";
+
+"Result 1 row: Higher than your friend #1" = "Первое место";
+"Result 2 row: Higher than your friend #1" = "среди друзей!";
+
+"Result 1 row: Same as your friend #1" = "Ровно с %player%.";
+"Result 2 row: Same as your friend #1" = "Победила дружба!";
+
+"Result 1 row: More score to beat your friend #1" = "%score% до первого";
+"Result 2 row: More score to beat your friend #1" = "места среди друзей";
+
+"Result 1 row: Tell your friends about it" = "Расскажи друзьям";
+"Result 2 row: Tell your friends about it" = "об этом";
+
+// In compare to previous result
+"Result 1 row: Breakthrough!" = "Это прорыв!";
+"Result 2 row: Breakthrough!" = "";
+
+"Result 1 row: Much better than previous!" = "Гораздо лучше,";
+"Result 2 row: Much better than previous!" = "чем только что!";
+
+"Result 1 row: Better than previous!" = "Лучше, чем раньше!";
+"Result 2 row: Better than previous!" = "";
+
+"Result 1 row: Slightly better than previous!" = "Немного лучше, чем";
+"Result 2 row: Slightly better than previous!" = "предыдущая попытка!";
+
+"Result 1 row: The same as before" = "Ровно как и в";
+"Result 2 row: The same as before" = "тот раз";
+
+"Result 1 row: More score to beat previous" = "На %score% меньше, чем";
+"Result 2 row: More score to beat previous" = "в предыдущий раз";
+

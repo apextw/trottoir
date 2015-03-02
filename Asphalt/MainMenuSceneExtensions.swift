@@ -86,8 +86,8 @@ extension MainMenuScene {
         let basicSize: CGFloat = 20.0 * DisplayHelper.FontScale
         let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 1.2
         
-        let row1 = Button(fontNamed: "Chalkduster")
-        row1.text = "Check out"
+        let row1 = Button(fontNamed: DisplayHelper.FontName)
+        row1.text =  NSLocalizedString("Push Out 1'st row", comment: "Check out")
         row1.name = "Push Out button"
         row1.delegate = self
         row1.fontColor = blueColor
@@ -96,8 +96,8 @@ extension MainMenuScene {
         row1.position = position
         row1.zRotation = 0.17
         
-        let row2 = Button(fontNamed: "Chalkduster")
-        row2.text = "our competition"
+        let row2 = Button(fontNamed: DisplayHelper.FontName)
+        row2.text = NSLocalizedString("Push Out 2'nd row", comment: "our competition")
         row2.name = "Push Out button"
         row2.delegate = self
         row2.fontColor = blueColor
@@ -107,8 +107,8 @@ extension MainMenuScene {
         row2.position = position
         row2.zRotation = 0.16
         
-        let row3 = Button(fontNamed: "Chalkduster")
-        row3.text = "game"
+        let row3 = Button(fontNamed: DisplayHelper.FontName)
+        row3.text = NSLocalizedString("Push Out 3'rd row", comment: "game")
         row3.name = "Push Out button"
         row3.delegate = self
         row3.fontColor = blueColor
@@ -118,8 +118,8 @@ extension MainMenuScene {
         row3.position = position
         row3.zRotation = 0.1
         
-        let row4 = Button(fontNamed: "Chalkduster")
-        row4.text = "Push Out"
+        let row4 = Button(fontNamed: DisplayHelper.FontName)
+        row4.text = NSLocalizedString("Push Out title", comment: "Push Out")
         row4.name = "Push Out button"
         row4.delegate = self
         row4.fontColor = yellowColor
@@ -129,13 +129,13 @@ extension MainMenuScene {
         row4.position = position
         row4.zRotation = 0.075
         
-        let row5 = Button(fontNamed: "Chalkduster")
-        row5.text = "only on the App Store"
+        let row5 = Button(fontNamed: DisplayHelper.FontName)
+        row5.text = NSLocalizedString("Only on the App Store", comment: "Only on the App Store")
         row5.name = "Push Out button"
         row5.delegate = self
         row5.fontColor = SKColor.whiteColor()
         row5.fontSize = basicSize
-        position.y = (row4.position.y - (row4.frame.size.height * 0.4)) * marginScale //- row5.frame.size.height / 2
+        position.y = (row4.position.y - (row4.frame.size.height * 0.4)) * marginScale
         position.x = 0
         row5.position = position
         row5.zRotation = 0.03
@@ -160,34 +160,45 @@ extension MainMenuScene {
             gameByLayer.addChild(giraffe)
         }
         
-        let fontName = "Chalkduster"
+        let fontName = DisplayHelper.FontName
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
         let angle: CGFloat = -0.1
 
         let gameByLabel = SKLabelNode(fontNamed: fontName)
-        gameByLabel.text = "Game by"
+        gameByLabel.text = NSLocalizedString("Game by label", comment: "Game by")
         gameByLabel.fontColor = SKColor.whiteColor()
         gameByLabel.fontSize = 1.2 * basicSize
         gameByLabel.verticalAlignmentMode = .Bottom
         gameByLabel.horizontalAlignmentMode = .Left
-        var x = -size.width * 0.035
-        var y = gameByLabel.frame.size.height * 0.6
+        var x: CGFloat
+        var y: CGFloat
+        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            x = size.width * 0.1
+            y = gameByLabel.frame.size.height * 0.8
+        } else {
+            x = -size.width * 0.035
+            y = gameByLabel.frame.size.height * 0.6
+        }
         gameByLabel.position = CGPoint(x: x, y: y)
         gameByLabel.zRotation = angle
 
         let nameLabel = SKLabelNode(fontNamed: fontName)
-        nameLabel.text = "Alexander"
+        nameLabel.text = NSLocalizedString("Game by first name", comment: "Alexander")
         nameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
-        nameLabel.fontSize = 2 * basicSize
         nameLabel.verticalAlignmentMode = .Bottom
         nameLabel.horizontalAlignmentMode = .Left
+        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            nameLabel.fontSize = 1.7 * basicSize
+        } else {
+            nameLabel.fontSize = 1.9 * basicSize
+        }
         x = -size.width * 0.12
-        y = 0
+        y = -nameLabel.frame.size.height * 0.01
         nameLabel.position = CGPoint(x: x, y: y)
         nameLabel.zRotation = angle
         
         let surnameLabel = SKLabelNode(fontNamed: fontName)
-        surnameLabel.text = "Bekert"
+        surnameLabel.text = NSLocalizedString("Game by last name", comment: "Bekert")
         surnameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
         surnameLabel.fontSize = 2 * basicSize
         surnameLabel.verticalAlignmentMode = .Bottom
@@ -215,14 +226,14 @@ extension MainMenuScene {
             drawingsByLayer.addChild(giraffe)
         }
         
-        let fontName = "Chalkduster"
+        let fontName = DisplayHelper.FontName
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
         let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 0.5
 
         let angle: CGFloat = 0.19
         
         let shinyLabel = SKLabelNode(fontNamed: fontName)
-        shinyLabel.text = "Shiny"
+        shinyLabel.text = NSLocalizedString("Drawings by label 1'st row", comment: "Shiny")
         shinyLabel.fontColor = SKColor.whiteColor()
         shinyLabel.fontSize = 1.2 * basicSize
         shinyLabel.verticalAlignmentMode = .Bottom
@@ -233,7 +244,7 @@ extension MainMenuScene {
         shinyLabel.zRotation = angle
         
         let drawingsByLabel = SKLabelNode(fontNamed: fontName)
-        drawingsByLabel.text = "drawings by"
+        drawingsByLabel.text = NSLocalizedString("Drawings by label 2'nd row", comment: "drawings by")
         drawingsByLabel.fontColor = SKColor.whiteColor()
         drawingsByLabel.fontSize = 1.2 * basicSize
         drawingsByLabel.verticalAlignmentMode = .Bottom
@@ -244,9 +255,9 @@ extension MainMenuScene {
         drawingsByLabel.zRotation = angle
         
         let nameLabel = SKLabelNode(fontNamed: fontName)
-        nameLabel.text = "Tatsiana"
+        nameLabel.text = NSLocalizedString("Drawings by first name", comment: "Tatsiana")
         nameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
-        nameLabel.fontSize = 2 * basicSize
+        nameLabel.fontSize = 1.9 * basicSize
         nameLabel.verticalAlignmentMode = .Bottom
         nameLabel.horizontalAlignmentMode = .Left
         x = -size.width * 0.46 * marginScale
@@ -255,7 +266,7 @@ extension MainMenuScene {
         nameLabel.zRotation = angle
         
         let surnameLabel = SKLabelNode(fontNamed: fontName)
-        surnameLabel.text = "Volkova"
+        surnameLabel.text = NSLocalizedString("Drawings by last name", comment: "Volkova")
         surnameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
         surnameLabel.fontSize = 2 * basicSize
         surnameLabel.verticalAlignmentMode = .Bottom
@@ -304,6 +315,11 @@ extension MainMenuScene: SceneShowingAdProtocol {
         updateMusicSwitcherPosition()
         updateGameCenterButtonPosition()
         updateRateGameButtonPosition()
+        
+        rateGameButton.hidden = false
+        if rateGameStars != nil {
+            rateGameStars.hidden = false
+        }
     }
     
     func prepareForShowingAdWithSize(size: CGSize) {
@@ -311,6 +327,11 @@ extension MainMenuScene: SceneShowingAdProtocol {
         updateMusicSwitcherPosition()
         updateGameCenterButtonPosition()
         updateRateGameButtonPosition()
+        
+        rateGameButton.hidden = true
+        if rateGameStars != nil {
+            rateGameStars.hidden = true
+        }
     }
     
     override var scene: SKScene {

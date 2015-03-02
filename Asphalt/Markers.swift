@@ -45,7 +45,6 @@ class Markers {
         self.markerDelegate = markersDelegate
         
         MarkersColor.color = SKColor.whiteColor()
-//        addInitialMarkers()
         if Results.attempt > 1 {
             addAttemptLabel()
         }
@@ -53,27 +52,17 @@ class Markers {
     }
     
     private func addAttemptLabel() {
-        let labelNode = SKLabelNode(fontNamed: "Chalkduster")
-        labelNode.text = "Attempt \(Results.attempt)"
+        let labelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
+        var attemptText = NSLocalizedString("Attempt number", comment: "Attempt number")
+        attemptText = attemptText.stringByReplacingOccurrencesOfString("%number%", withString: Results.attempt.description)
+        labelNode.text = attemptText
         labelNode.verticalAlignmentMode = .Center
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontSize = 32 * DisplayHelper.MainMenuScale
         labelNode.position = CGPoint(x: 0, y: screenSize.height / 2 + labelNode.frame.size.height / 2)
         labels.append(labelNode)
     }
-    
-    private func addInitialMarkers() {
-        var position = CGPoint(x: 0, y: 0)
-        while position.y < maxY {
-            ++counter
-            let marker = Marker.markerWithLabel("\(counter)", number: counter)
-            marker.delegate = markerDelegate
-            position.y += border + Marker.size.height
-            marker.position = position
-            markers.append(marker)
-        }
-    }
-    
+        
     private func addFirstMarker() {
         counter = 1
         let marker = Marker.markerWithLabel("\(counter)", number: counter)

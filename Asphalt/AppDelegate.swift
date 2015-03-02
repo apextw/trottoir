@@ -26,12 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
         }
         
-        // Increment Starts Count
-        let startsCountKey = "Application Starts Count"
-        let startsCount = NSUserDefaults.standardUserDefaults().integerForKey(startsCountKey)
-        NSUserDefaults.standardUserDefaults().setInteger(startsCount + 1, forKey: startsCountKey)
-        println("Game was started for the \(startsCount + 1)'th time")
-        
         return true
     }
 
@@ -51,6 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        // Increment Starts Count
+        let activationsCountKey = "Application activations count"
+        let activationsCount = NSUserDefaults.standardUserDefaults().integerForKey(activationsCountKey)
+        NSUserDefaults.standardUserDefaults().setInteger(activationsCount + 1, forKey: activationsCountKey)
+        println("Game was activated for the \(activationsCount + 1)'th time")
     }
 
     func applicationWillTerminate(application: UIApplication) {

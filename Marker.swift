@@ -67,7 +67,7 @@ class Marker : SKSpriteNode {
     var delegate: MarkerActivationProtocol!
     var number: Int = 0
     
-    private var label: SKLabelNode = SKLabelNode(fontNamed: "Chalkduster")
+    private var label: SKLabelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
     
     var title: String {
         get {

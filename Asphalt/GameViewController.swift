@@ -42,19 +42,18 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GameCenterManager.sharedInstance.gameViewController = self
+        let skView = self.view as SKView
+        skView.ignoresSiblingOrder = true
+        Touchprint.screenSize = skView.frame.size
+
+        // Enable iAd
         loadAds()
         
-        // Configure the view.
-        let skView = self.view as SKView
+        // Debug info
 //        skView.showsFPS = true
 //        skView.showsNodeCount = true
 //        skView.showsDrawCount = true
 //        skView.showsQuadCount = true
-        
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
-        
-        Touchprint.screenSize = skView.frame.size
         
         if let menuScene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
             /* Set the scale mode to scale to fit the window */
@@ -126,6 +125,11 @@ extension GameViewController: ADBannerViewDelegate {
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         println("banner View did Fail To Receive Ad With Error")
+        readyToShowAd = false
+        if sceneToShowAd != nil && adBannerView != nil {
+            adBannerView.hidden = true
+            sceneToShowAd?.prepareForHidingAd()
+        }
     }
 }
 
@@ -143,7 +147,9 @@ extension GameViewController: adProtocol {
         wantsToShowAd = false
         sceneToShowAd = nil
 
-        adBannerView.hidden = true
-        scene.prepareForHidingAd()
+        if adBannerView != nil {
+            adBannerView.hidden = true
+            scene.prepareForHidingAd()
+        }
     }
 }

@@ -1,0 +1,157 @@
+/* 
+  Localizable.strings
+  Asphalt
+
+  Created by Alexander Bekert on 12/02/15.
+  Copyright (c) 2015 Alexander Bekert. All rights reserved.
+*/
+
+// Main Menu
+"Start Button" = "StaRt";
+"Restart Button" = "reStaRt";
+"Music ON" = "Music ON";
+"Music OFF" = "Music OFF";
+"Please, rate us" = "Please, rate us";
+"Thank you for rating us" = "Thank you ^^";
+"New drawing label" = "NEW!";
+"Game over 1'st row" = "Game";
+"Game over 2'nd row" = "over";
+
+// Push Out
+"Push Out 1'st row" = "Check out";
+"Push Out 2'nd row" = "our competition";
+"Push Out 3'rd row" = "game";
+"Push Out title" = "Push Out";
+"Only on the App Store" = "only on the App Store";
+
+// Credits
+// Game by
+"Game by label" = "Game by";
+"Game by first name" = "Alexander";
+"Game by last name" = "Bekert";
+// Drawings by
+"Drawings by label 1'st row" = "Shiny";
+"Drawings by label 2'nd row" = "drawings by";
+"Drawings by first name" = "Tatsiana";
+"Drawings by last name" = "Volkova";
+
+// Game Labels
+"Attempt number" = "Attempt %number%";
+
+// In-game players markers
+"My all time best 1 row" = "My";
+"My all time best 2 row" = "best";
+
+"My today best 1 row" = "My";
+"My today best 2 row" = "today's";
+"My today best 3 row" = "best";
+
+"My previous result 1 row" = "Previous";
+"My previous result 2 row" = "result";
+
+"My friend's nick-name" = "%player%'s";
+"today" = "today";
+"week" = "week";
+"all time" = "best";
+
+"The World Record of all time 1 row" = "The World";
+"The World Record of all time 2 row" = "Record by";
+// "The World Record of all time 3 row" = "%player%";
+
+"The World Record of the week 1 row" = "This week";
+"The World Record of the week 2 row" = "best by";
+// "The World Record of the week 3 row" = "%player%";
+
+"The World Record of today 1 row" = "today's";
+"The World Record of today 2 row" = "best by";
+// "The World Record of today 3 row" = "%player%";
+
+
+// Result descriptions
+// Local records
+"Result 1 row: Less than ten score" = "Just %score%";
+"Result 2 row: Less than ten score" = "";
+
+"Result 1 row: Your best for today!" = "It's your best";
+"Result 2 row: Your best for today!" = "for today!";
+
+"Result 1 row: More score to beat your today's best" = "%score% more to beat";
+"Result 2 row: More score to beat your today's best" = "your today's best";
+
+"Result 1 row: Your new highscore!" = "This is your new";
+"Result 2 row: Your new highscore!" = "highscore!";
+
+"Result 1 row: More score to beat your highscore" = "%score% more to beat";
+"Result 2 row: More score to beat your highscore" = "your highscore";
+
+// World records
+"Result 1 row: The World record for today!" = "The World Record";
+"Result 2 row: The World record for today!" = "for today!";
+
+"Result 1 row: More score to beat the World record for today" = "%score% more to beat";
+"Result 2 row: More score to beat the World record for today" = "today's World Record";
+
+"Result 1 row: The World record of the week!" = "Wow! It's the World";
+"Result 2 row: The World record of the week!" = "Record of the week!";
+
+"Result 1 row: More score to beat the World record of the week" = "%score% more to beat the World";
+"Result 2 row: More score to beat the World record of the week" = "record of this week";
+
+"Result 1 row: The World Record of all time!" = "The Best result";
+"Result 2 row: The World Record of all time!" = "the World ever seen!";
+
+"Result 1 row: More score to beat the World record of all time" = "%score% more to become";
+"Result 2 row: More score to beat the World record of all time" = "the World #1";
+
+// Friends
+"Result 1 row: Higher than your friend's all time record" = "%score% higher than";
+"Result 2 row: Higher than your friend's all time record" = "%player%'s Record!";
+
+"Result 1 row: More score to beat your friend's all time record" = "%score% more to beat";
+"Result 2 row: More score to beat your friend's all time record" = "%player%'s Record";
+
+"Result 1 row: Higher than your friend's week record" = "%score% higher than";
+"Result 2 row: Higher than your friend's week record" = "%player%'s week";
+
+"Result 1 row: More score to beat your friend's week record" = "%score% more to beat";
+"Result 2 row: More score to beat your friend's week record" = "%player%'s week best";
+
+"Result 1 row: Higher than your friend's today record" = "%score% higher than";
+"Result 2 row: Higher than your friend's today record" = "%player%'s today";
+
+"Result 1 row: More score to beat your friend's today record" = "%score% more to beat";
+"Result 2 row: More score to beat your friend's today record" = "%player%'s today";
+
+"Result 1 row: Higher than your friend #1" = "Now you are #1";
+"Result 2 row: Higher than your friend #1" = "among your friends!";
+
+"Result 1 row: Same as your friend #1" = "You and %player%";
+"Result 2 row: Same as your friend #1" = "are #1 among friends";
+
+"Result 1 row: More score to beat your friend #1" = "%score% more to beat";
+"Result 2 row: More score to beat your friend #1" = "%player%, friend #1";
+
+"Result 1 row: Tell your friends about it" = "Tell your friends";
+"Result 2 row: Tell your friends about it" = "about it";
+
+// In compare to previous result
+"Result 1 row: Breakthrough!" = "Breakthrough!";
+"Result 2 row: Breakthrough!" = "";
+
+"Result 1 row: Much better than previous!" = "Much better than your";
+"Result 2 row: Much better than previous!" = "result before!";
+
+"Result 1 row: Better than previous!" = "Better than your";
+"Result 2 row: Better than previous!" = "previous result!";
+
+"Result 1 row: Slightly better than previous!" = "Slightly better attempt";
+"Result 2 row: Slightly better than previous!" = "than before!";
+
+"Result 1 row: The same as before" = "The same as";
+"Result 2 row: The same as before" = "the result before";
+
+"Result 1 row: More score to beat previous" = "%score% more to beat";
+"Result 2 row: More score to beat previous" = "your previous result";
+
+"Result 1 row: " = "";
+"Result 2 row: " = "";

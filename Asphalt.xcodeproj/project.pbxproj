@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D18442C1A8CB74100AAA198 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D18442E1A8CB74100AAA198 /* Localizable.strings */; };
+		9D1844361A8CD9CB00AAA198 /* lc-chalk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D1844341A8CD9CB00AAA198 /* lc-chalk.ttf */; };
 		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
 		9D1D910919F34308002D92CA /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D910819F34308002D92CA /* MainMenuScene.swift */; };
 		9D3049CA19EF0CF800A93BF7 /* DrawingsAttributes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D3049C919EF0CF800A93BF7 /* DrawingsAttributes.plist */; };
@@ -55,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D1844291A8CB6F400AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		9D1844301A8CB74500AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9D1844311A8CB7E700AAA198 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9D1844341A8CD9CB00AAA198 /* lc-chalk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lc-chalk.ttf"; sourceTree = "<group>"; };
 		9D1D910619F34152002D92CA /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		9D1D910819F34308002D92CA /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Flurry-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -120,6 +126,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D1844321A8CD9B300AAA198 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				9D4065B619FD2CDC00543DCE /* song-1.caf */,
+				9DEE89A71A6923F600235EDA /* end.caf */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		9D1844371A8CD9D400AAA198 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9D1844341A8CD9CB00AAA198 /* lc-chalk.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		9D2698901A00DBA6002FF873 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,8 +179,8 @@
 		9D39779E19E7B0C1008ED26F /* Asphalt */ = {
 			isa = PBXGroup;
 			children = (
-				9D4065B619FD2CDC00543DCE /* song-1.caf */,
-				9DEE89A71A6923F600235EDA /* end.caf */,
+				9D1844321A8CD9B300AAA198 /* Sound */,
+				9D1844371A8CD9D400AAA198 /* Fonts */,
 				9D1D910619F34152002D92CA /* MainMenu.sks */,
 				9D3977A319E7B0C1008ED26F /* GameScene.sks */,
 				9DC9581419F1D5740097FA83 /* Asphalt.atlas */,
@@ -168,6 +191,7 @@
 				9D3977A919E7B0C1008ED26F /* Main.storyboard */,
 				9D3977AC19E7B0C1008ED26F /* Images.xcassets */,
 				9D39779F19E7B0C1008ED26F /* Supporting Files */,
+				9D18442E1A8CB74100AAA198 /* Localizable.strings */,
 			);
 			path = Asphalt;
 			sourceTree = "<group>";
@@ -293,6 +317,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 9D39779319E7B0C1008ED26F;
 			productRefGroup = 9D39779D19E7B0C1008ED26F /* Products */;
@@ -311,6 +336,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */,
+				9D18442C1A8CB74100AAA198 /* Localizable.strings in Resources */,
+				9D1844361A8CD9CB00AAA198 /* lc-chalk.ttf in Resources */,
 				9D1D910719F34152002D92CA /* MainMenu.sks in Resources */,
 				9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */,
 				9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */,
@@ -379,10 +406,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9D18442E1A8CB74100AAA198 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D1844301A8CB74500AAA198 /* ru */,
+				9D1844311A8CB7E700AAA198 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		9D3977A919E7B0C1008ED26F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9D3977AA19E7B0C1008ED26F /* Base */,
+				9D1844291A8CB6F400AAA198 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
