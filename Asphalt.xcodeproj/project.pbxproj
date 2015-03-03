@@ -18,10 +18,9 @@
 		9D3977A819E7B0C1008ED26F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977A719E7B0C1008ED26F /* GameViewController.swift */; };
 		9D3977AB19E7B0C1008ED26F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977A919E7B0C1008ED26F /* Main.storyboard */; };
 		9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3977AC19E7B0C1008ED26F /* Images.xcassets */; };
-		9D3977BC19E7B0C1008ED26F /* AsphaltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */; };
 		9D3D7CC019E9B15600A36405 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3D7CBF19E9B15600A36405 /* Background.swift */; };
 		9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED40319EF1CA800858D29 /* Drawings.atlas */; };
-		9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9D4065B619FD2CDC00543DCE /* song-1.caf */; };
+		9D4065B719FD2CDC00543DCE /* song.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9D4065B619FD2CDC00543DCE /* song.caf */; };
 		9D45F21019EE6C8B00EC0575 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F20F19EE6C8B00EC0575 /* Results.swift */; };
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4648DD19F6A93A004D2CF6 /* Button.swift */; };
@@ -46,16 +45,6 @@
 		9DF7752319F79C750096FF30 /* Drawings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF7752219F79C750096FF30 /* Drawings.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9D3977B619E7B0C1008ED26F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D39779419E7B0C1008ED26F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9D39779B19E7B0C1008ED26F;
-			remoteInfo = Asphalt;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		9D1844291A8CB6F400AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		9D1844301A8CB74500AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -73,20 +62,17 @@
 		9D3977A719E7B0C1008ED26F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9D3977AA19E7B0C1008ED26F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D3977AC19E7B0C1008ED26F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9D3977B519E7B0C1008ED26F /* AsphaltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsphaltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D3977BA19E7B0C1008ED26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsphaltTests.swift; sourceTree = "<group>"; };
 		9D3D7CBF19E9B15600A36405 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		9D3ED40319EF1CA800858D29 /* Drawings.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Drawings.atlas; sourceTree = "<group>"; };
-		9D4065B619FD2CDC00543DCE /* song-1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "song-1.caf"; path = "../song-1.caf"; sourceTree = "<group>"; };
-		9D45F20F19EE6C8B00EC0575 /* Results.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Results.swift; path = ../Results.swift; sourceTree = "<group>"; };
-		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManager.swift; path = ../GameManager.swift; sourceTree = "<group>"; };
+		9D4065B619FD2CDC00543DCE /* song.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = song.caf; sourceTree = "<group>"; };
+		9D45F20F19EE6C8B00EC0575 /* Results.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
+		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
 		9D47F4C71A00FC7C007F6DF9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = ../Marker.swift; sourceTree = "<group>"; };
+		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		9D50D5EE1A02C19B00AB3BEA /* Markers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markers.swift; sourceTree = "<group>"; };
 		9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkersLabelsAndColors.swift; sourceTree = "<group>"; };
 		9D5E06321A61611600E01A45 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -94,10 +80,10 @@
 		9D9B958E1A02C03A00FA3A33 /* MainMenuSceneExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuSceneExtensions.swift; sourceTree = "<group>"; };
 		9DA29FF119F3FCDF00756D31 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		9DB100DA1A2858D0006083D6 /* DisplayHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayHelper.swift; sourceTree = "<group>"; };
-		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Touchprint.swift; path = ../Touchprint.swift; sourceTree = "<group>"; };
+		9DC9581119F161790097FA83 /* Touchprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Touchprint.swift; sourceTree = "<group>"; };
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
-		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterManager.swift; path = ../GameCenterManager.swift; sourceTree = "<group>"; };
+		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
 		9DEE89A41A68692900235EDA /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.0.0.a; sourceTree = "<group>"; };
 		9DEE89A71A6923F600235EDA /* end.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = end.caf; sourceTree = "<group>"; };
@@ -116,20 +102,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9D3977B219E7B0C1008ED26F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		9D1844321A8CD9B300AAA198 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				9D4065B619FD2CDC00543DCE /* song-1.caf */,
+				9D4065B619FD2CDC00543DCE /* song.caf */,
 				9DEE89A71A6923F600235EDA /* end.caf */,
 			);
 			name = Sound;
@@ -162,7 +141,6 @@
 				9D2698901A00DBA6002FF873 /* Flurry */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Asphalt */,
-				9D3977B819E7B0C1008ED26F /* AsphaltTests */,
 				9D39779D19E7B0C1008ED26F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				9D39779C19E7B0C1008ED26F /* Asphalt.app */,
-				9D3977B519E7B0C1008ED26F /* AsphaltTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,23 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				9D3977A019E7B0C1008ED26F /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9D3977B819E7B0C1008ED26F /* AsphaltTests */ = {
-			isa = PBXGroup;
-			children = (
-				9D3977BB19E7B0C1008ED26F /* AsphaltTests.swift */,
-				9D3977B919E7B0C1008ED26F /* Supporting Files */,
-			);
-			path = AsphaltTests;
-			sourceTree = "<group>";
-		};
-		9D3977B919E7B0C1008ED26F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9D3977BA19E7B0C1008ED26F /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -268,24 +228,6 @@
 			productReference = 9D39779C19E7B0C1008ED26F /* Asphalt.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9D3977B419E7B0C1008ED26F /* AsphaltTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9D3977C219E7B0C1008ED26F /* Build configuration list for PBXNativeTarget "AsphaltTests" */;
-			buildPhases = (
-				9D3977B119E7B0C1008ED26F /* Sources */,
-				9D3977B219E7B0C1008ED26F /* Frameworks */,
-				9D3977B319E7B0C1008ED26F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9D3977B719E7B0C1008ED26F /* PBXTargetDependency */,
-			);
-			name = AsphaltTests;
-			productName = AsphaltTests;
-			productReference = 9D3977B519E7B0C1008ED26F /* AsphaltTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -304,10 +246,6 @@
 							};
 						};
 					};
-					9D3977B419E7B0C1008ED26F = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 9D39779B19E7B0C1008ED26F;
-					};
 				};
 			};
 			buildConfigurationList = 9D39779719E7B0C1008ED26F /* Build configuration list for PBXProject "Asphalt" */;
@@ -325,7 +263,6 @@
 			projectRoot = "";
 			targets = (
 				9D39779B19E7B0C1008ED26F /* Asphalt */,
-				9D3977B419E7B0C1008ED26F /* AsphaltTests */,
 			);
 		};
 /* End PBXProject section */
@@ -340,7 +277,7 @@
 				9D1844361A8CD9CB00AAA198 /* lc-chalk.ttf in Resources */,
 				9D1D910719F34152002D92CA /* MainMenu.sks in Resources */,
 				9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */,
-				9D4065B719FD2CDC00543DCE /* song-1.caf in Resources */,
+				9D4065B719FD2CDC00543DCE /* song.caf in Resources */,
 				9D3977AD19E7B0C1008ED26F /* Images.xcassets in Resources */,
 				9DEE89A81A6923F600235EDA /* end.caf in Resources */,
 				9D3ED40419EF1CA800858D29 /* Drawings.atlas in Resources */,
@@ -348,13 +285,6 @@
 				9D3977AB19E7B0C1008ED26F /* Main.storyboard in Resources */,
 				9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */,
 				9D3049CA19EF0CF800A93BF7 /* DrawingsAttributes.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9D3977B319E7B0C1008ED26F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,23 +317,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9D3977B119E7B0C1008ED26F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9D3977BC19E7B0C1008ED26F /* AsphaltTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9D3977B719E7B0C1008ED26F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9D39779B19E7B0C1008ED26F /* Asphalt */;
-			targetProxy = 9D3977B619E7B0C1008ED26F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9D18442E1A8CB74100AAA198 /* Localizable.strings */ = {
@@ -553,40 +467,6 @@
 			};
 			name = Release;
 		};
-		9D3977C319E7B0C1008ED26F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AsphaltTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Asphalt.app/Asphalt";
-			};
-			name = Debug;
-		};
-		9D3977C419E7B0C1008ED26F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AsphaltTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Asphalt.app/Asphalt";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -604,15 +484,6 @@
 			buildConfigurations = (
 				9D3977C019E7B0C1008ED26F /* Debug */,
 				9D3977C119E7B0C1008ED26F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9D3977C219E7B0C1008ED26F /* Build configuration list for PBXNativeTarget "AsphaltTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9D3977C319E7B0C1008ED26F /* Debug */,
-				9D3977C419E7B0C1008ED26F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
