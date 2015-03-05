@@ -18,7 +18,7 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         return Singleton.instance
     }
     
-    private let songName = "song-1"
+    private let songName = "song"
     
     var musicEnabled: Bool {
         set {
