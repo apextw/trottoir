@@ -301,21 +301,37 @@ public struct Results {
         return (resultAbove, resultBelow)
     }
     
+    static var attempt = 0
+    
+    private static var _localBestResult: Int!
+    
     static var localBestResult: Int {
         set {
+            _localBestResult = newValue
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "localBestResult")
         }
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey("localBestResult")
+            if _localBestResult == nil {
+                _localBestResult = NSUserDefaults.standardUserDefaults().integerForKey("localBestResult")
+            }
+            
+            return _localBestResult
         }
     }
     
+    private static var _previousResult: Int!
+
     static var previousResult: Int {
         set {
+            _previousResult = newValue
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "previousResult")
         }
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey("previousResult")
+            if _previousResult == nil {
+                _previousResult = NSUserDefaults.standardUserDefaults().integerForKey("previousResult")
+            }
+            
+            return _previousResult
         }
     }
     
@@ -338,57 +354,128 @@ public struct Results {
         }
     }
     
-    static var attempt = 0
+    
+    
+    private static var _globalAllTimeBestResult: Result!
     
     static var globalAllTimeBestResult: Result {
         get {
-            return Result.loadFromUserDefaultsForKey("Global AllTime Best");
+            if _globalAllTimeBestResult == nil {
+                _globalAllTimeBestResult = Result.loadFromUserDefaultsForKey("Global AllTime Best")
+            }
+            
+            return _globalAllTimeBestResult
+        }
+        set {
+            _globalAllTimeBestResult = newValue
+            _globalAllTimeBestResult.saveToUserDefaultsWithKey("Global AllTime Best")
         }
     }
+    
+    
+    
+    private static var _globalWeekBestResult: Result!
     
     static var globalWeekBestResult: Result {
         get {
-            return Result.loadFromUserDefaultsForKey("Global Week Best");
+            if _globalWeekBestResult == nil {
+                _globalWeekBestResult = Result.loadFromUserDefaultsForKey("Global Week Best")
+            }
+        
+            return _globalWeekBestResult
+        }
+        set {
+            _globalWeekBestResult = newValue
+            _globalWeekBestResult.saveToUserDefaultsWithKey("Global Week Best")
         }
     }
+    
+    
+    
+    private static var _globalTodayBestResult: Result!
     
     static var globalTodayBestResult: Result {
         get {
-            return Result.loadFromUserDefaultsForKey("Global Today Best");
+            if _globalTodayBestResult == nil {
+                _globalTodayBestResult = Result.loadFromUserDefaultsForKey("Global Today Best")
+            }
+        
+            return _globalTodayBestResult
+        }
+        set {
+            _globalTodayBestResult = newValue
+            _globalTodayBestResult.saveToUserDefaultsWithKey("Global Today Best")
         }
     }
     
+    
+    
+    private static var _friendsAlltimeTop10: [Result]!
+
     static var friendsAlltimeTop10: [Result] {
         get {
-            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Alltime Top 10") as? NSData {
-                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
-                    return results
-                }
+            if _friendsAlltimeTop10 == nil {
+                _friendsAlltimeTop10 = loadResultListForKey("Friendsonly Alltime Top 10")
             }
-            return []
+        
+            return _friendsAlltimeTop10
+        }
+        set {
+            _friendsAlltimeTop10 = newValue
+            saveResultList(newValue, withKey: "Friendsonly Alltime Top 10")
         }
     }
     
+
+    
+    private static var _friendsWeekTop10: [Result]!
+
     static var friendsWeekTop10: [Result] {
         get {
-            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Week Top 10") as? NSData {
-                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
-                    return results
-                }
+            if _friendsWeekTop10 == nil {
+                _friendsWeekTop10 = loadResultListForKey("Friendsonly Week Top 10")
             }
-            return []
+
+            return _friendsWeekTop10
+        }
+        set {
+            _friendsWeekTop10 = newValue
+            saveResultList(newValue, withKey: "Friendsonly Week Top 10")
         }
     }
 
+    
+    
+    private static var _friendsTodayTop10: [Result]!
+    
     static var friendsTodayTop10: [Result] {
         get {
-            if let data = NSUserDefaults.standardUserDefaults().objectForKey("Friendsonly Today Top 10") as? NSData {
-                if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
-                    return results
-                }
+            if _friendsTodayTop10 == nil {
+                _friendsTodayTop10 = loadResultListForKey("Friendsonly Today Top 10")
             }
-            return []
+            
+            return _friendsTodayTop10
         }
+        set {
+            _friendsTodayTop10 = newValue
+            saveResultList(newValue, withKey: "Friendsonly Today Top 10")
+        }
+    }
+    
+    
+    
+    private static func loadResultListForKey(key: String) -> [Result] {
+        if let data = NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSData {
+            if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
+                return results
+            }
+        }
+        return []
+    }
+    
+    private static func saveResultList(results: [Result], withKey key: String) {
+        let data = NSKeyedArchiver.archivedDataWithRootObject(results)
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: key)
     }
 
 }

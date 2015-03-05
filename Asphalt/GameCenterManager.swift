@@ -176,7 +176,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             if let firstElement: AnyObject = scores?.first {
                 let score = firstElement as GKScore
                 let result = Result(score: score)
-                result.saveToUserDefaultsWithKey("Global Week Best")
+                Results.globalWeekBestResult = result
                 println("Game Center: Successfully received global week best. It is \(result.score) by \(result.name)")
             } else {
                 println("Game Center: Global week best does not exist")
@@ -200,7 +200,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             if let firstElement: AnyObject = scores?.first {
                 let score = firstElement as GKScore
                 let result = Result(score: score)
-                result.saveToUserDefaultsWithKey("Global Today Best")
+                Results.globalTodayBestResult = result
                 println("Game Center: Successfully received global today best. It is \(result.score) by \(result.name)")
             } else {
                 println("Game Center: Global today best does not exist")
@@ -237,8 +237,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 }
             }
             
-            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
-            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Alltime Top 10")
+            Results.friendsAlltimeTop10 = friendsResults
             
             completion()
         }
@@ -271,8 +270,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 }
             }
             
-            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
-            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Week Top 10")
+            Results.friendsWeekTop10 = friendsResults
             
             completion()
         }
@@ -305,8 +303,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 }
             }
             
-            let data = NSKeyedArchiver.archivedDataWithRootObject(friendsResults)
-            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Friendsonly Today Top 10")
+            Results.friendsTodayTop10 = friendsResults
             
             completion()
         }
