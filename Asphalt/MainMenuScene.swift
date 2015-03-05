@@ -68,7 +68,7 @@ class MainMenuScene: SKScene {
                 addNewLabel()
             }
             if adDelegate != nil {
-                adDelegate.showAd(scene: self)
+                adDelegate.showAdBanner(scene: self)
             }
         }
         
@@ -414,7 +414,7 @@ extension MainMenuScene: ButtonProtocol {
             AudioManager.sharedInstance.switchMusicEnabled()
             updateMusicSwitcherText()
         } else if sender === startButton {
-            presentGameScene()
+            startButtonPressed()
         } else if sender === gameCenterButton {
             println("Open Game Center")
             GameCenterManager.sharedInstance.presentGameCenterViewController()
@@ -433,6 +433,16 @@ extension MainMenuScene: ButtonProtocol {
             rateGameButton.enabled = false
             Flurry.logEvent("Pressed_Rate_Game")
             AppRater.goToRatingPage()
+        }
+    }
+    
+    func startButtonPressed() {
+        if adDelegate != nil && Results.attempt > 0 && Results.attempt % 4 == 0 {
+            adDelegate.showAdFullscreenWithCompletion({
+                self.presentGameScene()
+            })
+        } else {
+            presentGameScene()
         }
     }
 }

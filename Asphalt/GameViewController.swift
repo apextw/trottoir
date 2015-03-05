@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import iAd
+import GoogleMobileAds
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -27,13 +28,18 @@ extension SKNode {
 }
 
 protocol adProtocol {
-    func showAd(#scene: SceneShowingAdProtocol)
+    func showAdBanner(#scene: SceneShowingAdProtocol)
     func hideAd(#scene: SceneShowingAdProtocol)
+    func showAdFullscreenWithCompletion(completion: (Void -> Void)?)
 }
 
 class GameViewController: UIViewController {
 
     var adBannerView: ADBannerView!
+    
+    private var banner: GADBannerView!
+    private var interstitial: GADInterstitial!
+    private var interstitialDidClose: (Void -> Void)?
     
     var wantsToShowAd = false
     var readyToShowAd = false
@@ -47,7 +53,9 @@ class GameViewController: UIViewController {
         Touchprint.screenSize = skView.frame.size
 
         // Enable iAd
-        loadAds()
+//        loadAds()
+        createAndLoadInterstitial()
+        createAndLoadBanner()
         
         // Debug info
 //        skView.showsFPS = true
@@ -93,6 +101,40 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    internal func createAndLoadInterstitial() {
+        interstitial = GADInterstitial()
+        interstitial.adUnitID = "ca-app-pub-7118034005818759/4865095025"
+        interstitial.delegate = self;
+        
+        let request = GADRequest();
+        // Request test ads on devices you specify. Your test device ID is printed to the console when
+        // an ad request is made. GADInterstitial automatically returns test ads when running on a
+        // simulator.
+//        request.testDevices = [
+//        "67def063eafa10c86d9461980e9bcc98"
+//        ]
+        interstitial.loadRequest(request)
+    }
+    
+    internal func createAndLoadBanner() {
+        
+//        banner = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        let y = self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeSmartBannerPortrait).height
+        banner = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait, origin: CGPoint(x: 0, y: y))
+        banner.adUnitID = "ca-app-pub-7118034005818759/2557430223"
+        banner.rootViewController = self;
+        banner.delegate = self;
+        
+        let request = GADRequest();
+        // Request test ads on devices you specify. Your test device ID is printed to the console when
+        // an ad request is made. GADInterstitial automatically returns test ads when running on a
+        // simulator.
+//        request.testDevices = [
+//            "67def063eafa10c86d9461980e9bcc98"
+//        ]
+        banner.loadRequest(request)
+    }
 }
 
 extension GameViewController: ADBannerViewDelegate {
@@ -105,7 +147,7 @@ extension GameViewController: ADBannerViewDelegate {
         println("banner View Did Load Ad")
         readyToShowAd = true
         if wantsToShowAd && sceneToShowAd != nil {
-            showAd(scene: sceneToShowAd!)
+            showAdBanner(scene: sceneToShowAd!)
         }
     }
     
@@ -134,22 +176,71 @@ extension GameViewController: ADBannerViewDelegate {
 }
 
 extension GameViewController: adProtocol {
-    func showAd(#scene: SceneShowingAdProtocol) {
+    func showAdBanner(#scene: SceneShowingAdProtocol) {
         wantsToShowAd = true
         sceneToShowAd = scene
+        
         if readyToShowAd {
-            scene.prepareForShowingAdWithSize(adBannerView.frame.size)
-            adBannerView.hidden = false
+            self.view.addSubview(banner)
+            scene.prepareForShowingAdWithSize(banner.frame.size)
         }
     }
     
     func hideAd(#scene: SceneShowingAdProtocol) {
         wantsToShowAd = false
         sceneToShowAd = nil
-
-        if adBannerView != nil {
-            adBannerView.hidden = true
+        
+        if banner.superview != nil {
+            banner.removeFromSuperview()
             scene.prepareForHidingAd()
+        }
+    }
+    
+    func showAdFullscreenWithCompletion(completion: (Void -> Void)?) {
+        if interstitial.isReady {
+            interstitialDidClose = completion
+            interstitial.presentFromRootViewController(self)
+        } else if completion != nil {
+            completion!()
+        }
+    }
+}
+
+extension GameViewController: GADInterstitialDelegate {
+    
+    func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+        println("AdMob: Failed to load interstitial ad")
+
+        createAndLoadInterstitial()
+    }
+    
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        println("AdMob: Interstitial ad disappeared")
+        
+        if interstitialDidClose != nil {
+            interstitialDidClose!()
+            interstitialDidClose = nil
+        }
+        
+        createAndLoadInterstitial()
+    }
+}
+
+extension GameViewController: GADBannerViewDelegate {
+    func adView(view: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        println("AdMob: Banner View Did Fail To Receive Ad With Error")
+        readyToShowAd = false
+        if sceneToShowAd != nil && adBannerView != nil {
+            adBannerView.hidden = true
+            sceneToShowAd?.prepareForHidingAd()
+        }
+    }
+    
+    func adViewDidReceiveAd(view: GADBannerView!) {
+        println("AdMob: Banner View Did Receive Ad")
+        self.readyToShowAd = true
+        if wantsToShowAd && sceneToShowAd != nil {
+            showAdBanner(scene: sceneToShowAd!)
         }
     }
 }
