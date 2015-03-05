@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Asphalt
+
+  Created by Alexander Bekert on 04/03/15.
+  Copyright (c) 2015 Alexander Bekert. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Trottoir";
+"CFBundleName" = "Trottoir";
