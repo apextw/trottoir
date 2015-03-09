@@ -27,8 +27,6 @@
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4648DD19F6A93A004D2CF6 /* Button.swift */; };
 		9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */; };
-		9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C71A00FC7C007F6DF9 /* Security.framework */; };
-		9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */; };
 		9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
 		9D50D5EF1A02C19B00AB3BEA /* Markers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50D5EE1A02C19B00AB3BEA /* Markers.swift */; };
@@ -42,7 +40,6 @@
 		9DC9581519F1D5740097FA83 /* Asphalt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581419F1D5740097FA83 /* Asphalt.atlas */; };
 		9DC9581719F1DCEC0097FA83 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DC9581619F1DCEC0097FA83 /* Colors.plist */; };
 		9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */; };
-		9DEE89A61A68692900235EDA /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */; };
 		9DEE89A81A6923F600235EDA /* end.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DEE89A71A6923F600235EDA /* end.caf */; };
 		9DF7752319F79C750096FF30 /* Drawings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF7752219F79C750096FF30 /* Drawings.swift */; };
 /* End PBXBuildFile section */
@@ -74,8 +71,6 @@
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
-		9D47F4C71A00FC7C007F6DF9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		9D50D5EE1A02C19B00AB3BEA /* Markers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markers.swift; sourceTree = "<group>"; };
@@ -89,8 +84,6 @@
 		9DC9581419F1D5740097FA83 /* Asphalt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asphalt.atlas; sourceTree = "<group>"; };
 		9DC9581619F1DCEC0097FA83 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
 		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
-		9DEE89A41A68692900235EDA /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.0.0.a; sourceTree = "<group>"; };
 		9DEE89A71A6923F600235EDA /* end.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = end.caf; sourceTree = "<group>"; };
 		9DF7752219F79C750096FF30 /* Drawings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawings.swift; sourceTree = "<group>"; };
 		DE913B66B1D830690A2E298A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,9 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DEE89A61A68692900235EDA /* libFlurry_6.0.0.a in Frameworks */,
-				9D47F4CA1A00FC8F007F6DF9 /* SystemConfiguration.framework in Frameworks */,
-				9D47F4C81A00FC7C007F6DF9 /* Security.framework in Frameworks */,
 				9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */,
 				353E82D224621676C32688F7 /* libPods.a in Frameworks */,
 			);
@@ -125,6 +115,7 @@
 		7337D76C1D6D5D5C11119041 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */,
 				DE913B66B1D830690A2E298A /* libPods.a */,
 			);
 			name = Frameworks;
@@ -150,11 +141,7 @@
 		9D2698901A00DBA6002FF873 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				9D47F4C91A00FC8F007F6DF9 /* SystemConfiguration.framework */,
-				9D47F4C71A00FC7C007F6DF9 /* Security.framework */,
 				9D2698911A00DBA6002FF873 /* Flurry-Bridging-Header.h */,
-				9DEE89A41A68692900235EDA /* Flurry.h */,
-				9DEE89A51A68692900235EDA /* libFlurry_6.0.0.a */,
 			);
 			path = Flurry;
 			sourceTree = "<group>";
@@ -162,7 +149,6 @@
 		9D39779319E7B0C1008ED26F = {
 			isa = PBXGroup;
 			children = (
-				9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */,
 				9D2698901A00DBA6002FF873 /* Flurry */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Asphalt */,
