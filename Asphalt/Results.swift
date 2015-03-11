@@ -91,7 +91,7 @@ public struct Results {
         if score < 10 {
             return localizedResultDescriptionFor("Less than ten score", score: score)
         } else if score > Results.localBestResult {
-            resultDescriptionForNewLocalBestScore(score)
+            return resultDescriptionForNewLocalBestScore(score)
         } else {
             var choice : Int
             if todayBestResult == 0 {
@@ -102,7 +102,7 @@ public struct Results {
             
             switch choice {
             case 0:
-                resultDescriptionInCompareToPreviousResult(score)
+                return resultDescriptionInCompareToPreviousResult(score)
             case 1:
                 return resultDescriptionInCompareToFriends(score)
             case 2:
