@@ -250,7 +250,7 @@
 		9D39779419E7B0C1008ED26F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Alexander Bekert";
 				TargetAttributes = {
 					9D39779B19E7B0C1008ED26F = {
@@ -483,7 +483,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E50EC93CA8A712A8395ED5AB /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -508,7 +507,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 104864CB752E8968CD219C0F /* Pods.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

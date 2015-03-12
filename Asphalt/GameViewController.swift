@@ -52,7 +52,7 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         Touchprint.screenSize = skView.frame.size
 
-        // Enable iAd
+        // Enable Ad
 //        loadAds()
         createAndLoadInterstitial()
         createAndLoadBanner()
@@ -190,7 +190,7 @@ extension GameViewController: adProtocol {
         wantsToShowAd = false
         sceneToShowAd = nil
         
-        if banner.superview != nil {
+        if banner != nil && banner.superview != nil {
             banner.removeFromSuperview()
             scene.prepareForHidingAd()
         }
