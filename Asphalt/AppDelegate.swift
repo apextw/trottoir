@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register default preferences plist
         if let defaultPrefsFile = NSBundle.mainBundle().URLForResource("DefaultPreferences", withExtension: "plist") {
             let dictionary = NSDictionary(contentsOfURL: defaultPrefsFile)!
-            NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
+            NSUserDefaults.standardUserDefaults().registerDefaults(dictionary as! [String : AnyObject])
         }
         
         return true
@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let activationsCountKey = "Application activations count"
         let activationsCount = NSUserDefaults.standardUserDefaults().integerForKey(activationsCountKey)
         NSUserDefaults.standardUserDefaults().setInteger(activationsCount + 1, forKey: activationsCountKey)
-        println("Game was activated for the \(activationsCount + 1)'th time")
+        print("Game was activated for the \(activationsCount + 1)'th time")
     }
 
     func applicationWillTerminate(application: UIApplication) {

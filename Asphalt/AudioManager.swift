@@ -53,27 +53,36 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         var success = false
         
         if audioSession.otherAudioPlaying {
-            success = audioSession.setCategory(AVAudioSessionCategorySoloAmbient, error: nil)
+            do {
+                try audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+                success = true
+            } catch _ {
+                success = false
+            }
         } else {
-            success = audioSession.setCategory(AVAudioSessionCategoryAmbient, error: nil)
+            do {
+                try audioSession.setCategory(AVAudioSessionCategoryAmbient)
+                success = true
+            } catch _ {
+                success = false
+            }
         }
         
         if !success {
-            println("Error setting category!")
+            print("Error setting category!")
         }
     }
     
     private func configureAudioPlayer() {
         if let filepath = NSBundle.mainBundle().pathForResource(songName, ofType: "caf") {
-            if let url = NSURL(fileURLWithPath: filepath) {
-                player = AVAudioPlayer(contentsOfURL: url, error: nil)
-                player.enableRate = false
-                player.rate = 1
-                player.delegate = self
-                player.numberOfLoops = -1
-                player.volume = 0.8
-                player.prepareToPlay()
-            }
+            let url = NSURL(fileURLWithPath: filepath)
+            player = try? AVAudioPlayer(contentsOfURL: url)
+            player.enableRate = false
+            player.rate = 1
+            player.delegate = self
+            player.numberOfLoops = -1
+            player.volume = 0.8
+            player.prepareToPlay()
         }
     }
     

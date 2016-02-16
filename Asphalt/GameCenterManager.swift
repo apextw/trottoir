@@ -26,25 +26,25 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     }
     
     override init() {
-        println("Init")
+        print("Init")
     }
     
     func autenticatePlayer() {
         let localPlayer = GKLocalPlayer.localPlayer()
-        localPlayer.authenticateHandler = {(viewController : UIViewController!, error : NSError!) -> Void in
+        localPlayer.authenticateHandler = {(viewController : UIViewController?, error : NSError?) -> Void in
             //handle authentication
             if viewController != nil {
-                println("Game Center: Need to Log In")
+                print("Game Center: Need to Log In")
                 if self.gameViewController != nil {
                     self.pauseCurrentScene()
-                    self.gameViewController.presentViewController(viewController, animated: true, completion: nil)
+                    self.gameViewController.presentViewController(viewController!, animated: true, completion: nil)
                 }
             } else if localPlayer.authenticated {
-                println("Game Center: Successfully autenticated")
+                print("Game Center: Successfully autenticated")
                 self.updateResults()
                 self.resumeCurrentScene()
             } else {
-                println("Game Center: Autentication failed")
+                print("Game Center: Autentication failed")
                 self.resumeCurrentScene()
             }
         }
@@ -74,18 +74,18 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     }
     
     private func pauseCurrentScene() {
-        let skView = self.gameViewController.view as SKView
+        let skView = self.gameViewController.view as! SKView
         skView.paused = true
     }
     
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
             self.resumeCurrentScene()
         })
     }
     
     private func resumeCurrentScene() {
-        let skView = self.gameViewController.view as SKView
+        let skView = self.gameViewController.view as! SKView
         skView.paused = false
     }
 
@@ -96,9 +96,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         score.context = 0
         GKScore.reportScores([score], withCompletionHandler: { (error) -> Void in
             if error == nil {
-                println("Game Center: Score successfully reported")
+                print("Game Center: Score successfully reported")
             } else {
-                println("Game Center: Score report failed. \(error.description)")
+                print("Game Center: Score report failed. \(error!.description)")
             }
             
             completion?()
@@ -108,15 +108,15 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     func updateResults() {
         GKLeaderboard.loadLeaderboardsWithCompletionHandler { (leaderboards, error) -> Void in
             if error != nil {
-                println("Game Center: Leaderboards loading failed.  \(error.description)")
+                print("Game Center: Leaderboards loading failed.  \(error!.description)")
                 return
             }
             
-            println("Game Center: Successfully received leaderboards")
-            for element in leaderboards {
-                let leaderboard = element as GKLeaderboard
+            print("Game Center: Successfully received leaderboards")
+            for element in leaderboards! {
+                let leaderboard = element
                 if leaderboard.identifier == self.defaultLeaderboardId {
-                    println("Game Center: Default leaderboard found")
+                    print("Game Center: Default leaderboard found")
                     self.retreiveDataFromLeaderboard(leaderboard as GKLeaderboard)
                     break
                 }
@@ -145,17 +145,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = .AllTime
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving global alltime best.  \(error.description)")
+                print("Game Center: Error during receiving global alltime best.  \(error!.description)")
                 return
             }
             
             if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as GKScore
+                let score = firstElement as! GKScore
                 let result = Result(score: score)
                 result.saveToUserDefaultsWithKey("Global AllTime Best")
-                println("Game Center: Successfully received global alltime best. It is \(result.score) by \(result.name)")
+                print("Game Center: Successfully received global alltime best. It is \(result.score) by \(result.name)")
             } else {
-                println("Game Center: Global alltime best does not exist")
+                print("Game Center: Global alltime best does not exist")
             }
             
             completion()
@@ -169,17 +169,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = .Week
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving global week best.  \(error.description)")
+                print("Game Center: Error during receiving global week best.  \(error!.description)")
                 return
             }
             
             if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as GKScore
+                let score = firstElement as! GKScore
                 let result = Result(score: score)
                 Results.globalWeekBestResult = result
-                println("Game Center: Successfully received global week best. It is \(result.score) by \(result.name)")
+                print("Game Center: Successfully received global week best. It is \(result.score) by \(result.name)")
             } else {
-                println("Game Center: Global week best does not exist")
+                print("Game Center: Global week best does not exist")
             }
             
             completion()
@@ -193,17 +193,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = .Today
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving global today best.  \(error.description)")
+                print("Game Center: Error during receiving global today best.  \(error!.description)")
                 return
             }
             
             if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as GKScore
+                let score = firstElement as! GKScore
                 let result = Result(score: score)
                 Results.globalTodayBestResult = result
-                println("Game Center: Successfully received global today best. It is \(result.score) by \(result.name)")
+                print("Game Center: Successfully received global today best. It is \(result.score) by \(result.name)")
             } else {
-                println("Game Center: Global today best does not exist")
+                print("Game Center: Global today best does not exist")
             }
             
             completion()
@@ -217,22 +217,21 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = .AllTime
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving friendsonly alltime best.  \(error.description)")
+                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             
             var friendsResults: [Result] = []
             
             if scores != nil {
-                for object in scores {
-                    let score = object as GKScore
+                for score in scores! {
                     let result = Result(score: score)
                     let rank = score.rank
                     if result.name == GKLocalPlayer.localPlayer().alias {
-                        println("Game Center: Friendsonly alltime Top 10. My place is #\(rank) with score \(result.score)")
+                        print("Game Center: Friendsonly alltime Top 10. My place is #\(rank) with score \(result.score)")
                     } else {
                         friendsResults.append(result)
-                        println("Game Center: Friendsonly alltime Top 10. #\(rank) is \(result.score) by \(result.name)")
+                        print("Game Center: Friendsonly alltime Top 10. #\(rank) is \(result.score) by \(result.name)")
                     }
                 }
             }
@@ -250,22 +249,21 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = GKLeaderboardTimeScope.Week
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving friendsonly alltime best.  \(error.description)")
+                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             
             var friendsResults: [Result] = []
             
             if scores != nil {
-                for object in scores {
-                    let score = object as GKScore
+                for score in scores! {
                     let result = Result(score: score)
                     let rank = score.rank
                     if result.name == GKLocalPlayer.localPlayer().alias {
-                        println("Game Center: Friendsonly week Top 10. My place is #\(rank) with score \(result.score)")
+                        print("Game Center: Friendsonly week Top 10. My place is #\(rank) with score \(result.score)")
                     } else {
                         friendsResults.append(result)
-                        println("Game Center: Friendsonly week Top 10. #\(rank) is \(result.score) by \(result.name)")
+                        print("Game Center: Friendsonly week Top 10. #\(rank) is \(result.score) by \(result.name)")
                     }
                 }
             }
@@ -283,22 +281,21 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         leaderboard.timeScope = GKLeaderboardTimeScope.Today
         leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if error != nil {
-                println("Game Center: Error during receiving friendsonly alltime best.  \(error.description)")
+                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             
             var friendsResults: [Result] = []
 
             if scores != nil {
-                for object in scores {
-                    let score = object as GKScore
+                for score in scores! {
                     let result = Result(score: score)
                     let rank = score.rank
                     if result.name == GKLocalPlayer.localPlayer().alias {
-                        println("Game Center: Friendsonly today Top 10. My place is #\(rank) with score \(result.score)")
+                        print("Game Center: Friendsonly today Top 10. My place is #\(rank) with score \(result.score)")
                     } else {
                         friendsResults.append(result)
-                        println("Game Center: Friendsonly today Top 10. #\(rank) is \(result.score) by \(result.name)")
+                        print("Game Center: Friendsonly today Top 10. #\(rank) is \(result.score) by \(result.name)")
                     }
                 }
             }

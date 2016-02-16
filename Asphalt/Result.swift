@@ -13,27 +13,28 @@ class Result : NSObject, NSCoding {
     var score: Int
     var name: String
     
-    init(score: Int, name: String) {
-        self.score = score
-        self.name = name
-    }
+//    init(score: Int, name: String) {
+//        self.score = score
+//        self.name = name
+//    }
     
-    init(score: Int, name: String!) {
+    init(score: Int, name: String? = "") {
         self.score = score
-        if name == nil {
-            self.name = "";
-        } else {
-            self.name = name!
-        }
+        self.name = name!
+//        if name == nil {
+//            self.name = "";
+//        } else {
+//            self.name = name!
+//        }
     }
     
     init(score: GKScore) {
         self.score = Int(score.value)
-        self.name = score.player.alias
+        self.name = score.player.alias!
     }
     
-    required init(coder decoder: NSCoder) {
-        if let decodedName = decoder.decodeObjectForKey("Name") as String? {
+    required init?(coder decoder: NSCoder) {
+        if let decodedName = decoder.decodeObjectForKey("Name") as! String? {
             name = decodedName
         } else {
             name = ""
@@ -49,7 +50,7 @@ class Result : NSObject, NSCoding {
 
     class func loadFromUserDefaultsForKey(key: String) -> Result {
         let score = NSUserDefaults.standardUserDefaults().integerForKey(key + " Score")
-        let name = NSUserDefaults.standardUserDefaults().objectForKey(key + " Name") as String?
+        let name = NSUserDefaults.standardUserDefaults().objectForKey(key + " Name") as! String?
         
         return Result(score: score, name: name)
     }
@@ -59,7 +60,7 @@ class Result : NSObject, NSCoding {
         NSUserDefaults.standardUserDefaults().setObject(name, forKey: key + " Name")
     }
     
-    func description() -> String {
+    override var description: String {
         return "\(name) — \(score) score(s)"
     }
 }

@@ -1,4 +1,4 @@
-platform :ios, '6.0'
+platform :ios, '8.4'
 
 pod 'Google-Mobile-Ads-SDK'
 pod 'AdMobMediationAdapterIAd'

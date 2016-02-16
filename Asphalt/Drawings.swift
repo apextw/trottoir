@@ -20,18 +20,18 @@ struct Drawings {
     
     static func drawingForTileNumber(number: Int) -> Drawing? {
         for pictureAttributes in Drawings.attributes {
-            let dictionary = pictureAttributes as NSDictionary
-            let pictureTileNumber = dictionary.objectForKey("Tile number") as String
+            let dictionary = pictureAttributes as! NSDictionary
+            let pictureTileNumber = dictionary.objectForKey("Tile number") as! String
             
-            let intValue = pictureTileNumber.toInt()
+            let intValue = Int(pictureTileNumber)
             if Int(number) == intValue {
-                let name = dictionary.objectForKey("Name") as String
-                let anchorX = (dictionary.objectForKey("anchorX") as NSString).floatValue
+                let name = dictionary.objectForKey("Name") as! String
+                let anchorX = (dictionary.objectForKey("anchorX") as! NSString).floatValue
                 let texture = Drawings.drawingsAtlas.textureNamed(name)
                 
-                let red = dictionary.objectForKey("Red") as NSNumber?
-                let green = dictionary.objectForKey("Green") as NSNumber?
-                let blue = dictionary.objectForKey("Blue") as NSNumber?
+                let red = dictionary.objectForKey("Red") as! NSNumber?
+                let green = dictionary.objectForKey("Green") as! NSNumber?
+                let blue = dictionary.objectForKey("Blue") as! NSNumber?
                 
                 if red != nil && green != nil && blue != nil {
                     let redValue = CGFloat(red!.floatValue / 255)
@@ -56,7 +56,7 @@ struct Drawings {
                 return SKSpriteNode(texture: texture)
             }
 
-            println("Unable to get suitable Main Menu Drawing")
+            print("Unable to get suitable Main Menu Drawing")
             return SKSpriteNode()
         }
     }
@@ -74,12 +74,12 @@ struct Drawings {
     
     static private func pictureNameForTileNumber(tileNumber: Int) -> String? {
         for pictureAttributes in Drawings.attributes {
-            let dictionary = pictureAttributes as NSDictionary
-            let pictureTileNumber = dictionary.objectForKey("Tile number") as String
+            let dictionary = pictureAttributes as! NSDictionary
+            let pictureTileNumber = dictionary.objectForKey("Tile number") as! String
             
-            let intValue = pictureTileNumber.toInt()
+            let intValue = Int(pictureTileNumber)
             if tileNumber == intValue {
-                let name = dictionary.objectForKey("Name") as String
+                let name = dictionary.objectForKey("Name") as! String
                 return name
             }
         }

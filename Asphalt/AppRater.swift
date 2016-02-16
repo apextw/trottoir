@@ -17,7 +17,7 @@ public class AppRater {
         let reviewUrlTemplate = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=APP_ID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
         
         let urlString = reviewUrlTemplate.stringByReplacingOccurrencesOfString("APP_ID", withString: AppID)
-        println("Processing to the App Store. URL: \(urlString)")
+        print("Processing to the App Store. URL: \(urlString)")
         if let url = NSURL(string: urlString) {
             UIApplication.sharedApplication().openURL(url)
             doNotShowDialogInFuture()
@@ -36,7 +36,7 @@ public class AppRater {
         let base = "Do Not Show Rate Me Dialog For Version "
 
         if let nsObject: AnyObject? = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] {
-            let appVersion = nsObject as String
+            let appVersion = nsObject as! String
             return base + appVersion
         }
         

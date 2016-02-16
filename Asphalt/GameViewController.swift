@@ -13,12 +13,12 @@ import GoogleMobileAds
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
+            let sceneData = try! NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe)
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as SKScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! SKScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -28,8 +28,8 @@ extension SKNode {
 }
 
 protocol adProtocol {
-    func showAdBanner(#scene: SceneShowingAdProtocol)
-    func hideAd(#scene: SceneShowingAdProtocol)
+    func showAdBanner(scene scene: SceneShowingAdProtocol)
+    func hideAd(scene scene: SceneShowingAdProtocol)
     func showAdFullscreenWithCompletion(completion: (Void -> Void)?)
 }
 
@@ -48,7 +48,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GameCenterManager.sharedInstance.gameViewController = self
-        let skView = self.view as SKView
+        let skView = self.view as! SKView
         skView.ignoresSiblingOrder = true
         Touchprint.screenSize = skView.frame.size
 
@@ -74,7 +74,7 @@ class GameViewController: UIViewController {
     }
     
     func loadAds() {
-        adBannerView = ADBannerView(frame: CGRect.zeroRect)
+        adBannerView = ADBannerView(frame: CGRect.zero)
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
         adBannerView.hidden = true
@@ -85,11 +85,11 @@ class GameViewController: UIViewController {
         super.viewWillLayoutSubviews()
     }
     
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
@@ -103,8 +103,7 @@ class GameViewController: UIViewController {
     }
     
     internal func createAndLoadInterstitial() {
-        interstitial = GADInterstitial()
-        interstitial.adUnitID = "ca-app-pub-7118034005818759/4865095025"
+        interstitial = GADInterstitial (adUnitID: "ca-app-pub-7118034005818759/4865095025")
         interstitial.delegate = self;
         
         let request = GADRequest();
@@ -140,11 +139,11 @@ class GameViewController: UIViewController {
 extension GameViewController: ADBannerViewDelegate {
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("banner View Will Load Ad")
+        print("banner View Will Load Ad")
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("banner View Did Load Ad")
+        print("banner View Did Load Ad")
         readyToShowAd = true
         if wantsToShowAd && sceneToShowAd != nil {
             showAdBanner(scene: sceneToShowAd!)
@@ -152,21 +151,21 @@ extension GameViewController: ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        println("banner View Action Should Begin")
-        let skView = self.view as SKView
+        print("banner View Action Should Begin")
+        let skView = self.view as! SKView
         skView.paused = true
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("banner View Action Did Finish")
-        let skView = self.view as SKView
+        print("banner View Action Did Finish")
+        let skView = self.view as! SKView
         skView.paused = false
     }
     
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("banner View did Fail To Receive Ad With Error")
+        print("banner View did Fail To Receive Ad With Error")
         readyToShowAd = false
         if sceneToShowAd != nil && adBannerView != nil {
             adBannerView.hidden = true
@@ -176,7 +175,7 @@ extension GameViewController: ADBannerViewDelegate {
 }
 
 extension GameViewController: adProtocol {
-    func showAdBanner(#scene: SceneShowingAdProtocol) {
+    func showAdBanner(scene scene: SceneShowingAdProtocol) {
         wantsToShowAd = true
         sceneToShowAd = scene
         
@@ -186,7 +185,7 @@ extension GameViewController: adProtocol {
         }
     }
     
-    func hideAd(#scene: SceneShowingAdProtocol) {
+    func hideAd(scene scene: SceneShowingAdProtocol) {
         wantsToShowAd = false
         sceneToShowAd = nil
         
@@ -209,13 +208,13 @@ extension GameViewController: adProtocol {
 extension GameViewController: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
-        println("AdMob: Failed to load interstitial ad")
+        print("AdMob: Failed to load interstitial ad")
 
         createAndLoadInterstitial()
     }
     
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
-        println("AdMob: Interstitial ad disappeared")
+        print("AdMob: Interstitial ad disappeared")
         
         if interstitialDidClose != nil {
             interstitialDidClose!()
@@ -228,7 +227,7 @@ extension GameViewController: GADInterstitialDelegate {
 
 extension GameViewController: GADBannerViewDelegate {
     func adView(view: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
-        println("AdMob: Banner View Did Fail To Receive Ad With Error")
+        print("AdMob: Banner View Did Fail To Receive Ad With Error")
         readyToShowAd = false
         if sceneToShowAd != nil && adBannerView != nil {
             adBannerView.hidden = true
@@ -237,7 +236,7 @@ extension GameViewController: GADBannerViewDelegate {
     }
     
     func adViewDidReceiveAd(view: GADBannerView!) {
-        println("AdMob: Banner View Did Receive Ad")
+        print("AdMob: Banner View Did Receive Ad")
         self.readyToShowAd = true
         if wantsToShowAd && sceneToShowAd != nil {
             showAdBanner(scene: sceneToShowAd!)

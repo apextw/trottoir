@@ -71,7 +71,7 @@ class Marker : SKSpriteNode {
     
     var title: String {
         get {
-            return label.text
+            return label.text!
         }
         set (newTitle) {
             label.text = newTitle
@@ -94,7 +94,7 @@ class Marker : SKSpriteNode {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         activateMarker()
         for touch: AnyObject in touches {
             let touchLocationInScene = touch.locationInNode(self.scene!)
@@ -146,13 +146,17 @@ class Marker : SKSpriteNode {
         let effectNode = SKEffectNode()
         let externalEffectNode = SKEffectNode()
         
-        let filter = CIFilter(name: "CIBumpDistortion")
+        guard let filter = CIFilter(name: "CIBumpDistortion") else {
+            return
+        }
         filter.setDefaults()
         filter.setValue(50, forKey: "inputRadius")
         filter.setValue(1, forKey: "inputScale")
         effectNode.filter = filter
 
-        let externalFilter = CIFilter(name: "CISharpenLuminance")
+        guard let externalFilter = CIFilter(name: "CISharpenLuminance") else {
+            return
+        }
         externalFilter.setDefaults()
         externalFilter.setValue(10, forKey: "inputSharpness")
         externalEffectNode.filter = externalFilter
@@ -174,6 +178,6 @@ class Marker : SKSpriteNode {
     }
     
     deinit {
-        println("Marker \(number) deinit")
+        print("Marker \(number) deinit")
     }
 }

@@ -27,9 +27,9 @@ class GameScene: SKScene, GameManagerProtocol {
     override func didMoveToView(view: SKView) {
         resetSpeed()
         
-        println("Self.size: x = \(self.size.width), y = \(self.size.height)")
-        println("Self.view?.frame.size: x = \(self.view?.frame.size.width), y = \(self.view?.frame.size.height)")
-        println("Self.view!.bounds.size: x = \(self.view?.bounds.size.width), y = \(self.view?.bounds.size.width)")
+        print("Self.size: x = \(self.size.width), y = \(self.size.height)")
+        print("Self.view?.frame.size: x = \(self.view?.frame.size.width), y = \(self.view?.frame.size.height)")
+        print("Self.view!.bounds.size: x = \(self.view?.bounds.size.width), y = \(self.view?.bounds.size.width)")
 
         
         gameManager = GameManager(delegate: self)
@@ -82,7 +82,7 @@ class GameScene: SKScene, GameManagerProtocol {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
         if GameManager.godMode {
@@ -220,14 +220,14 @@ class GameScene: SKScene, GameManagerProtocol {
         return duration
     }
     
-    private func presentMainMenu(#showNewLabel: Bool) {
+    private func presentMainMenu(showNewLabel showNewLabel: Bool) {
         if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
             scene.adDelegate = adDelegate
             
             scene.size = self.size
             scene.scaleMode = SKSceneScaleMode.ResizeFill
             if background.currentDrawing != nil {
-                scene.drawing = background.currentDrawing.copy() as SKSpriteNode
+                scene.drawing = background.currentDrawing.copy() as! SKSpriteNode
             }
             scene.score = gameManager.score
             scene.showNewLabel = showNewLabel
@@ -265,6 +265,6 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     deinit {
-        println("Game Scene deinit")
+        print("Game Scene deinit")
     }
 }

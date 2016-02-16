@@ -153,12 +153,11 @@ extension MainMenuScene {
         let gameByLayer = SKNode()
         
 //        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-with-laptop") {
-        if let giraffeTexture = SKTexture(imageNamed: "giraffe-with-laptop") {
-            let giraffe = SKSpriteNode(texture: giraffeTexture)
-            let x = -size.width * 0.3
-            giraffe.position = CGPoint(x: x, y: 0)
-            gameByLayer.addChild(giraffe)
-        }
+        let giraffeTexture = SKTexture(imageNamed: "giraffe-with-laptop")
+        let giraffe = SKSpriteNode(texture: giraffeTexture)
+        var x = -size.width * 0.3
+        giraffe.position = CGPoint(x: x, y: 0)
+        gameByLayer.addChild(giraffe)
         
         let fontName = DisplayHelper.FontName
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
@@ -170,7 +169,6 @@ extension MainMenuScene {
         gameByLabel.fontSize = 1.2 * basicSize
         gameByLabel.verticalAlignmentMode = .Bottom
         gameByLabel.horizontalAlignmentMode = .Left
-        var x: CGFloat
         var y: CGFloat
         if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
             x = size.width * 0.1
@@ -219,12 +217,11 @@ extension MainMenuScene {
         let drawingsByLayer = SKNode()
         
 //        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-painter") {
-        if let giraffeTexture = SKTexture(imageNamed: "giraffe-painter") {
-            let giraffe = SKSpriteNode(texture: giraffeTexture)
-            let x = size.width * 0.3
-            giraffe.position = CGPoint(x: x, y: 0)
-            drawingsByLayer.addChild(giraffe)
-        }
+        let giraffeTexture = SKTexture(imageNamed: "giraffe-painter")
+        let giraffe = SKSpriteNode(texture: giraffeTexture)
+        var x = size.width * 0.3
+        giraffe.position = CGPoint(x: x, y: 0)
+        drawingsByLayer.addChild(giraffe)
         
         let fontName = DisplayHelper.FontName
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
@@ -238,7 +235,7 @@ extension MainMenuScene {
         shinyLabel.fontSize = 1.2 * basicSize
         shinyLabel.verticalAlignmentMode = .Bottom
         shinyLabel.horizontalAlignmentMode = .Left
-        var x = -size.width * 0.4 * marginScale
+        x = -size.width * 0.4 * marginScale
         var y = shinyLabel.frame.size.height * 0.17
         shinyLabel.position = CGPoint(x: x, y: y)
         shinyLabel.zRotation = angle

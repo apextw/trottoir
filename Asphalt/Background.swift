@@ -58,12 +58,12 @@ public class Background {
         }
         
         while partsToAdd > 0 {
-            let bgLeftCopy = background.copy() as SKSpriteNode
+            let bgLeftCopy = background.copy() as! SKSpriteNode
             leftPosition.x -= background.size.width;
             bgLeftCopy.position = leftPosition;
             node.addChild(bgLeftCopy)
             
-            let bgRightCopy = background.copy() as SKSpriteNode
+            let bgRightCopy = background.copy() as! SKSpriteNode
             rightPosition.x += background.size.width;
             bgRightCopy.position = rightPosition;
             node.addChild(bgRightCopy)
@@ -85,7 +85,7 @@ public class Background {
         
         while position.y < tileMaxY {
             position.y += originalTile.size.height
-            println("New tile row at Y: \(position.y)")
+            print("New tile row at Y: \(position.y)")
             if let rowCopy = tileRow.copy() as? SKNode {
                 rowCopy.position = position
                 tileRows.append(rowCopy)
@@ -145,7 +145,7 @@ public class Background {
                     
                     lastRow.parent!.addChild(rowCopy)
                     tileRows.append(rowCopy)
-                    println("New tile row at X: \(position.x) Y: \(position.y)")
+                    print("New tile row at X: \(position.x) Y: \(position.y)")
                 }
             }
         }
@@ -158,7 +158,7 @@ public class Background {
     public var currentDrawingTileNumber = 0
     private var recentlyLoadedDrawing: SKSpriteNode!
     
-    private func addDrawingToTileRowIfNeeded(#tileRow: SKNode, number: Int) {
+    private func addDrawingToTileRowIfNeeded(tileRow tileRow: SKNode, number: Int) {
         
         // Fix speed of new pictures appear for iPad
         var fixedNumber: Int = number
@@ -173,7 +173,7 @@ public class Background {
             recentlyLoadedDrawing = SKSpriteNode(texture: drawing.texture)
             recentlyLoadedDrawing.name = drawing.name
             insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
-            println("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
+            print("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
             recentlyLoadedDrawingTileNumber = number
             if drawing.color != nil {
                 MarkersColor.color = drawing.color!
@@ -206,7 +206,7 @@ public class Background {
     private func removeTileRowIfNeeded() {
         if let firstRow = tileRows.first {
             if firstRow.position.y <= tileMinY {
-                println("Background: remove first tile row")
+                print("Background: remove first tile row")
                 tileRows.removeAtIndex(0)
                 firstRow.removeFromParent()
             }
@@ -266,7 +266,7 @@ public class Background {
                 backgorundRow.removeFromParent()
             }
         }
-        println("Background deinit")
+        print("Background deinit")
     }
 }
 
@@ -277,8 +277,8 @@ extension Background {
         var position = CGPoint(x: 0, y: tileMinY)
         let parent = tileRows.last!.parent!
         
-        do {
-            let tilerow = originalTilerow.copy() as SKNode
+        repeat {
+            let tilerow = originalTilerow.copy() as! SKNode
             tilerow.position = position
             parent.addChild(tilerow)
             tileRows.insert(tilerow, atIndex: 0)
@@ -291,10 +291,10 @@ extension Background {
         var removedCount = 0
         var needToCheckOneMoreTime = true
 
-        do {
+        repeat {
             if let firstRow = tileRows.first {
                 if firstRow.position.y <= tileMinY {
-                    println("Remove first tile row")
+                    print("Remove first tile row")
                     tileRows.removeAtIndex(0)
                     firstRow.removeFromParent()
                     
@@ -307,6 +307,6 @@ extension Background {
             }
         } while needToCheckOneMoreTime
         
-        println("Background: removed \(removedCount) first tilerows.")
+        print("Background: removed \(removedCount) first tilerows.")
     }
 }

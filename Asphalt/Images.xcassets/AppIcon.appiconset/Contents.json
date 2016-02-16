@@ -23,13 +23,13 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon@2x~iphone.png",
+      "filename" : "icon-120.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon@3x~iphone.png",
+      "filename" : "icon-180.png",
       "scale" : "3x"
     },
     {
@@ -55,13 +55,13 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "icon~ipad.png",
+      "filename" : "icon-76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "icon@2x~ipad.png",
+      "filename" : "icon-152.png",
       "scale" : "2x"
     }
   ],

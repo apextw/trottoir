@@ -35,7 +35,7 @@ class Markers {
     
     init(screenSize: CGSize, markersDelegate: MarkerActivationProtocol) {
         self.screenSize = screenSize
-        println("Screen size for markers: width: \(screenSize.width) height: \(screenSize.height)")
+        print("Screen size for markers: width: \(screenSize.width) height: \(screenSize.height)")
         // Normally, maxY should be 'screenSize.height * 0.5 - Marker.size.height * 0.5'
         // We set 0.3 to allow it appear a little bit earlier
         // We need it to spawn labels, that intersect the lower bound of marker
@@ -142,7 +142,7 @@ class Markers {
     private func removeMarkerIfNeeded() {
         if let firstMarker = markers.first {
             if firstMarker.position.y < minY {
-                println("Remove marker at X: \(firstMarker.position.x) Y: \(firstMarker.position.y))")
+                print("Remove marker at X: \(firstMarker.position.x) Y: \(firstMarker.position.y))")
                 markers.removeAtIndex(0)
                 firstMarker.removeFromParent()
                 firstMarker.doubledMarker = nil
@@ -156,7 +156,7 @@ class Markers {
     private func removeLabelIfNeeded() {
         if let firstLabel = labels.first {
             if firstLabel.position.y < minY {
-                println("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
+                print("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
                 labels.removeAtIndex(0)
                 firstLabel.removeFromParent()
             }
@@ -168,14 +168,14 @@ class Markers {
             marker.removeFromParent()
             marker.delegate = nil
         }
-        println("Markers deinit")
+        print("Markers deinit")
     }
 }
 
 // MARK: Complexities of adding markers
 extension Markers {
     
-    private func addEasyMarker(#lastMarker: Marker) {
+    private func addEasyMarker(lastMarker lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -198,7 +198,7 @@ extension Markers {
         }
     }
     
-    private func addMediumMarker(#lastMarker: Marker) {
+    private func addMediumMarker(lastMarker lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -221,7 +221,7 @@ extension Markers {
         }
     }
     
-    private func addHardMarker(#lastMarker: Marker) {
+    private func addHardMarker(lastMarker lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -244,7 +244,7 @@ extension Markers {
         }
     }
     
-    private func addInsaneMarker(#lastMarker: Marker) {
+    private func addInsaneMarker(lastMarker lastMarker: Marker) {
         let layer = lastMarker.parent!
         if arc4random() % 2 == 0 {
             addDoubleMarkerTo(layer, withLastMarkerPosition: lastMarker.position)
@@ -268,7 +268,7 @@ extension Markers {
         
         showAchievementForMarkerIfNeeded(marker: marker)
         
-        println("New marker \(counter) at at X: \(position.x) Y: \(position.y)")
+        print("New marker \(counter) at at X: \(position.x) Y: \(position.y)")
         
         return marker
     }
@@ -306,7 +306,7 @@ extension Markers {
         showAchievementForMarkerIfNeeded(marker: leftMarker)
         showAchievementForMarkerIfNeeded(marker: rightMarker)
         
-        println("New double marker \(counter - 1)-\(counter) at at Y: \(position.y)")
+        print("New double marker \(counter - 1)-\(counter) at at Y: \(position.y)")
         return (leftMarker, rightMarker)
     }
     
@@ -344,7 +344,7 @@ extension Markers {
                 let rndValue = CGFloat(arc4random() % 100) / 100.0
                 if rndValue < chanceOfDoubleMarker {
                     // Insert double marker
-                    println("Zigzag queue: ");
+                    print("Zigzag queue: ");
                     addDoubleMarkerTo(node, toPosition: CGPoint(x: xCoordinate, y: yCoordinate))
                     yCoordinate += Marker.size.height + border
                     continue
@@ -357,7 +357,7 @@ extension Markers {
             
             showAchievementForMarkerIfNeeded(marker: marker)
             
-            println("Zigzag queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
+            print("Zigzag queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
             
             xCoordinate += xShift
             if abs(xCoordinate) > maxX {
@@ -385,7 +385,7 @@ extension Markers {
             
             showAchievementForMarkerIfNeeded(marker: marker)
             
-            println("Random queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
+            print("Random queue: New marker \(counter) at at X: \(xCoordinate) Y: \(marker.position.y)")
         }
     }
 }

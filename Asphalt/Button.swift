@@ -30,7 +30,7 @@ class Button: SKLabelNode {
         enabled = true
     }
     
-    required override init(fontNamed fontName: String!) {
+    required override init(fontNamed fontName: String?) {
         super.init(fontNamed: fontName)
         enabled = true
     }
@@ -47,14 +47,14 @@ class Button: SKLabelNode {
         }
     }
     
-    override internal func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first! 
         let touchPoint = touch.locationInNode(self)
         delegate?.didTouchDownButton(self, position: touchPoint)
 //        setSelected(true)
     }
     
-    override internal func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+//    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
 //        let touch = touches.anyObject() as UITouch
 //        let touchPoint = touch.locationInNode(self.parent)
 //        if CGRectContainsPoint(self.frame, touchPoint) {
@@ -62,11 +62,11 @@ class Button: SKLabelNode {
 //        } else {
 //            setSelected(false)
 //        }
-    }
-    
-    override internal func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let touchPoint = touch.locationInNode(self.parent)
+//    }
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first! 
+        let touchPoint = touch.locationInNode(self.parent!)
 //        setSelected(false)
         if delegate != nil && CGRectContainsPoint(self.frame, touchPoint) {
             delegate!.didTouchUpInsideButton(self, position: touchPoint)

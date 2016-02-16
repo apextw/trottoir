@@ -66,14 +66,14 @@ class GameManager: MarkerActivationProtocol {
     }
     
     private func gameOver() {
-        println("Game over")
+        print("Game over")
         if delegate != nil {
             delegate.gameOver()
         }
     }
     
     deinit {
-        println("Game Manager deinit")
+        print("Game Manager deinit")
     }
 
 }

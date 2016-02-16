@@ -341,7 +341,7 @@ public struct Results {
             NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "todayBestResultDate")
         }
         get {
-            let resultDate: NSDate! = NSUserDefaults.standardUserDefaults().objectForKey("todayBestResultDate") as NSDate!
+            let resultDate: NSDate! = NSUserDefaults.standardUserDefaults().objectForKey("todayBestResultDate") as! NSDate!
             if resultDate == nil {
                 return 0
             }

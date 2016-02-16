@@ -17,7 +17,7 @@ extension Markers {
         case alltime
     }
     
-    internal func showAchievementForMarkerIfNeeded(#marker: Marker) -> SKNode? {
+    internal func showAchievementForMarkerIfNeeded(marker marker: Marker) -> SKNode? {
         let number = marker.number
         
         var label : SKNode!
@@ -112,7 +112,7 @@ extension Markers {
         layer.addChild(label)
         
         labels.append(label)
-        println("Add score label")
+        print("Add score label")
         return label
     }
     
@@ -127,7 +127,7 @@ extension Markers {
     private func labelWidth(label: SKNode) -> CGFloat {
         var maxWidth: CGFloat = 0
         for child in label.children {
-            let node = child as SKNode
+            let node = child 
             if node.frame.size.width > maxWidth {
                 maxWidth = node.frame.size.width
             }
@@ -146,7 +146,7 @@ extension Markers {
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = color
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("My all time best 2 row", comment: "best")
         secondRow.verticalAlignmentMode = .Top
         
@@ -166,10 +166,10 @@ extension Markers {
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = color
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("My today best 2 row", comment: "today's")
         
-        let thirdRow = labelNode.copy() as SKLabelNode
+        let thirdRow = labelNode.copy() as! SKLabelNode
         thirdRow.text = NSLocalizedString("My today best 3 row", comment: "best")
         
         secondRow.position = CGPoint(x: 0, y: 0)
@@ -195,7 +195,7 @@ extension Markers {
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = color
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("My previous result 2 row", comment: "result")
         secondRow.verticalAlignmentMode = .Top
         
@@ -210,12 +210,12 @@ extension Markers {
     
     private func friendsBestLabelWithName(name: String, scope: Scope) -> SKNode {
         let labelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
-        labelNode.text = NSLocalizedString("My friend's nick-name", comment: "Friend's")
-        labelNode.text = labelNode.text.stringByReplacingOccurrencesOfString("%player%", withString: name)
+        let label = NSLocalizedString("My friend's nick-name", comment: "Friend's")
+        labelNode.text = label.stringByReplacingOccurrencesOfString("%player%", withString: name)
         labelNode.verticalAlignmentMode = .Bottom
         labelNode.horizontalAlignmentMode = .Center
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         switch scope {
         case .today:
             let color = SKColor.whiteColor()
@@ -253,10 +253,10 @@ extension Markers {
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = color
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("The World Record of all time 2 row", comment: "Record by")
         
-        let thirdRow = labelNode.copy() as SKLabelNode
+        let thirdRow = labelNode.copy() as! SKLabelNode
         thirdRow.text = name
         
         secondRow.position = CGPoint(x: 0, y: 0)
@@ -270,27 +270,25 @@ extension Markers {
         node.addChild(secondRow)
         node.addChild(thirdRow)
 
-        if let cupTexture = SKTextureAtlas(named: "Drawings").textureNamed("the-world-cup") {
-            let cupNode = SKSpriteNode(texture: cupTexture)
-            node.addChild(cupNode)
-        }
+        let atlas = SKTextureAtlas(named: "Drawings")
+        let cupTexture = atlas.textureNamed("the-world-cup")
+        let cupNode = SKSpriteNode(texture: cupTexture)
+        node.addChild(cupNode)
         
         return node
     }
     
     private func thisWeekRecordLabelWithName(name: String) -> SKNode {
-        let color = SKColor(red: 1, green: 1, blue: 0.6, alpha: 1)
-
         let labelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
         labelNode.text = NSLocalizedString("The World Record of the week 1 row", comment: "this week")
         labelNode.verticalAlignmentMode = .Center
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = SKColor(red: 0.973, green: 0.97, blue: 0.775, alpha: 1)
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("The World Record of the week 2 row", comment: "best by")
         
-        let thirdRow = labelNode.copy() as SKLabelNode
+        let thirdRow = labelNode.copy() as! SKLabelNode
         thirdRow.text = name
         
         secondRow.position = CGPoint(x: 0, y: 0)
@@ -308,18 +306,16 @@ extension Markers {
     }
 
     private func todayRecordLabelWithName(name: String) -> SKNode {
-        let color = SKColor(red: 1, green: 1, blue: 0.6, alpha: 1)
-
         let labelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
         labelNode.text = NSLocalizedString("The World Record of today 1 row", comment: "today's")
         labelNode.verticalAlignmentMode = .Center
         labelNode.horizontalAlignmentMode = .Center
         labelNode.fontColor = SKColor(red: 0.973, green: 0.97, blue: 0.775, alpha: 1)
         
-        let secondRow = labelNode.copy() as SKLabelNode
+        let secondRow = labelNode.copy() as! SKLabelNode
         secondRow.text = NSLocalizedString("The World Record of today 2 row", comment: "best by")
         
-        let thirdRow = labelNode.copy() as SKLabelNode
+        let thirdRow = labelNode.copy() as! SKLabelNode
         thirdRow.text = name
         
         secondRow.position = CGPoint(x: 0, y: 0)

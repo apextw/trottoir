@@ -147,11 +147,10 @@ class MainMenuScene: SKScene {
         rateGameButton.text = NSLocalizedString("Please, rate us", comment: "Please, rate us")
         rateGameButton.fontSize = 32 * DisplayHelper.FontScale
 
-        if let starsTexture = SKTextureAtlas(named: "Drawings").textureNamed("rating-stars") {
-            rateGameStars = SKSpriteNode(texture: starsTexture)
-            rateGameStars.anchorPoint = CGPoint(x: 0.5, y: 0)
-            uiLayer.addChild(rateGameStars)
-        }
+        let starsTexture = SKTextureAtlas(named: "Drawings").textureNamed("rating-stars")
+        rateGameStars = SKSpriteNode(texture: starsTexture)
+        rateGameStars.anchorPoint = CGPoint(x: 0.5, y: 0)
+        uiLayer.addChild(rateGameStars)
 
         updateRateGameButtonPosition()
         rateGameButton.delegate = self
@@ -226,7 +225,7 @@ class MainMenuScene: SKScene {
         gameOver1.text = NSLocalizedString("Game over 1'st row", comment: "Game")
         gameOver1.fontSize = 36 * DisplayHelper.FontScale
         
-        let gameOver2 = gameOver1.copy() as SKLabelNode
+        let gameOver2 = gameOver1.copy() as! SKLabelNode
         gameOver2.text = NSLocalizedString("Game over 2'nd row", comment: "over")
         gameOver2.horizontalAlignmentMode = .Left
         gameOver2.fontSize = 32 * DisplayHelper.FontScale
@@ -280,7 +279,7 @@ class MainMenuScene: SKScene {
             resultLabel1.zRotation = 0.06
             resultLabel1.verticalAlignmentMode = .Bottom
             
-            let resultLabel2: SKLabelNode = resultLabel1.copy() as SKLabelNode
+            let resultLabel2: SKLabelNode = resultLabel1.copy() as! SKLabelNode
             resultLabel2.text = result2
             resultLabel2.verticalAlignmentMode = .Top
             
@@ -294,7 +293,7 @@ class MainMenuScene: SKScene {
         if drawing != nil {
             node.position = CGPoint(x: -self.size.width * 0.2, y: 0)
         } else {
-            node.position = CGPoint.zeroPoint
+            node.position = CGPoint.zero
         }
         node.zPosition = 1
         uiLayer.addChild(node)
@@ -358,7 +357,7 @@ class MainMenuScene: SKScene {
     
     //MARK: Fingerprints
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch: AnyObject in touches {
             ++tapsCounter
             
@@ -398,7 +397,7 @@ class MainMenuScene: SKScene {
     }
     
     deinit {
-        println("Menu Scene deinit")
+        print("Menu Scene deinit")
     }
 }
 
@@ -416,7 +415,7 @@ extension MainMenuScene: ButtonProtocol {
         } else if sender === startButton {
             startButtonPressed()
         } else if sender === gameCenterButton {
-            println("Open Game Center")
+            print("Open Game Center")
             GameCenterManager.sharedInstance.presentGameCenterViewController()
         } else if let senderName = sender.name {
             if senderName == "Push Out button" {
@@ -427,7 +426,7 @@ extension MainMenuScene: ButtonProtocol {
                 }
             }
         } else if sender == rateGameButton {
-            println("Rate game pressed")
+            print("Rate game pressed")
             rateGameButton.text = NSLocalizedString("Thank you for rating us", comment: "Thank you ^^")
             rateGameButton.delegate = nil
             rateGameButton.enabled = false
