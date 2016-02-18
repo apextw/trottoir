@@ -5,6 +5,25 @@ Trottoir. Bright iOS game written in Swift using SpriteKit
 
 [Official Page](http://pushout.info/trottoir)
 
+## Setup
+
+This project uses [CocoaPods](http://cocoapods.org). To install CocoaPods:
+
+```
+sudo gem install cocoapods
+pod setup
+```
+
+After cloning the project you need to install pods:
+```
+pod install
+```
+
+Make sure to always open the Xcode *workspace* instead of the project file when building your project:
+```
+open Trottoir.xcworkspace
+```
+
 ## License
 
 [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
