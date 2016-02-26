@@ -130,25 +130,31 @@ public class Background {
     private var tilerowsCount = 0
     
     private func addTileRowIfNeeded() {
-        if let lastRow = tileRows.last {
-            if lastRow.position.y <= tileMaxY {
-                if let rowCopy = originalTilerow.copy() as? SKNode {
-                    var position = lastRow.position
-                    position.y += originalTile.size.height
-                    rowCopy.position = position
-                    if rowCopy.parent != nil {
-                        rowCopy.removeFromParent()
-                    }
-                    
-                    ++tilerowsCount
-                    addDrawingToTileRowIfNeeded(tileRow: rowCopy, number: tilerowsCount)
-                    
-                    lastRow.parent!.addChild(rowCopy)
-                    tileRows.append(rowCopy)
-                    print("New tile row at X: \(position.x) Y: \(position.y)")
-                }
-            }
+        guard let lastRow = tileRows.last else {
+            return
         }
+        
+        if lastRow.position.y > tileMaxY {
+            return
+        }
+        
+        guard let rowCopy = originalTilerow.copy() as? SKNode else {
+            return
+        }
+        
+        var position = lastRow.position
+        position.y += originalTile.size.height
+        rowCopy.position = position
+        if rowCopy.parent != nil {
+            rowCopy.removeFromParent()
+        }
+        
+        ++tilerowsCount
+        addDrawingToTileRowIfNeeded(tileRow: rowCopy, number: tilerowsCount)
+        
+        lastRow.parent!.addChild(rowCopy)
+        tileRows.append(rowCopy)
+        print("New tile row at X: \(position.x) Y: \(position.y)")
     }
     
     private var picturesAttributes: NSArray!
@@ -159,25 +165,27 @@ public class Background {
     private var recentlyLoadedDrawing: SKSpriteNode!
     
     private func addDrawingToTileRowIfNeeded(tileRow tileRow: SKNode, number: Int) {
-        
         // Fix speed of new pictures appear for iPad
         var fixedNumber: Int = number
         if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
             fixedNumber = Int(Float(number) / 1.3)
         }
+        
+        guard let drawing = Drawings.drawingForTileNumber(fixedNumber) else {
+            return
+        }
 
-        if let drawing = Drawings.drawingForTileNumber(fixedNumber) {
-            if recentlyLoadedDrawing != nil && drawing.name == recentlyLoadedDrawing.name {
-                return
-            }
-            recentlyLoadedDrawing = SKSpriteNode(texture: drawing.texture)
-            recentlyLoadedDrawing.name = drawing.name
-            insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
-            print("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
-            recentlyLoadedDrawingTileNumber = number
-            if drawing.color != nil {
-                MarkersColor.color = drawing.color!
-            }
+        if recentlyLoadedDrawing != nil && drawing.name == recentlyLoadedDrawing.name {
+            return
+        }
+        
+        recentlyLoadedDrawing = SKSpriteNode(texture: drawing.texture)
+        recentlyLoadedDrawing.name = drawing.name
+        insertDrawing(recentlyLoadedDrawing, toNode: tileRow, anchorX: drawing.anchorX)
+        print("Insert \(drawing.name) into tile number \(number) with anchorX \(drawing.anchorX)")
+        recentlyLoadedDrawingTileNumber = number
+        if drawing.color != nil {
+            MarkersColor.color = drawing.color!
         }
     }
     
@@ -204,12 +212,15 @@ public class Background {
     }
     
     private func removeTileRowIfNeeded() {
-        if let firstRow = tileRows.first {
-            if firstRow.position.y <= tileMinY {
-                print("Background: remove first tile row")
-                tileRows.removeAtIndex(0)
-                firstRow.removeFromParent()
-            }
+        
+        guard let firstRow = tileRows.first else {
+            return
+        }
+        
+        if firstRow.position.y <= tileMinY {
+            print("Background: remove first tile row")
+            tileRows.removeAtIndex(0)
+            firstRow.removeFromParent()
         }
     }
     
@@ -226,14 +237,10 @@ public class Background {
         let sceneAnchor = scene.anchorPoint
         let isOnScreen = drawingBottomY < sceneSize.height * (1 - sceneAnchor.y)
         
-//        if positionInScene.y < scene._bounds.size.height * (1 - scene.anchorPoint.y) {
         if isOnScreen {
             currentDrawing = recentlyLoadedDrawing
             currentDrawingTileNumber = recentlyLoadedDrawingTileNumber
         }
-        
-//        if let scene = recentlyLoadedDrawing.scene {
-//        }
     }
     
     func insertNodeToTheLastRow(node: SKNode) -> SKNode {
@@ -289,23 +296,22 @@ extension Background {
     func removeInvisibleRows() {
         
         var removedCount = 0
-        var needToCheckOneMoreTime = true
 
         repeat {
-            if let firstRow = tileRows.first {
-                if firstRow.position.y <= tileMinY {
-                    print("Remove first tile row")
-                    tileRows.removeAtIndex(0)
-                    firstRow.removeFromParent()
-                    
-                    ++removedCount
-                } else {
-                    needToCheckOneMoreTime = false
-                }
-            } else {
-                needToCheckOneMoreTime = false
+            guard let firstRow = tileRows.first else {
+                break
             }
-        } while needToCheckOneMoreTime
+            
+            if firstRow.position.y <= tileMinY {
+                print("Remove first tile row")
+                tileRows.removeAtIndex(0)
+                firstRow.removeFromParent()
+                
+                ++removedCount
+            } else {
+                break
+            }
+        } while tileRows.count > 0
         
         print("Background: removed \(removedCount) first tilerows.")
     }

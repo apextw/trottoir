@@ -49,5 +49,4 @@ public class AppRater {
         return !NSUserDefaults.standardUserDefaults().boolForKey(key)
     }
 
-    
 }

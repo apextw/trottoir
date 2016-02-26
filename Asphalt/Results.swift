@@ -54,40 +54,8 @@ public struct Results {
     }
     
     private static func lastResultDescriptionForResult(score: Int) -> (firstRow: String, secondRow: String) {
-//        return ("many-many-many symbols", "");
+//        return degugResult ();
         
-//        return localizedResultDescriptionFor("Less than ten score", score: score)
-//        return localizedResultDescriptionFor("Your best for today!")
-//        return localizedResultDescriptionFor("More score to beat your today's best", score: 43)
-//        return localizedResultDescriptionFor("More score to beat your highscore", score: 43)
-        // World Records
-//        return localizedResultDescriptionFor("The World record for today!")
-//        return localizedResultDescriptionFor("The World record of the week!")
-//        return localizedResultDescriptionFor("The World Record of all time!")
-//        return localizedResultDescriptionFor("More score to beat the World record for today", score: 43)
-//        return localizedResultDescriptionFor("More score to beat the World record of the week", score: 43)
-//        return localizedResultDescriptionFor("More score to beat the World record of all time", score: 43)
-        // Friends
-//        return localizedResultDescriptionFor("Higher than your friend's all time record", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("More score to beat your friend's all time record", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("Higher than your friend's week record", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("More score to beat your friend's week record", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("Higher than your friend's today record", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("More score to beat your friend's today record", score: 43, player: "Peter.Shardiko")
-
-//        return localizedResultDescriptionFor("Higher than your friend #1", player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("More score to beat your friend #1", score: 43, player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("Same as your friend #1", player: "Peter.Shardiko")
-//        return localizedResultDescriptionFor("Tell your friends about it")
-
-        // Compare to previous result
-//        return localizedResultDescriptionFor("Breakthrough!")
-//        return localizedResultDescriptionFor("Much better than previous!")
-//        return localizedResultDescriptionFor("Better than previous!")
-//        return localizedResultDescriptionFor("Slightly better than previous!")
-//        return localizedResultDescriptionFor("The same as before")
-//        return localizedResultDescriptionFor("More score to beat previous", score: 43)
-
         if score < 10 {
             return localizedResultDescriptionFor("Less than ten score", score: score)
         } else if score > Results.localBestResult {
@@ -120,8 +88,43 @@ public struct Results {
         
         let difference = localBestResult - score
         return localizedResultDescriptionFor("More score to beat your highscore", score: difference)
-
     }
+    
+//    static private func degugResult() -> (firstRow: String, secondRow: String) {
+        //        return ("many-many-many symbols", "");
+        
+        //        return localizedResultDescriptionFor("Less than ten score", score: score)
+        //        return localizedResultDescriptionFor("Your best for today!")
+        //        return localizedResultDescriptionFor("More score to beat your today's best", score: 43)
+        //        return localizedResultDescriptionFor("More score to beat your highscore", score: 43)
+        // World Records
+        //        return localizedResultDescriptionFor("The World record for today!")
+        //        return localizedResultDescriptionFor("The World record of the week!")
+        //        return localizedResultDescriptionFor("The World Record of all time!")
+        //        return localizedResultDescriptionFor("More score to beat the World record for today", score: 43)
+        //        return localizedResultDescriptionFor("More score to beat the World record of the week", score: 43)
+        //        return localizedResultDescriptionFor("More score to beat the World record of all time", score: 43)
+        // Friends
+        //        return localizedResultDescriptionFor("Higher than your friend's all time record", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("More score to beat your friend's all time record", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("Higher than your friend's week record", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("More score to beat your friend's week record", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("Higher than your friend's today record", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("More score to beat your friend's today record", score: 43, player: "Peter.Shardiko")
+        
+        //        return localizedResultDescriptionFor("Higher than your friend #1", player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("More score to beat your friend #1", score: 43, player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("Same as your friend #1", player: "Peter.Shardiko")
+        //        return localizedResultDescriptionFor("Tell your friends about it")
+        
+        // Compare to previous result
+        //        return localizedResultDescriptionFor("Breakthrough!")
+        //        return localizedResultDescriptionFor("Much better than previous!")
+        //        return localizedResultDescriptionFor("Better than previous!")
+        //        return localizedResultDescriptionFor("Slightly better than previous!")
+//                return localizedResultDescriptionFor("The same as before")
+        //        return localizedResultDescriptionFor("More score to beat previous", score: 43)
+//    }
     
     static private func localizedResultDescriptionFor(description: String, score: Int? = nil, player: String? = nil) -> (firstRow: String, secondRow: String) {
         if score == nil && player == nil {

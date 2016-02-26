@@ -51,40 +51,40 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     func fillScreenWithBackground() {
+        guard let backgroundLayer = self.childNodeWithName("BackgroundLayer") else {
+            return
+        }
         
-        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
-
-            if background != nil {
-                background.addTo(backgroundLayer)
-                return
-            }
-        
-            if let backgroundPart = backgroundLayer.childNodeWithName("BackgroundPart") as? SKSpriteNode {
-                background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
-                background.addTo(backgroundLayer)
-                return
-            }
-            
-            background = Background(screenSize: self.size)
+        if background != nil {
             background.addTo(backgroundLayer)
             return
         }
+    
+        if let backgroundPart = backgroundLayer.childNodeWithName("BackgroundPart") as? SKSpriteNode {
+            background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
+            background.addTo(backgroundLayer)
+            return
+        }
+        
+        background = Background(screenSize: self.size)
+        background.addTo(backgroundLayer)
     }
     
     func addMarkers() {
         let screenSize = CGSize(width: self.size.width / DisplayHelper.MarkerSizeMultiplier, height: self.size.height / DisplayHelper.MarkerSizeMultiplier)
         markers = Markers(screenSize: screenSize, markersDelegate: gameManager)
-        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
-            let markersLayer = SKNode()
-            markersLayer.setScale(DisplayHelper.MarkerSizeMultiplier)
-            markers.addTo(markersLayer)
-            backgroundLayer.addChild(markersLayer)
+        
+        guard let backgroundLayer = self.childNodeWithName("BackgroundLayer") else {
+            return
         }
+        
+        let markersLayer = SKNode()
+        markersLayer.setScale(DisplayHelper.MarkerSizeMultiplier)
+        markers.addTo(markersLayer)
+        backgroundLayer.addChild(markersLayer)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
         if GameManager.godMode {
             let enabled = !background.scrollingEnabled
             
@@ -98,21 +98,23 @@ class GameScene: SKScene, GameManagerProtocol {
             return
         }
         
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            let touchprint = Touchprint.touchprintWithTouchLocation(location)
-            touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
-            touchprint.position = location
-            if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
-                backgroundLayer.addChild(touchprint)
-            }
-
+        for touch: UITouch in touches {
+            addTouchprint(touch)
             gameOver()
+        }
+    }
+    
+    private func addTouchprint (touch: UITouch) {
+        let location = touch.locationInNode(self)
+        let touchprint = Touchprint.touchprintWithTouchLocation(location)
+        touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
+        touchprint.position = location
+        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
+            backgroundLayer.addChild(touchprint)
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
         if !isGameOver {
             background.update()
             markers.update()

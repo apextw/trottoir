@@ -103,16 +103,17 @@ class Markers {
     
     private func shift() {
         for marker in markers {
-            if marker.parent != nil {
-                let newPosition = CGPoint(x: marker.position.x, y: marker.position.y + scrollSpeed)
-                
-                // Check and fix color on first marker appear
-                if marker.position.y >= markerInvisibleMaxY && newPosition.y < markerInvisibleMaxY {
-                    marker.color = MarkersColor.color
-                }
-
-                marker.position = newPosition
+            if marker.parent == nil {
+                continue
             }
+            let newPosition = CGPoint(x: marker.position.x, y: marker.position.y + scrollSpeed)
+            
+            // Check and fix color on first marker appear
+            if marker.position.y >= markerInvisibleMaxY && newPosition.y < markerInvisibleMaxY {
+                marker.color = MarkersColor.color
+            }
+
+            marker.position = newPosition
         }
         for label in labels {
             if label.parent != nil {
@@ -122,44 +123,49 @@ class Markers {
     }
     
     private func addMarkerIfNeeded() {
-        if let lastMarker = markers.last {
-            if lastMarker.position.y <= maxY {
-                
-                switch counter {
-                case 0...50:
-                    addEasyMarker(lastMarker: lastMarker)
-                case 51...100:
-                    addMediumMarker(lastMarker: lastMarker)
-                case 101...250:
-                    addHardMarker(lastMarker: lastMarker)
-                default:
-                    addInsaneMarker(lastMarker: lastMarker)
-                }
-            }
+        guard let lastMarker = markers.last else {
+            return
+        }
+        
+        if lastMarker.position.y > maxY {
+            return
+        }
+            
+        switch counter {
+        case 0...50:
+            addEasyMarker(lastMarker: lastMarker)
+        case 51...100:
+            addMediumMarker(lastMarker: lastMarker)
+        case 101...250:
+            addHardMarker(lastMarker: lastMarker)
+        default:
+            addInsaneMarker(lastMarker: lastMarker)
         }
     }
     
     private func removeMarkerIfNeeded() {
-        if let firstMarker = markers.first {
-            if firstMarker.position.y < minY {
-                print("Remove marker at X: \(firstMarker.position.x) Y: \(firstMarker.position.y))")
-                markers.removeAtIndex(0)
-                firstMarker.removeFromParent()
-                firstMarker.doubledMarker = nil
-                if firstMarker.isActivated == false && markerDelegate != nil {
-                    markerDelegate.markerWillHideUnactivated(firstMarker)
-                }
+        guard let firstMarker = markers.first else {
+            return
+        }
+        if firstMarker.position.y < minY {
+            print("Remove marker at X: \(firstMarker.position.x) Y: \(firstMarker.position.y))")
+            markers.removeAtIndex(0)
+            firstMarker.removeFromParent()
+            firstMarker.doubledMarker = nil
+            if firstMarker.isActivated == false && markerDelegate != nil {
+                markerDelegate.markerWillHideUnactivated(firstMarker)
             }
         }
     }
     
     private func removeLabelIfNeeded() {
-        if let firstLabel = labels.first {
-            if firstLabel.position.y < minY {
-                print("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
-                labels.removeAtIndex(0)
-                firstLabel.removeFromParent()
-            }
+        guard let firstLabel = labels.first else {
+            return
+        }
+        if firstLabel.position.y < minY {
+            print("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
+            labels.removeAtIndex(0)
+            firstLabel.removeFromParent()
         }
     }
     

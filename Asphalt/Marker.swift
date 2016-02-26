@@ -15,9 +15,10 @@ protocol MarkerActivationProtocol {
 }
 
 struct SquareTexture {
-    static private let texture1 = SKTextureAtlas(named: "Asphalt").textureNamed("square-1")
-    static private let texture2 = SKTextureAtlas(named: "Asphalt").textureNamed("square-2")
-    static private let texture3 = SKTextureAtlas(named: "Asphalt").textureNamed("square-3")
+    static private let atlas = SKTextureAtlas(named: "Asphalt")
+    static private let texture1 = atlas.textureNamed("square-1")
+    static private let texture2 = atlas.textureNamed("square-2")
+    static private let texture3 = atlas.textureNamed("square-3")
     static private let textures = [texture1, texture2, texture3]
     
     static var texture: SKTexture {
@@ -37,7 +38,6 @@ class Marker : SKSpriteNode {
         marker.zPosition = 5
         marker.title = label
         marker.number = number
-//        marker.setScale(DisplayHelper.MarkerSizeMultiplier)
         
         return marker
     }
@@ -96,18 +96,22 @@ class Marker : SKSpriteNode {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         activateMarker()
-        for touch: AnyObject in touches {
-            let touchLocationInScene = touch.locationInNode(self.scene!)
-            let touchprint = Touchprint.touchprintWithTouchLocation(touchLocationInScene)
-            
-            let touchLocation = touch.locationInNode(self)
-            touchprint.position = touchLocation
-            touchprint.colorBlendFactor = self.colorBlendFactor
-            touchprint.color = self.color
-            touchprint.zPosition = -0.1
-            
-            self.addChild(touchprint)
+        for touch: UITouch in touches {
+            addTouchprint(touch)
         }
+    }
+    
+    private func addTouchprint(touch: UITouch) {
+        let touchLocationInScene = touch.locationInNode(self.scene!)
+        let touchprint = Touchprint.touchprintWithTouchLocation(touchLocationInScene)
+        
+        let touchLocation = touch.locationInNode(self)
+        touchprint.position = touchLocation
+        touchprint.colorBlendFactor = self.colorBlendFactor
+        touchprint.color = self.color
+        touchprint.zPosition = -0.1
+        
+        self.addChild(touchprint)
     }
     
     private func touchprintAngle() -> CGFloat {
@@ -149,6 +153,7 @@ class Marker : SKSpriteNode {
         guard let filter = CIFilter(name: "CIBumpDistortion") else {
             return
         }
+        
         filter.setDefaults()
         filter.setValue(50, forKey: "inputRadius")
         filter.setValue(1, forKey: "inputScale")
@@ -157,6 +162,7 @@ class Marker : SKSpriteNode {
         guard let externalFilter = CIFilter(name: "CISharpenLuminance") else {
             return
         }
+        
         externalFilter.setDefaults()
         externalFilter.setValue(10, forKey: "inputSharpness")
         externalEffectNode.filter = externalFilter

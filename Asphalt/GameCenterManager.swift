@@ -149,8 +149,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as! GKScore
+            if let score = scores?.first {
                 let result = Result(score: score)
                 result.saveToUserDefaultsWithKey("Global AllTime Best")
                 print("Game Center: Successfully received global alltime best. It is \(result.score) by \(result.name)")
@@ -197,8 +196,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as! GKScore
+            if let score = scores?.first {
                 let result = Result(score: score)
                 Results.globalTodayBestResult = result
                 print("Game Center: Successfully received global today best. It is \(result.score) by \(result.name)")

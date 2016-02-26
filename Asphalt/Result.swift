@@ -13,11 +13,6 @@ class Result : NSObject, NSCoding {
     var score: Int
     var name: String
     
-//    init(score: Int, name: String) {
-//        self.score = score
-//        self.name = name
-//    }
-    
     init(score: Int, name: String? = "") {
         self.score = score
         self.name = name!
@@ -50,7 +45,7 @@ class Result : NSObject, NSCoding {
 
     class func loadFromUserDefaultsForKey(key: String) -> Result {
         let score = NSUserDefaults.standardUserDefaults().integerForKey(key + " Score")
-        let name = NSUserDefaults.standardUserDefaults().objectForKey(key + " Name") as! String?
+        let name = NSUserDefaults.standardUserDefaults().stringForKey(key + " Name")
         
         return Result(score: score, name: name)
     }

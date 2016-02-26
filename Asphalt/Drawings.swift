@@ -24,27 +24,29 @@ struct Drawings {
             let pictureTileNumber = dictionary.objectForKey("Tile number") as! String
             
             let intValue = Int(pictureTileNumber)
-            if Int(number) == intValue {
-                let name = dictionary.objectForKey("Name") as! String
-                let anchorX = (dictionary.objectForKey("anchorX") as! NSString).floatValue
-                let texture = Drawings.drawingsAtlas.textureNamed(name)
-                
-                let red = dictionary.objectForKey("Red") as! NSNumber?
-                let green = dictionary.objectForKey("Green") as! NSNumber?
-                let blue = dictionary.objectForKey("Blue") as! NSNumber?
-                
-                if red != nil && green != nil && blue != nil {
-                    let redValue = CGFloat(red!.floatValue / 255)
-                    let greenValue = CGFloat(green!.floatValue / 255)
-                    let blueValue = CGFloat(blue!.floatValue / 255)
-                    
-                    let color = SKColor(red: redValue, green: greenValue, blue: blueValue, alpha: 1)
-                    
-                    return Drawing(name: name, anchorX: anchorX, tileNumber: number, texture: texture, color: color)
-                }
-
-                return Drawing(name: name, anchorX: anchorX, tileNumber: number, texture: texture, color: nil)
+            if Int(number) != intValue {
+                continue
             }
+            
+            let name = dictionary.objectForKey("Name") as! String
+            let anchorX = (dictionary.objectForKey("anchorX") as! NSString).floatValue
+            let texture = Drawings.drawingsAtlas.textureNamed(name)
+            
+            let red = dictionary.objectForKey("Red") as! NSNumber?
+            let green = dictionary.objectForKey("Green") as! NSNumber?
+            let blue = dictionary.objectForKey("Blue") as! NSNumber?
+            
+            if red != nil && green != nil && blue != nil {
+                let redValue = CGFloat(red!.floatValue / 255)
+                let greenValue = CGFloat(green!.floatValue / 255)
+                let blueValue = CGFloat(blue!.floatValue / 255)
+                
+                let color = SKColor(red: redValue, green: greenValue, blue: blueValue, alpha: 1)
+                
+                return Drawing(name: name, anchorX: anchorX, tileNumber: number, texture: texture, color: color)
+            }
+
+            return Drawing(name: name, anchorX: anchorX, tileNumber: number, texture: texture, color: nil)
         }
         return nil
     }
