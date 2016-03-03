@@ -67,7 +67,9 @@ struct Drawings {
         let currentMenuDrawingNumber = NSUserDefaults.standardUserDefaults().integerForKey("Current Drawing Number")
         if tileNumber > currentMenuDrawingNumber {
             NSUserDefaults.standardUserDefaults().setInteger(tileNumber, forKey: "Current Drawing Number")
-            let newDrawingName = Drawings.pictureNameForTileNumber(tileNumber)!
+            guard let newDrawingName = Drawings.pictureNameForTileNumber(tileNumber) else {
+                return false
+            }
             NSUserDefaults.standardUserDefaults().setObject(newDrawingName, forKey: "Current Menu Picture")
             return true
         }

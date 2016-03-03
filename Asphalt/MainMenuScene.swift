@@ -381,7 +381,7 @@ class MainMenuScene: SKScene {
         if fingerprints.count == maxFingerprintsCount {
             let firstTouch = fingerprints.first!
             firstTouch.removeFromParent()
-            fingerprints.removeAtIndex(0)
+            fingerprints.removeFirst()
         }
         
         uiLayer.addChild(touchprint)

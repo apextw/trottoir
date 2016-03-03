@@ -172,8 +172,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
                 return
             }
             
-            if let firstElement: AnyObject = scores?.first {
-                let score = firstElement as! GKScore
+            if let score = scores?.first {
                 let result = Result(score: score)
                 Results.globalWeekBestResult = result
                 print("Game Center: Successfully received global week best. It is \(result.score) by \(result.name)")

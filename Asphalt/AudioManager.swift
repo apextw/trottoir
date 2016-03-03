@@ -49,26 +49,10 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
     }
     
     private func configureAudioSession() {
-        
-        var success = false
-        
-        if audioSession.otherAudioPlaying {
-            do {
-                try audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
-                success = true
-            } catch _ {
-                success = false
-            }
-        } else {
-            do {
-                try audioSession.setCategory(AVAudioSessionCategoryAmbient)
-                success = true
-            } catch _ {
-                success = false
-            }
-        }
-        
-        if !success {
+        let category = audioSession.otherAudioPlaying ? AVAudioSessionCategorySoloAmbient : AVAudioSessionCategoryAmbient
+        do {
+            try audioSession.setCategory(category)
+        } catch _ {
             print("Error setting category!")
         }
     }

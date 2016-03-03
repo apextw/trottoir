@@ -149,7 +149,7 @@ class Markers {
         }
         if firstMarker.position.y < minY {
             print("Remove marker at X: \(firstMarker.position.x) Y: \(firstMarker.position.y))")
-            markers.removeAtIndex(0)
+            markers.removeFirst()
             firstMarker.removeFromParent()
             firstMarker.doubledMarker = nil
             if firstMarker.isActivated == false && markerDelegate != nil {
@@ -164,7 +164,7 @@ class Markers {
         }
         if firstLabel.position.y < minY {
             print("Remove label at X: \(firstLabel.position.x) Y: \(firstLabel.position.y))")
-            labels.removeAtIndex(0)
+            labels.removeFirst()
             firstLabel.removeFromParent()
         }
     }

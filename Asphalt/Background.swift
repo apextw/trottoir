@@ -219,7 +219,7 @@ public class Background {
         
         if firstRow.position.y <= tileMinY {
             print("Background: remove first tile row")
-            tileRows.removeAtIndex(0)
+            tileRows.removeFirst()
             firstRow.removeFromParent()
         }
     }
@@ -304,7 +304,7 @@ extension Background {
             
             if firstRow.position.y <= tileMinY {
                 print("Remove first tile row")
-                tileRows.removeAtIndex(0)
+                tileRows.removeFirst()
                 firstRow.removeFromParent()
                 
                 ++removedCount
