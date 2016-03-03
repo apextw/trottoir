@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9D1BD81C-AF95-457A-8BFF-1C1BC9288745</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Asphalt</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BEE0A8C09EECA0ABDB17C84AF8B3C1B0D8E21068</key>
+		<string>https://github.com/win2l/Asphalt.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Asphalt.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BEE0A8C09EECA0ABDB17C84AF8B3C1B0D8E21068</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/win2l/Asphalt.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BEE0A8C09EECA0ABDB17C84AF8B3C1B0D8E21068</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BEE0A8C09EECA0ABDB17C84AF8B3C1B0D8E21068</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Asphalt</string>
+		</dict>
+	</array>
+</dict>
+</plist>
