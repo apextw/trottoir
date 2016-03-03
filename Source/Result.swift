@@ -15,12 +15,7 @@ class Result : NSObject, NSCoding {
     
     init(score: Int, name: String? = "") {
         self.score = score
-        self.name = name!
-//        if name == nil {
-//            self.name = "";
-//        } else {
-//            self.name = name!
-//        }
+        self.name = name != nil ? name! : ""
     }
     
     init(score: GKScore) {
