@@ -9,7 +9,7 @@ extension MainMenuScene {
         }
         
         if swipeUpRecognizer == nil {
-            swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
+            swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MainMenuScene.performShiftDown(_:)))
             swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         }
         self.view!.addGestureRecognizer(swipeUpRecognizer)
@@ -21,7 +21,7 @@ extension MainMenuScene {
         }
         
         if swipeDownRecognizer == nil {
-            swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftUp:")
+            swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MainMenuScene.performShiftUp(_:)))
             swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         }
         self.view!.addGestureRecognizer(swipeDownRecognizer)

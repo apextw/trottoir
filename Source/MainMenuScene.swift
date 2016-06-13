@@ -359,7 +359,7 @@ class MainMenuScene: SKScene {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch: AnyObject in touches {
-            ++tapsCounter
+            tapsCounter += 1
             
             let location = touch.locationInNode(uiLayer)
             addFingerprintToLocation(location)

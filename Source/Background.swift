@@ -68,7 +68,7 @@ public class Background {
             bgRightCopy.position = rightPosition;
             node.addChild(bgRightCopy)
             
-            --partsToAdd
+            partsToAdd -= 1
         }
         
         node.addChild(background)
@@ -149,7 +149,7 @@ public class Background {
             rowCopy.removeFromParent()
         }
         
-        ++tilerowsCount
+        tilerowsCount += 1
         addDrawingToTileRowIfNeeded(tileRow: rowCopy, number: tilerowsCount)
         
         lastRow.parent!.addChild(rowCopy)
@@ -189,22 +189,12 @@ public class Background {
         }
     }
     
-    private func insertDrawing(drawing: SKSpriteNode, toNode node: SKNode, var anchorX: Float?) {
-        if anchorX == nil {
-            anchorX = -1
-        }
-        
-//        if anchorX < -1 {
-//            anchorX = -1
-//            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
-//        } else if anchorX > 1 {
-//            anchorX = 1
-//            println("Warning: Wrong drawing anchorX value. Expected a value in -1 ... 1")
-//        }
-        
+    private func insertDrawing(drawing: SKSpriteNode, toNode node: SKNode, anchorX: Float?) {
+        let anchor = anchorX == nil ? -1 : anchorX!
+                
         drawing.setScale(DisplayHelper.DrawingsSizeMultiplier)
         
-        let x = (screenSize.width * 0.5 - drawing.size.width / 2 - DisplayHelper.DrawingsBorderShift) * CGFloat(anchorX!)
+        let x = (screenSize.width * 0.5 - drawing.size.width / 2 - DisplayHelper.DrawingsBorderShift) * CGFloat(anchor)
         let y = -originalTile.size.height * 0.5// + drawing.size.height * 0.5
         drawing.position = CGPoint(x: x, y: y);
         drawing.zPosition = 1
@@ -307,7 +297,7 @@ extension Background {
                 tileRows.removeFirst()
                 firstRow.removeFromParent()
                 
-                ++removedCount
+                removedCount += 1
             } else {
                 break
             }

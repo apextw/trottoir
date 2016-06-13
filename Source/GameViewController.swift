@@ -50,6 +50,7 @@ class GameViewController: UIViewController {
         GameCenterManager.sharedInstance.gameViewController = self
         let skView = self.view as! SKView
         skView.ignoresSiblingOrder = true
+        skView.multipleTouchEnabled = true
         Touchprint.screenSize = skView.frame.size
 
         // Enable Ad

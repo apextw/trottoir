@@ -38,18 +38,18 @@ class GameManager: MarkerActivationProtocol {
         let number = sender.number
         
         if number - 1 == score && !awaitingForDoubleMarker {
-            ++score
+            score += 1
             return
         }
         
         if number - 2 == score && sender.doubledMarker != nil && !awaitingForDoubleMarker {
-            ++score
+            score += 1
             awaitingForDoubleMarker = true
             return
         }
         
         if awaitingForDoubleMarker && number == score {
-            ++score
+            score += 1
             awaitingForDoubleMarker = false
             return
         }

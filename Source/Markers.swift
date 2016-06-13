@@ -280,7 +280,7 @@ extension Markers {
     }
     
     private func addSingleMarkerTo(node: SKNode) -> Marker {
-        ++counter
+        counter += 1
 //        updateColor()
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
