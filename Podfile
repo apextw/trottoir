@@ -1,7 +1,10 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '8.4'
+platform :ios, '9.0'
 
-pod 'Google-Mobile-Ads-SDK'
-# pod 'AdMobMediationAdapterIAd'
-pod 'Flurry-iOS-SDK'
+target 'Trottoir' do
+
+    pod 'Google-Mobile-Ads-SDK'
+    pod 'Flurry-iOS-SDK'
+
+end
