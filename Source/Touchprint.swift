@@ -11,8 +11,8 @@ import SpriteKit
 
 struct Touchprint {
     static var screenSize: CGSize = CGSize(width: 0, height: 0)
-    static private let texture: SKTexture = SKTexture(imageNamed: "touchprint")
-    static func touchprintWithTouchLocation(location: CGPoint) -> SKSpriteNode {
+    static fileprivate let texture: SKTexture = SKTexture(imageNamed: "touchprint")
+    static func touchprintWithTouchLocation(_ location: CGPoint) -> SKSpriteNode {
         let touchprint = SKSpriteNode(texture: texture)
         touchprint.position = location
         touchprint.zRotation = angleForX(location.x);
@@ -20,9 +20,9 @@ struct Touchprint {
         return touchprint
     }
     
-    static private let maxAngle: CGFloat = 0.8
+    static fileprivate let maxAngle: CGFloat = 0.8
     
-    static private func angleForX(x: CGFloat) -> CGFloat {
+    static fileprivate func angleForX(_ x: CGFloat) -> CGFloat {
         var positionMultiplier = x / (screenSize.width * 0.5)
         
         if positionMultiplier > 1 {

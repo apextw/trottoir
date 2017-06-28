@@ -9,17 +9,17 @@
 import SpriteKit
 
 protocol MarkerActivationProtocol {
-    func markerDidActivated(sender: Marker)
-    func markerWillHideUnactivated(sender: Marker)
-    func markedDidActivatedSecondTime(sender: Marker)
+    func markerDidActivated(_ sender: Marker)
+    func markerWillHideUnactivated(_ sender: Marker)
+    func markedDidActivatedSecondTime(_ sender: Marker)
 }
 
 struct SquareTexture {
-    static private let atlas = SKTextureAtlas(named: "Asphalt")
-    static private let texture1 = atlas.textureNamed("square-1")
-    static private let texture2 = atlas.textureNamed("square-2")
-    static private let texture3 = atlas.textureNamed("square-3")
-    static private let textures = [texture1, texture2, texture3]
+    static fileprivate let atlas = SKTextureAtlas(named: "Asphalt")
+    static fileprivate let texture1 = atlas.textureNamed("square-1")
+    static fileprivate let texture2 = atlas.textureNamed("square-2")
+    static fileprivate let texture3 = atlas.textureNamed("square-3")
+    static fileprivate let textures = [texture1, texture2, texture3]
     
     static var texture: SKTexture {
         get {
@@ -31,9 +31,9 @@ struct SquareTexture {
 
 class Marker : SKSpriteNode {
     
-    class internal func markerWithLabel(label: String, number: Int) -> Marker {
+    class internal func markerWithLabel(_ label: String, number: Int) -> Marker {
         let marker = Marker(texture: SquareTexture.texture, size: Marker.size)
-        marker.userInteractionEnabled = true
+        marker.isUserInteractionEnabled = true
         marker.name = "marker"
         marker.zPosition = 5
         marker.title = label
@@ -67,7 +67,7 @@ class Marker : SKSpriteNode {
     var delegate: MarkerActivationProtocol!
     var number: Int = 0
     
-    private var label: SKLabelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
+    fileprivate var label: SKLabelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
     
     var title: String {
         get {
@@ -76,9 +76,9 @@ class Marker : SKSpriteNode {
         set (newTitle) {
             label.text = newTitle
             if label.parent == nil {
-                label.horizontalAlignmentMode = .Center
-                label.verticalAlignmentMode = .Center
-                label.fontColor = SKColor.whiteColor()
+                label.horizontalAlignmentMode = .center
+                label.verticalAlignmentMode = .center
+                label.fontColor = SKColor.white
                 label.zPosition = 1
                 self.addChild(label)
             }
@@ -94,18 +94,18 @@ class Marker : SKSpriteNode {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         activateMarker()
         for touch: UITouch in touches {
             addTouchprint(touch)
         }
     }
     
-    private func addTouchprint(touch: UITouch) {
-        let touchLocationInScene = touch.locationInNode(self.scene!)
+    fileprivate func addTouchprint(_ touch: UITouch) {
+        let touchLocationInScene = touch.location(in: self.scene!)
         let touchprint = Touchprint.touchprintWithTouchLocation(touchLocationInScene)
         
-        let touchLocation = touch.locationInNode(self)
+        let touchLocation = touch.location(in: self)
         touchprint.position = touchLocation
         touchprint.colorBlendFactor = self.colorBlendFactor
         touchprint.color = self.color
@@ -114,8 +114,8 @@ class Marker : SKSpriteNode {
         self.addChild(touchprint)
     }
     
-    private func touchprintAngle() -> CGFloat {
-        let doubleValue = (Double((arc4random() % 1000)) % M_PI_2) - M_PI_4
+    fileprivate func touchprintAngle() -> CGFloat {
+        let doubleValue = (Double((arc4random() % 1000)).truncatingRemainder(dividingBy: M_PI_2)) - M_PI_4
         return CGFloat(doubleValue)
     }
 

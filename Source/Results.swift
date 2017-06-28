@@ -7,10 +7,34 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 public struct Results {
     
-    static func commitNewLocalBest(result: Int) {
+    static func commitNewLocalBest(_ result: Int) {
 
         _lastResultDescription = lastResultDescriptionForResult(result)
         
@@ -45,7 +69,7 @@ public struct Results {
         }
     }
     
-    private static var _lastResultDescription: (firstRow: String, secondRow: String) = ("", "")
+    fileprivate static var _lastResultDescription: (firstRow: String, secondRow: String) = ("", "")
     
     public static var lastResultDescription: (firstRow: String, secondRow: String) {
         get {
@@ -53,7 +77,7 @@ public struct Results {
         }
     }
     
-    private static func lastResultDescriptionForResult(score: Int) -> (firstRow: String, secondRow: String) {
+    fileprivate static func lastResultDescriptionForResult(_ score: Int) -> (firstRow: String, secondRow: String) {
 //        return degugResult ();
         
         if score < 10 {
@@ -126,7 +150,7 @@ public struct Results {
         //        return localizedResultDescriptionFor("More score to beat previous", score: 43)
 //    }
     
-    static private func localizedResultDescriptionFor(description: String, score: Int? = nil, player: String? = nil) -> (firstRow: String, secondRow: String) {
+    static fileprivate func localizedResultDescriptionFor(_ description: String, score: Int? = nil, player: String? = nil) -> (firstRow: String, secondRow: String) {
         if score == nil && player == nil {
             let firstRow = NSLocalizedString("Result 1 row: \(description)", comment: description)
             let secondRow = NSLocalizedString("Result 2 row: \(description)", comment: description)
@@ -137,19 +161,19 @@ public struct Results {
         var secondRow = NSLocalizedString("Result 2 row: \(description)", comment: description)
 
         if score != nil {
-            firstRow = firstRow.stringByReplacingOccurrencesOfString("%score%", withString: score!.description)
-            secondRow = secondRow.stringByReplacingOccurrencesOfString("%score%", withString: score!.description)
+            firstRow = firstRow.replacingOccurrences(of: "%score%", with: score!.description)
+            secondRow = secondRow.replacingOccurrences(of: "%score%", with: score!.description)
         }
         
         if player != nil {
-            firstRow = firstRow.stringByReplacingOccurrencesOfString("%player%", withString: player!)
-            secondRow = secondRow.stringByReplacingOccurrencesOfString("%player%", withString: player!)
+            firstRow = firstRow.replacingOccurrences(of: "%player%", with: player!)
+            secondRow = secondRow.replacingOccurrences(of: "%player%", with: player!)
         }
         
         return (firstRow, secondRow)
     }
     
-    static private func resultDescriptionForNewLocalBestScore(score: Int) -> (firstRow: String, secondRow: String) {
+    static fileprivate func resultDescriptionForNewLocalBestScore(_ score: Int) -> (firstRow: String, secondRow: String) {
         
         var choice = Int(arc4random() % 5)
         
@@ -218,7 +242,7 @@ public struct Results {
         return localizedResultDescriptionFor("Your new highscore!")
     }
     
-    static private func resultDescriptionInCompareToPreviousResult(score: Int) -> (firstRow: String, secondRow: String) {
+    static fileprivate func resultDescriptionInCompareToPreviousResult(_ score: Int) -> (firstRow: String, secondRow: String) {
         let difference = score - previousResult
         if difference > 100 {
             return localizedResultDescriptionFor("Breakthrough!")
@@ -235,7 +259,7 @@ public struct Results {
         }
     }
     
-    static private func resultDescriptionInCompareToFriends(score: Int) -> (firstRow: String, secondRow: String) {
+    static fileprivate func resultDescriptionInCompareToFriends(_ score: Int) -> (firstRow: String, secondRow: String) {
         if friendsTodayTop10.count > 1 {
             let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsTodayTop10)
             
@@ -291,7 +315,7 @@ public struct Results {
         return localizedResultDescriptionFor("Tell your friends about it")
     }
     
-    static private func resultsAboveAndBelowScore(score: Int, fromResults results: [Result]) -> (resultAbove: Result?, resultBelow: Result?) {
+    static fileprivate func resultsAboveAndBelowScore(_ score: Int, fromResults results: [Result]) -> (resultAbove: Result?, resultBelow: Result?) {
         var resultAbove: Result?
         var resultBelow: Result?
         for result in results {
@@ -306,32 +330,32 @@ public struct Results {
     
     static var attempt = 0
     
-    private static var _localBestResult: Int!
+    fileprivate static var _localBestResult: Int!
     
     static var localBestResult: Int {
         set {
             _localBestResult = newValue
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "localBestResult")
+            UserDefaults.standard.set(newValue, forKey: "localBestResult")
         }
         get {
             if _localBestResult == nil {
-                _localBestResult = NSUserDefaults.standardUserDefaults().integerForKey("localBestResult")
+                _localBestResult = UserDefaults.standard.integer(forKey: "localBestResult")
             }
             
             return _localBestResult
         }
     }
     
-    private static var _previousResult: Int!
+    fileprivate static var _previousResult: Int!
 
     static var previousResult: Int {
         set {
             _previousResult = newValue
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "previousResult")
+            UserDefaults.standard.set(newValue, forKey: "previousResult")
         }
         get {
             if _previousResult == nil {
-                _previousResult = NSUserDefaults.standardUserDefaults().integerForKey("previousResult")
+                _previousResult = UserDefaults.standard.integer(forKey: "previousResult")
             }
             
             return _previousResult
@@ -340,17 +364,17 @@ public struct Results {
     
     static var todayBestResult: Int {
         set {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "todayBestResult")
-            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "todayBestResultDate")
+            UserDefaults.standard.set(newValue, forKey: "todayBestResult")
+            UserDefaults.standard.set(Date(), forKey: "todayBestResultDate")
         }
         get {
-            let resultDate: NSDate! = NSUserDefaults.standardUserDefaults().objectForKey("todayBestResultDate") as! NSDate!
+            let resultDate: Date! = UserDefaults.standard.object(forKey: "todayBestResultDate") as! Date!
             if resultDate == nil {
                 return 0
             }
-            let yesterdaysBorder = NSDate(timeIntervalSinceNow: -3600 * 24)
-            if yesterdaysBorder.compare(resultDate) != NSComparisonResult.OrderedDescending {
-                return NSUserDefaults.standardUserDefaults().integerForKey("todayBestResult")
+            let yesterdaysBorder = Date(timeIntervalSinceNow: -3600 * 24)
+            if yesterdaysBorder.compare(resultDate) != ComparisonResult.orderedDescending {
+                return UserDefaults.standard.integer(forKey: "todayBestResult")
             } else {
                 return 0
             }
@@ -359,7 +383,7 @@ public struct Results {
     
     
     
-    private static var _globalAllTimeBestResult: Result!
+    fileprivate static var _globalAllTimeBestResult: Result!
     
     static var globalAllTimeBestResult: Result {
         get {
@@ -377,7 +401,7 @@ public struct Results {
     
     
     
-    private static var _globalWeekBestResult: Result!
+    fileprivate static var _globalWeekBestResult: Result!
     
     static var globalWeekBestResult: Result {
         get {
@@ -395,7 +419,7 @@ public struct Results {
     
     
     
-    private static var _globalTodayBestResult: Result!
+    fileprivate static var _globalTodayBestResult: Result!
     
     static var globalTodayBestResult: Result {
         get {
@@ -413,7 +437,7 @@ public struct Results {
     
     
     
-    private static var _friendsAlltimeTop10: [Result]!
+    fileprivate static var _friendsAlltimeTop10: [Result]!
 
     static var friendsAlltimeTop10: [Result] {
         get {
@@ -431,7 +455,7 @@ public struct Results {
     
 
     
-    private static var _friendsWeekTop10: [Result]!
+    fileprivate static var _friendsWeekTop10: [Result]!
 
     static var friendsWeekTop10: [Result] {
         get {
@@ -449,7 +473,7 @@ public struct Results {
 
     
     
-    private static var _friendsTodayTop10: [Result]!
+    fileprivate static var _friendsTodayTop10: [Result]!
     
     static var friendsTodayTop10: [Result] {
         get {
@@ -467,18 +491,18 @@ public struct Results {
     
     
     
-    private static func loadResultListForKey(key: String) -> [Result] {
-        if let data = NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSData {
-            if let results = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Result] {
+    fileprivate static func loadResultListForKey(_ key: String) -> [Result] {
+        if let data = UserDefaults.standard.object(forKey: key) as? Data {
+            if let results = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Result] {
                 return results
             }
         }
         return []
     }
     
-    private static func saveResultList(results: [Result], withKey key: String) {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(results)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: key)
+    fileprivate static func saveResultList(_ results: [Result], withKey key: String) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: results)
+        UserDefaults.standard.set(data, forKey: key)
     }
 
 }

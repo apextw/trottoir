@@ -9,32 +9,32 @@
 import SpriteKit
 
 struct Drawings {
-    static private let attributes: NSArray = {
-        if let path = NSBundle.mainBundle().pathForResource("DrawingsAttributes", ofType: "plist") {
+    static fileprivate let attributes: NSArray = {
+        if let path = Bundle.main.path(forResource: "DrawingsAttributes", ofType: "plist") {
             return NSArray(contentsOfFile: path)!
         }
         return []
         }()
     
-    static private let drawingsAtlas = SKTextureAtlas(named: "Drawings")
+    static fileprivate let drawingsAtlas = SKTextureAtlas(named: "Drawings")
     
-    static func drawingForTileNumber(number: Int) -> Drawing? {
+    static func drawingForTileNumber(_ number: Int) -> Drawing? {
         for pictureAttributes in Drawings.attributes {
             let dictionary = pictureAttributes as! NSDictionary
-            let pictureTileNumber = dictionary.objectForKey("Tile number") as! String
+            let pictureTileNumber = dictionary.object(forKey: "Tile number") as! String
             
             let intValue = Int(pictureTileNumber)
             if Int(number) != intValue {
                 continue
             }
             
-            let name = dictionary.objectForKey("Name") as! String
-            let anchorX = (dictionary.objectForKey("anchorX") as! NSString).floatValue
+            let name = dictionary.object(forKey: "Name") as! String
+            let anchorX = (dictionary.object(forKey: "anchorX") as! NSString).floatValue
             let texture = Drawings.drawingsAtlas.textureNamed(name)
             
-            let red = dictionary.objectForKey("Red") as! NSNumber?
-            let green = dictionary.objectForKey("Green") as! NSNumber?
-            let blue = dictionary.objectForKey("Blue") as! NSNumber?
+            let red = dictionary.object(forKey: "Red") as! NSNumber?
+            let green = dictionary.object(forKey: "Green") as! NSNumber?
+            let blue = dictionary.object(forKey: "Blue") as! NSNumber?
             
             if red != nil && green != nil && blue != nil {
                 let redValue = CGFloat(red!.floatValue / 255)
@@ -53,7 +53,7 @@ struct Drawings {
     
     static var mainMenuDrawing: SKSpriteNode {
         get {
-            if let textureName = NSUserDefaults.standardUserDefaults().stringForKey("Current Menu Picture") {
+            if let textureName = UserDefaults.standard.string(forKey: "Current Menu Picture") {
                 let texture = Drawings.drawingsAtlas.textureNamed(textureName)
                 return SKSpriteNode(texture: texture)
             }
@@ -63,27 +63,27 @@ struct Drawings {
         }
     }
     
-    static func submitMenuDrawingWithTileNumber(tileNumber: Int) -> Bool {
-        let currentMenuDrawingNumber = NSUserDefaults.standardUserDefaults().integerForKey("Current Drawing Number")
+    static func submitMenuDrawingWithTileNumber(_ tileNumber: Int) -> Bool {
+        let currentMenuDrawingNumber = UserDefaults.standard.integer(forKey: "Current Drawing Number")
         if tileNumber > currentMenuDrawingNumber {
-            NSUserDefaults.standardUserDefaults().setInteger(tileNumber, forKey: "Current Drawing Number")
+            UserDefaults.standard.set(tileNumber, forKey: "Current Drawing Number")
             guard let newDrawingName = Drawings.pictureNameForTileNumber(tileNumber) else {
                 return false
             }
-            NSUserDefaults.standardUserDefaults().setObject(newDrawingName, forKey: "Current Menu Picture")
+            UserDefaults.standard.set(newDrawingName, forKey: "Current Menu Picture")
             return true
         }
         return false
     }
     
-    static private func pictureNameForTileNumber(tileNumber: Int) -> String? {
+    static fileprivate func pictureNameForTileNumber(_ tileNumber: Int) -> String? {
         for pictureAttributes in Drawings.attributes {
             let dictionary = pictureAttributes as! NSDictionary
-            let pictureTileNumber = dictionary.objectForKey("Tile number") as! String
+            let pictureTileNumber = dictionary.object(forKey: "Tile number") as! String
             
             let intValue = Int(pictureTileNumber)
             if tileNumber == intValue {
-                let name = dictionary.objectForKey("Name") as! String
+                let name = dictionary.object(forKey: "Name") as! String
                 return name
             }
         }

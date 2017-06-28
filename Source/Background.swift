@@ -8,16 +8,16 @@
 
 import SpriteKit
 
-public class Background {
+open class Background {
     
-    private var tileRows : [SKNode] = []
-    private var originalTile : SKSpriteNode!
-    private var originalTilerow : SKNode!
+    fileprivate var tileRows : [SKNode] = []
+    fileprivate var originalTile : SKSpriteNode!
+    fileprivate var originalTilerow : SKNode!
     
-    private var screenSize: CGSize = CGSize(width: 0, height: 0)
+    fileprivate var screenSize: CGSize = CGSize(width: 0, height: 0)
     
-    private var tileMaxY: CGFloat = 0;
-    private var tileMinY: CGFloat = 0;
+    fileprivate var tileMaxY: CGFloat = 0;
+    fileprivate var tileMinY: CGFloat = 0;
     
     var scrollSpeed: CGFloat = -1
     var scrollingEnabled = false
@@ -26,7 +26,7 @@ public class Background {
     
     init(screenSize: CGSize) {
         self.screenSize = screenSize
-        originalTile = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 100, height: 100))
+        originalTile = SKSpriteNode(color: SKColor.gray, size: CGSize(width: 100, height: 100))
         tileMinY = -screenSize.height / 2 + originalTile.size.height / 2
         tileMaxY = screenSize.height / 2 - originalTile.size.height / 2
         originalTilerow = tileRowWith(originalTile, forScreenWidth: screenSize.width)
@@ -43,7 +43,7 @@ public class Background {
         buildTileMapWith(originalTilerow, forScreenHeight: screenSize.height)
     }
     
-    private func tileRowWith(background: SKSpriteNode, forScreenWidth screenWidth: CGFloat) -> SKNode {
+    fileprivate func tileRowWith(_ background: SKSpriteNode, forScreenWidth screenWidth: CGFloat) -> SKNode {
         
         var partsToAdd = Int(screenWidth) / Int(background.size.width);
         partsToAdd = (partsToAdd / 2) + 1;
@@ -75,7 +75,7 @@ public class Background {
         return node
     }
     
-    private func buildTileMapWith(tileRow: SKNode, forScreenHeight screenHeight: CGFloat) {
+    fileprivate func buildTileMapWith(_ tileRow: SKNode, forScreenHeight screenHeight: CGFloat) {
         
         tileRows = [tileRow]
         
@@ -93,7 +93,7 @@ public class Background {
         }
     }
     
-    func addTo(node: SKNode) {
+    func addTo(_ node: SKNode) {
         for tileRow in tileRows {
             if tileRow.parent != nil {
                 tileRow.removeFromParent()
@@ -119,17 +119,17 @@ public class Background {
         }
     }
     
-    private func shiftTileRows() {
+    fileprivate func shiftTileRows() {
         for tileRow in tileRows {
             if tileRow.parent != nil {
-                tileRow.position = CGPointMake(tileRow.position.x, tileRow.position.y + scrollSpeed)
+                tileRow.position = CGPoint(x: tileRow.position.x, y: tileRow.position.y + scrollSpeed)
             }
         }
     }
     
-    private var tilerowsCount = 0
+    fileprivate var tilerowsCount = 0
     
-    private func addTileRowIfNeeded() {
+    fileprivate func addTileRowIfNeeded() {
         guard let lastRow = tileRows.last else {
             return
         }
@@ -157,17 +157,17 @@ public class Background {
         print("New tile row at X: \(position.x) Y: \(position.y)")
     }
     
-    private var picturesAttributes: NSArray!
-    private var drawingsAtlas: SKTextureAtlas!
+    fileprivate var picturesAttributes: NSArray!
+    fileprivate var drawingsAtlas: SKTextureAtlas!
     
-    public var currentDrawing: SKSpriteNode!
-    public var currentDrawingTileNumber = 0
-    private var recentlyLoadedDrawing: SKSpriteNode!
+    open var currentDrawing: SKSpriteNode!
+    open var currentDrawingTileNumber = 0
+    fileprivate var recentlyLoadedDrawing: SKSpriteNode!
     
-    private func addDrawingToTileRowIfNeeded(tileRow tileRow: SKNode, number: Int) {
+    fileprivate func addDrawingToTileRowIfNeeded(tileRow: SKNode, number: Int) {
         // Fix speed of new pictures appear for iPad
         var fixedNumber: Int = number
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
             fixedNumber = Int(Float(number) / 1.3)
         }
         
@@ -189,7 +189,7 @@ public class Background {
         }
     }
     
-    private func insertDrawing(drawing: SKSpriteNode, toNode node: SKNode, anchorX: Float?) {
+    fileprivate func insertDrawing(_ drawing: SKSpriteNode, toNode node: SKNode, anchorX: Float?) {
         let anchor = anchorX == nil ? -1 : anchorX!
                 
         drawing.setScale(DisplayHelper.DrawingsSizeMultiplier)
@@ -201,7 +201,7 @@ public class Background {
         node.addChild(drawing)
     }
     
-    private func removeTileRowIfNeeded() {
+    fileprivate func removeTileRowIfNeeded() {
         
         guard let firstRow = tileRows.first else {
             return
@@ -214,13 +214,13 @@ public class Background {
         }
     }
     
-    private func updateCurrentDrawingIfNeeded() {
+    fileprivate func updateCurrentDrawingIfNeeded() {
         if recentlyLoadedDrawing === currentDrawing {
             return
         }
         
         let scene = recentlyLoadedDrawing.scene!
-        let positionInScene = scene.convertPoint(recentlyLoadedDrawing.position, fromNode: recentlyLoadedDrawing.parent!)
+        let positionInScene = scene.convert(recentlyLoadedDrawing.position, from: recentlyLoadedDrawing.parent!)
         let drawingBottomY = positionInScene.y - (recentlyLoadedDrawing.size.height * recentlyLoadedDrawing.anchorPoint.y)
         
         let sceneSize = scene.size
@@ -233,7 +233,7 @@ public class Background {
         }
     }
     
-    func insertNodeToTheLastRow(node: SKNode) -> SKNode {
+    func insertNodeToTheLastRow(_ node: SKNode) -> SKNode {
         if node.parent != nil {
             node.removeFromParent()
         }
@@ -278,7 +278,7 @@ extension Background {
             let tilerow = originalTilerow.copy() as! SKNode
             tilerow.position = position
             parent.addChild(tilerow)
-            tileRows.insert(tilerow, atIndex: 0)
+            tileRows.insert(tilerow, at: 0)
             position.y -= originalTile.size.height
         } while position.y > minY
     }

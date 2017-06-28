@@ -20,34 +20,34 @@ class Result : NSObject, NSCoding {
     
     init(score: GKScore) {
         self.score = Int(score.value)
-        self.name = score.player.alias!
+        self.name = (score.player?.alias!)!
     }
     
     required init?(coder decoder: NSCoder) {
-        if let decodedName = decoder.decodeObjectForKey("Name") as! String? {
+        if let decodedName = decoder.decodeObject(forKey: "Name") as! String? {
             name = decodedName
         } else {
             name = ""
         }
         
-        score = decoder.decodeIntegerForKey("Score")
+        score = decoder.decodeInteger(forKey: "Score")
     }
     
-    func encodeWithCoder(encoder: NSCoder) {
-        encoder.encodeObject(name, forKey: "Name")
-        encoder.encodeInteger(score, forKey: "Score")
+    func encode(with encoder: NSCoder) {
+        encoder.encode(name, forKey: "Name")
+        encoder.encode(score, forKey: "Score")
     }
 
-    class func loadFromUserDefaultsForKey(key: String) -> Result {
-        let score = NSUserDefaults.standardUserDefaults().integerForKey(key + " Score")
-        let name = NSUserDefaults.standardUserDefaults().stringForKey(key + " Name")
+    class func loadFromUserDefaultsForKey(_ key: String) -> Result {
+        let score = UserDefaults.standard.integer(forKey: key + " Score")
+        let name = UserDefaults.standard.string(forKey: key + " Name")
         
         return Result(score: score, name: name)
     }
     
-    func saveToUserDefaultsWithKey(key: String) {
-        NSUserDefaults.standardUserDefaults().setInteger(score, forKey: key + " Score")
-        NSUserDefaults.standardUserDefaults().setObject(name, forKey: key + " Name")
+    func saveToUserDefaultsWithKey(_ key: String) {
+        UserDefaults.standard.set(score, forKey: key + " Score")
+        UserDefaults.standard.set(name, forKey: key + " Name")
     }
     
     override var description: String {

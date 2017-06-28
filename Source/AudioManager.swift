@@ -18,18 +18,18 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         return Singleton.instance
     }
     
-    private let songName = "song"
+    fileprivate let songName = "song"
     
     var musicEnabled: Bool {
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: "Music Enabled")
+            UserDefaults.standard.set(newValue, forKey: "Music Enabled")
             if newValue == true && player == nil {
                 configureAudioSession()
                 configureAudioPlayer()
             }
         }
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey("Music Enabled")
+            return UserDefaults.standard.bool(forKey: "Music Enabled")
         }
     }
     
@@ -38,7 +38,7 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
     }
     
     var player: AVAudioPlayer!
-    private var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
+    fileprivate var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
     
     override init() {
         super.init()
@@ -48,8 +48,8 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    private func configureAudioSession() {
-        let category = audioSession.otherAudioPlaying ? AVAudioSessionCategorySoloAmbient : AVAudioSessionCategoryAmbient
+    fileprivate func configureAudioSession() {
+        let category = audioSession.isOtherAudioPlaying ? AVAudioSessionCategorySoloAmbient : AVAudioSessionCategoryAmbient
         do {
             try audioSession.setCategory(category)
         } catch _ {
@@ -57,10 +57,10 @@ class AudioManager: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    private func configureAudioPlayer() {
-        if let filepath = NSBundle.mainBundle().pathForResource(songName, ofType: "caf") {
-            let url = NSURL(fileURLWithPath: filepath)
-            player = try? AVAudioPlayer(contentsOfURL: url)
+    fileprivate func configureAudioPlayer() {
+        if let filepath = Bundle.main.path(forResource: songName, ofType: "caf") {
+            let url = URL(fileURLWithPath: filepath)
+            player = try? AVAudioPlayer(contentsOf: url)
             player.enableRate = false
             player.rate = 1
             player.delegate = self

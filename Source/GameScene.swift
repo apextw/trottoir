@@ -12,19 +12,19 @@ class GameScene: SKScene, GameManagerProtocol {
     
     var adDelegate: adProtocol!
 
-    private let initialSpeed: CGFloat = -4
+    fileprivate let initialSpeed: CGFloat = -4
     
-    private var scrollSpeed: CGFloat = 0
-    private var speedMultiplier: CGFloat = 1
+    fileprivate var scrollSpeed: CGFloat = 0
+    fileprivate var speedMultiplier: CGFloat = 1
     
     var background: Background!
-    private var markers: Markers!
+    fileprivate var markers: Markers!
     
-    private var gameManager: GameManager!
+    fileprivate var gameManager: GameManager!
     
-    private var isGameOver = false
+    fileprivate var isGameOver = false
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         resetSpeed()
         
         print("Self.size: x = \(self.size.width), y = \(self.size.height)")
@@ -46,12 +46,12 @@ class GameScene: SKScene, GameManagerProtocol {
         startSpeedIncreaser()
         AudioManager.sharedInstance.play()
         
-        let dictionary: [NSObject: AnyObject] = ["Attempt" : Results.attempt, "Sound_is_on" : AudioManager.sharedInstance.musicEnabled]
+        let dictionary: [AnyHashable: Any] = ["Attempt" : Results.attempt, "Sound_is_on" : AudioManager.sharedInstance.musicEnabled]
         Flurry.logEvent("Game_started", withParameters: dictionary, timed: true)
     }
     
     func fillScreenWithBackground() {
-        guard let backgroundLayer = self.childNodeWithName("BackgroundLayer") else {
+        guard let backgroundLayer = self.childNode(withName: "BackgroundLayer") else {
             return
         }
         
@@ -60,7 +60,7 @@ class GameScene: SKScene, GameManagerProtocol {
             return
         }
     
-        if let backgroundPart = backgroundLayer.childNodeWithName("BackgroundPart") as? SKSpriteNode {
+        if let backgroundPart = backgroundLayer.childNode(withName: "BackgroundPart") as? SKSpriteNode {
             background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
             background.addTo(backgroundLayer)
             return
@@ -74,7 +74,7 @@ class GameScene: SKScene, GameManagerProtocol {
         let screenSize = CGSize(width: self.size.width / DisplayHelper.MarkerSizeMultiplier, height: self.size.height / DisplayHelper.MarkerSizeMultiplier)
         markers = Markers(screenSize: screenSize, markersDelegate: gameManager)
         
-        guard let backgroundLayer = self.childNodeWithName("BackgroundLayer") else {
+        guard let backgroundLayer = self.childNode(withName: "BackgroundLayer") else {
             return
         }
         
@@ -84,7 +84,7 @@ class GameScene: SKScene, GameManagerProtocol {
         backgroundLayer.addChild(markersLayer)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if GameManager.godMode {
             let enabled = !background.scrollingEnabled
             
@@ -93,7 +93,7 @@ class GameScene: SKScene, GameManagerProtocol {
             if enabled {
                 startSpeedIncreaser()
             } else {
-                self.removeActionForKey("Speed increaser")
+                self.removeAction(forKey: "Speed increaser")
             }
             return
         }
@@ -104,40 +104,40 @@ class GameScene: SKScene, GameManagerProtocol {
         }
     }
     
-    private func addTouchprint (touch: UITouch) {
-        let location = touch.locationInNode(self)
+    fileprivate func addTouchprint (_ touch: UITouch) {
+        let location = touch.location(in: self)
         let touchprint = Touchprint.touchprintWithTouchLocation(location)
         touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
         touchprint.position = location
-        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
+        if let backgroundLayer = self.childNode(withName: "BackgroundLayer") {
             backgroundLayer.addChild(touchprint)
         }
     }
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         if !isGameOver {
             background.update()
             markers.update()
         }
     }
     
-    private func resetSpeed() {
+    fileprivate func resetSpeed() {
         scrollSpeed = initialSpeed
         speedMultiplier = 1
-        self.removeActionForKey("Speed increaser")
+        self.removeAction(forKey: "Speed increaser")
     }
     
-    private func startSpeedIncreaser() {
-        let increaseSpeedAction = SKAction.runBlock { () -> Void in
+    fileprivate func startSpeedIncreaser() {
+        let increaseSpeedAction = SKAction.run { () -> Void in
             self.increaseSpeed()
         }
-        let waitAction = SKAction.waitForDuration(1)
+        let waitAction = SKAction.wait(forDuration: 1)
         let increaseThenWait = SKAction.sequence([increaseSpeedAction, waitAction])
-        let repeatAction = SKAction.repeatActionForever(increaseThenWait)
-        runAction(repeatAction, withKey: "Speed increaser")
+        let repeatAction = SKAction.repeatForever(increaseThenWait)
+        run(repeatAction, withKey: "Speed increaser")
     }
     
-    private func increaseSpeed() {
+    fileprivate func increaseSpeed() {
         speedMultiplier *= 1.03
         scrollSpeed = initialSpeed * speedMultiplier
         markers.scrollSpeed = scrollSpeed
@@ -157,7 +157,7 @@ class GameScene: SKScene, GameManagerProtocol {
 
         if AudioManager.sharedInstance.musicEnabled {
             let playSound = SKAction.playSoundFileNamed("end.caf", waitForCompletion: true)
-            runAction(playSound)
+            run(playSound)
             AudioManager.sharedInstance.stop()
         }
 
@@ -169,8 +169,8 @@ class GameScene: SKScene, GameManagerProtocol {
         }
 
         let animationDuration = shake()
-        let waitAction = SKAction.waitForDuration(animationDuration)
-        self.runAction(waitAction, completion: { () -> Void in
+        let waitAction = SKAction.wait(forDuration: animationDuration)
+        self.run(waitAction, completion: { () -> Void in
             self.presentMainMenu(showNewLabel: reachedNewDrawing)
         })
         
@@ -179,11 +179,11 @@ class GameScene: SKScene, GameManagerProtocol {
         
         isGameOver = true
         
-        let dictionary: [NSObject: AnyObject] = ["score" : gameManager.score]
+        let dictionary: [AnyHashable: Any] = ["score" : gameManager.score]
         Flurry.endTimedEvent("Game_started", withParameters: dictionary)
     }
     
-    private func shake() -> NSTimeInterval {
+    fileprivate func shake() -> TimeInterval {
         let iterationsCount = 4
         let iterationDuration = 0.1
         var range: CGFloat = 25
@@ -195,16 +195,16 @@ class GameScene: SKScene, GameManagerProtocol {
             let rndY = CGFloat(arc4random() % UInt32(range * 100) / 100) - range / 2
             let rndAngle = CGFloat(arc4random() % UInt32(angleRange * 100) / 100) - angleRange / 2
 
-            let move1 = SKAction.moveByX(rndX, y: rndY, duration: iterationDuration)
-            move1.timingMode = SKActionTimingMode.EaseOut
-            let rotate1 = SKAction.rotateByAngle(rndAngle, duration: iterationDuration)
-            rotate1.timingMode = SKActionTimingMode.EaseOut
+            let move1 = SKAction.moveBy(x: rndX, y: rndY, duration: iterationDuration)
+            move1.timingMode = SKActionTimingMode.easeOut
+            let rotate1 = SKAction.rotate(byAngle: rndAngle, duration: iterationDuration)
+            rotate1.timingMode = SKActionTimingMode.easeOut
             moves.append(SKAction.group([move1, rotate1]))
             
-            let move2 = SKAction.moveByX(-rndX, y: -rndY, duration: iterationDuration)
-            move2.timingMode = SKActionTimingMode.EaseIn
-            let rotate2 = SKAction.rotateByAngle(-rndAngle, duration: iterationDuration)
-            rotate2.timingMode = SKActionTimingMode.EaseIn
+            let move2 = SKAction.moveBy(x: -rndX, y: -rndY, duration: iterationDuration)
+            move2.timingMode = SKActionTimingMode.easeIn
+            let rotate2 = SKAction.rotate(byAngle: -rndAngle, duration: iterationDuration)
+            rotate2.timingMode = SKActionTimingMode.easeIn
             moves.append(SKAction.group([move2, rotate2]))
             
             range = max(max(fabs(rndX), fabs(rndY)), 0.5 * range)
@@ -213,28 +213,28 @@ class GameScene: SKScene, GameManagerProtocol {
 
         let moveSequence = SKAction.sequence(moves)
         
-        let duration = iterationDuration * 2 * NSTimeInterval(iterationsCount)
+        let duration = iterationDuration * 2 * TimeInterval(iterationsCount)
 
         for child in self.children {
-            child.runAction(moveSequence)
+            child.run(moveSequence)
         }
         
         return duration
     }
     
-    private func presentMainMenu(showNewLabel showNewLabel: Bool) {
+    fileprivate func presentMainMenu(showNewLabel: Bool) {
         if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
             scene.adDelegate = adDelegate
             
             scene.size = self.size
-            scene.scaleMode = SKSceneScaleMode.ResizeFill
+            scene.scaleMode = SKSceneScaleMode.resizeFill
             if background.currentDrawing != nil {
                 scene.drawing = background.currentDrawing.copy() as! SKSpriteNode
             }
             scene.score = gameManager.score
             scene.showNewLabel = showNewLabel
             let duration = 0.5
-            let transition = SKTransition.pushWithDirection(SKTransitionDirection.Left, duration: duration)
+            let transition = SKTransition.push(with: SKTransitionDirection.left, duration: duration)
             self.view!.presentScene(scene, transition: transition)
             
             delay(duration, closure: { () -> () in
@@ -243,16 +243,12 @@ class GameScene: SKScene, GameManagerProtocol {
         }
     }
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
-    private func freeObjects() {
+    fileprivate func freeObjects() {
         self.markers.markerDelegate = nil
         self.markers = nil
         
@@ -262,7 +258,7 @@ class GameScene: SKScene, GameManagerProtocol {
         self.gameManager = nil
     }
     
-    func setScore(newScore: Int) {
+    func setScore(_ newScore: Int) {
 //        scoresLabel.text = newScore.description
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameManagerProtocol {
-    func setScore(newScore: Int)
+    func setScore(_ newScore: Int)
     func gameOver()
 }
 
@@ -34,7 +34,7 @@ class GameManager: MarkerActivationProtocol {
     
     var awaitingForDoubleMarker = false
     
-    func markerDidActivated(sender: Marker) {
+    func markerDidActivated(_ sender: Marker) {
         let number = sender.number
         
         if number - 1 == score && !awaitingForDoubleMarker {
@@ -57,15 +57,15 @@ class GameManager: MarkerActivationProtocol {
         gameOver()
     }
     
-    func markerWillHideUnactivated(sender: Marker) {
+    func markerWillHideUnactivated(_ sender: Marker) {
         gameOver()
     }
     
-    func markedDidActivatedSecondTime(sender: Marker) {
+    func markedDidActivatedSecondTime(_ sender: Marker) {
         gameOver()
     }
     
-    private func gameOver() {
+    fileprivate func gameOver() {
         print("Game over")
         if delegate != nil {
             delegate.gameOver()

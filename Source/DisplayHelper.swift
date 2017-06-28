@@ -10,7 +10,7 @@ import Foundation
 
 public struct DisplayHelper {
     public static let MarkerSizeMultiplier: CGFloat = {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 1
         } else {
             return 1.5
@@ -18,7 +18,7 @@ public struct DisplayHelper {
     }()
     
     public static let DrawingsSizeMultiplier: CGFloat = {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 1
         } else {
             return 1.5
@@ -26,7 +26,7 @@ public struct DisplayHelper {
     }()
     
     public static let DrawingsBorderShift: CGFloat = {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 0
         } else {
             return 100
@@ -34,7 +34,7 @@ public struct DisplayHelper {
     }()
 
     public static let MainMenuScale: CGFloat = {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 1
         } else {
             return 1.5
@@ -42,7 +42,7 @@ public struct DisplayHelper {
     }()
     
     public static let FontScale: CGFloat = {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 1
         } else {
             return 1.5
@@ -50,7 +50,7 @@ public struct DisplayHelper {
     }()
     
     public static let FontName: String = {
-        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+        if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
             return "LCChalk";
         }
         return "Chalkduster"

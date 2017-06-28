@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		353E82D224621676C32688F7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE913B66B1D830690A2E298A /* libPods.a */; };
+		93CE71B81F04561C0037DD92 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CE71B71F04561C0037DD92 /* GameKit.framework */; };
 		9D18442C1A8CB74100AAA198 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D18442E1A8CB74100AAA198 /* Localizable.strings */; };
 		9D1844361A8CD9CB00AAA198 /* lc-chalk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D1844341A8CD9CB00AAA198 /* lc-chalk.ttf */; };
 		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
@@ -27,7 +27,6 @@
 		9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45F21119EE6EFE00EC0575 /* GameManager.swift */; };
 		9D4648DE19F6A93A004D2CF6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4648DD19F6A93A004D2CF6 /* Button.swift */; };
 		9D4648E019F6F76A004D2CF6 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */; };
-		9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */; };
 		9D4AF95219EAADAF0087FEAB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4AF95119EAADAF0087FEAB /* Marker.swift */; };
 		9D50D5EF1A02C19B00AB3BEA /* Markers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50D5EE1A02C19B00AB3BEA /* Markers.swift */; };
 		9D50D5F11A02C2F800AB3BEA /* MarkersLabelsAndColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */; };
@@ -42,10 +41,13 @@
 		9DDFB6A31A00E77D00ED451D /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */; };
 		9DEE89A81A6923F600235EDA /* end.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DEE89A71A6923F600235EDA /* end.caf */; };
 		9DF7752319F79C750096FF30 /* Drawings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF7752219F79C750096FF30 /* Drawings.swift */; };
+		FCD80B4E638F43C9C1B292CC /* libPods-Trottoir.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E74E1055A5C4C9E7D29A0357 /* libPods-Trottoir.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		104864CB752E8968CD219C0F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		523FB445B09F3198C0D3A255 /* Pods-Trottoir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trottoir.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trottoir/Pods-Trottoir.debug.xcconfig"; sourceTree = "<group>"; };
+		93CE71B71F04561C0037DD92 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9D1844291A8CB6F400AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D1844301A8CB74500AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D1844311A8CB7E700AAA198 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -71,7 +73,6 @@
 		9D45F21119EE6EFE00EC0575 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		9D4648DD19F6A93A004D2CF6 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		9D4648DF19F6F76A004D2CF6 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
-		9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9D4AF95119EAADAF0087FEAB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		9D50D5EE1A02C19B00AB3BEA /* Markers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markers.swift; sourceTree = "<group>"; };
 		9D50D5F01A02C2F800AB3BEA /* MarkersLabelsAndColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkersLabelsAndColors.swift; sourceTree = "<group>"; };
@@ -86,8 +87,10 @@
 		9DDFB6A21A00E77D00ED451D /* GameCenterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
 		9DEE89A71A6923F600235EDA /* end.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = end.caf; sourceTree = "<group>"; };
 		9DF7752219F79C750096FF30 /* Drawings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawings.swift; sourceTree = "<group>"; };
+		A37FB50E519A754CC31A9C89 /* Pods-Trottoir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trottoir.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trottoir/Pods-Trottoir.release.xcconfig"; sourceTree = "<group>"; };
 		DE913B66B1D830690A2E298A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50EC93CA8A712A8395ED5AB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E74E1055A5C4C9E7D29A0357 /* libPods-Trottoir.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trottoir.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D47F4CC1A0108BA007F6DF9 /* GameKit.framework in Frameworks */,
-				353E82D224621676C32688F7 /* libPods.a in Frameworks */,
+				93CE71B81F04561C0037DD92 /* GameKit.framework in Frameworks */,
+				FCD80B4E638F43C9C1B292CC /* libPods-Trottoir.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +111,8 @@
 			children = (
 				E50EC93CA8A712A8395ED5AB /* Pods.debug.xcconfig */,
 				104864CB752E8968CD219C0F /* Pods.release.xcconfig */,
+				523FB445B09F3198C0D3A255 /* Pods-Trottoir.debug.xcconfig */,
+				A37FB50E519A754CC31A9C89 /* Pods-Trottoir.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -115,8 +120,9 @@
 		7337D76C1D6D5D5C11119041 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9D47F4CB1A0108BA007F6DF9 /* GameKit.framework */,
+				93CE71B71F04561C0037DD92 /* GameKit.framework */,
 				DE913B66B1D830690A2E298A /* libPods.a */,
+				E74E1055A5C4C9E7D29A0357 /* libPods-Trottoir.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -244,12 +250,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D3977BF19E7B0C1008ED26F /* Build configuration list for PBXNativeTarget "Trottoir" */;
 			buildPhases = (
-				F49729584BE49929E56EBB01 /* Check Pods Manifest.lock */,
+				F49729584BE49929E56EBB01 /* [CP] Check Pods Manifest.lock */,
 				9D39779819E7B0C1008ED26F /* Sources */,
 				9D39779919E7B0C1008ED26F /* Frameworks */,
 				9D39779A19E7B0C1008ED26F /* Resources */,
-				40EBDFB9AB91A797D2258A9E /* Copy Pods Resources */,
-				8AD26AEBFEEE89A08F55231C /* Embed Pods Frameworks */,
+				40EBDFB9AB91A797D2258A9E /* [CP] Copy Pods Resources */,
+				8AD26AEBFEEE89A08F55231C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -274,6 +280,7 @@
 					9D39779B19E7B0C1008ED26F = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = MLXPDYN59V;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -326,49 +333,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		40EBDFB9AB91A797D2258A9E /* Copy Pods Resources */ = {
+		40EBDFB9AB91A797D2258A9E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trottoir/Pods-Trottoir-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8AD26AEBFEEE89A08F55231C /* Embed Pods Frameworks */ = {
+		8AD26AEBFEEE89A08F55231C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trottoir/Pods-Trottoir-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F49729584BE49929E56EBB01 /* Check Pods Manifest.lock */ = {
+		F49729584BE49929E56EBB01 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -471,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -509,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -520,14 +527,15 @@
 		};
 		9D3977C019E7B0C1008ED26F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E50EC93CA8A712A8395ED5AB /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 523FB445B09F3198C0D3A255 /* Pods-Trottoir.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = MLXPDYN59V;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -541,20 +549,22 @@
 				SWIFT_DISABLE_SAFETY_CHECKS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging/Flurry-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		9D3977C119E7B0C1008ED26F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 104864CB752E8968CD219C0F /* Pods.release.xcconfig */;
+			baseConfigurationReference = A37FB50E519A754CC31A9C89 /* Pods-Trottoir.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MLXPDYN59V;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,6 +577,7 @@
 				SWIFT_DISABLE_SAFETY_CHECKS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging/Flurry-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

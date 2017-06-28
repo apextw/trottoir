@@ -9,8 +9,8 @@
 import SpriteKit
 
 protocol ButtonProtocol {
-    func didTouchDownButton(sender: Button, position: CGPoint)
-    func didTouchUpInsideButton(sender: Button, position: CGPoint)
+    func didTouchDownButton(_ sender: Button, position: CGPoint)
+    func didTouchUpInsideButton(_ sender: Button, position: CGPoint)
 }
 
 class Button: SKLabelNode {
@@ -18,10 +18,10 @@ class Button: SKLabelNode {
     var delegate: ButtonProtocol? = nil
     var enabled: Bool {
         set {
-            userInteractionEnabled = newValue
+            isUserInteractionEnabled = newValue
         }
         get {
-            return userInteractionEnabled
+            return isUserInteractionEnabled
         }
     }
     
@@ -39,7 +39,7 @@ class Button: SKLabelNode {
         super.init(coder: aDecoder)
     }
     
-    private func setSelected(selected: Bool) {
+    fileprivate func setSelected(_ selected: Bool) {
         if selected {
             self.setScale(1.2)
         } else {
@@ -47,9 +47,9 @@ class Button: SKLabelNode {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! 
-        let touchPoint = touch.locationInNode(self)
+        let touchPoint = touch.location(in: self)
         delegate?.didTouchDownButton(self, position: touchPoint)
 //        setSelected(true)
     }
@@ -64,11 +64,11 @@ class Button: SKLabelNode {
 //        }
 //    }
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! 
-        let touchPoint = touch.locationInNode(self.parent!)
+        let touchPoint = touch.location(in: self.parent!)
 //        setSelected(false)
-        if delegate != nil && CGRectContainsPoint(self.frame, touchPoint) {
+        if delegate != nil && self.frame.contains(touchPoint) {
             delegate!.didTouchUpInsideButton(self, position: touchPoint)
         }
     }

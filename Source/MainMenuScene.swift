@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol SceneShowingAdProtocol {
-    func prepareForShowingAdWithSize(size: CGSize)
+    func prepareForShowingAdWithSize(_ size: CGSize)
     func prepareForHidingAd()
     var scene: SKScene {
         get
@@ -24,10 +24,10 @@ class MainMenuScene: SKScene {
     internal var background: Background!
     internal var uiLayer: SKNode!
     
-    private let whiteStripe = SKSpriteNode(texture: SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe"))
-    private let musicSwitcher = Button(fontNamed: DisplayHelper.FontName)
-    private let startButton = Button(fontNamed: DisplayHelper.FontName)
-    private let gameCenterButton = Button(fontNamed: DisplayHelper.FontName)
+    fileprivate let whiteStripe = SKSpriteNode(texture: SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe"))
+    fileprivate let musicSwitcher = Button(fontNamed: DisplayHelper.FontName)
+    fileprivate let startButton = Button(fontNamed: DisplayHelper.FontName)
+    fileprivate let gameCenterButton = Button(fontNamed: DisplayHelper.FontName)
     internal let rateGameButton = Button(fontNamed: DisplayHelper.FontName)
     internal var rateGameStars: SKSpriteNode!
 
@@ -36,7 +36,7 @@ class MainMenuScene: SKScene {
     internal var swipeUpRecognizer: UISwipeGestureRecognizer!
     internal var swipeDownRecognizer: UISwipeGestureRecognizer!
 
-    private var isShowingResult = false
+    fileprivate var isShowingResult = false
     var score: Int! = nil {
         didSet {
             isShowingResult = true
@@ -44,14 +44,14 @@ class MainMenuScene: SKScene {
     }
     var showNewLabel = false
     
-    private var fingerprints: [SKSpriteNode] = []
-    private let maxFingerprintsCount = 150
-    private var tapsCounter = 0
+    fileprivate var fingerprints: [SKSpriteNode] = []
+    fileprivate let maxFingerprintsCount = 150
+    fileprivate var tapsCounter = 0
     
     internal var adBannerSize = CGSize()
     
-    override func didMoveToView(view: SKView) {
-        uiLayer = self.childNodeWithName("UI Layer")
+    override func didMove(to view: SKView) {
+        uiLayer = self.childNode(withName: "UI Layer")
         fillScreenWithBackground()
         
         addWhiteStripe()
@@ -75,22 +75,22 @@ class MainMenuScene: SKScene {
         addSwipeUpRecognizer()
     }
     
-    private var shouldShowRateMeButton: Bool {
+    fileprivate var shouldShowRateMeButton: Bool {
         let activationsCountKey = "Application activations count"
-        let activationsCount = NSUserDefaults.standardUserDefaults().integerForKey(activationsCountKey)
+        let activationsCount = UserDefaults.standard.integer(forKey: activationsCountKey)
         return activationsCount > 10 && Results.localBestResult > 60 && AppRater.shouldShowRateMeDialog()
     }
     
-    private func fillScreenWithBackground() {
-        if let backgroundLayer = self.childNodeWithName("BackgroundLayer") {
-            if let backgroundPart = backgroundLayer.childNodeWithName("BackgroundPart") as? SKSpriteNode {
+    fileprivate func fillScreenWithBackground() {
+        if let backgroundLayer = self.childNode(withName: "BackgroundLayer") {
+            if let backgroundPart = backgroundLayer.childNode(withName: "BackgroundPart") as? SKSpriteNode {
                 background = Background(backgroundTileSprite: backgroundPart, screenSize: self.size)
                 background.addTo(backgroundLayer)
             }
         }
     }
     
-    private var labelLeftBorder: CGFloat {
+    fileprivate var labelLeftBorder: CGFloat {
         get {
             return self.size.width * 0.05
         }
@@ -98,7 +98,7 @@ class MainMenuScene: SKScene {
 
     // MARK: Music Switcher
     
-    private func initMusicSwitcher() {
+    fileprivate func initMusicSwitcher() {
         musicSwitcher.fontSize = 32 * DisplayHelper.FontScale
         updateMusicSwitcherText()
         musicSwitcher.delegate = self
@@ -106,7 +106,7 @@ class MainMenuScene: SKScene {
         musicSwitcher.zPosition = 5
     }
     
-    private func updateMusicSwitcherText() {
+    fileprivate func updateMusicSwitcherText() {
         if AudioManager.sharedInstance.musicEnabled {
             musicSwitcher.text = NSLocalizedString("Music ON", comment: "Music ON")
         } else {
@@ -125,7 +125,7 @@ class MainMenuScene: SKScene {
     
     // MARK: Game Center Button
     
-    private func initGameCenterButton() {
+    fileprivate func initGameCenterButton() {
         gameCenterButton.text = "Game Center"
         gameCenterButton.fontSize = 32 * DisplayHelper.FontScale
         updateGameCenterButtonPosition()
@@ -143,7 +143,7 @@ class MainMenuScene: SKScene {
     
     // MARK: Rate Game Button
     
-    private func initRateGame() {
+    fileprivate func initRateGame() {
         rateGameButton.text = NSLocalizedString("Please, rate us", comment: "Please, rate us")
         rateGameButton.fontSize = 32 * DisplayHelper.FontScale
 
@@ -173,7 +173,7 @@ class MainMenuScene: SKScene {
     
     // MARK: Start Button
     
-    private func addWhiteStripe() {
+    fileprivate func addWhiteStripe() {
 //        let texture = SKTextureAtlas(named: "Asphalt").textureNamed("white-stripe")
 //        whiteStripe = SKSpriteNode(texture: texture)
         let position = CGPoint(x: 0, y: self.size.height * 0.4)
@@ -182,7 +182,7 @@ class MainMenuScene: SKScene {
         uiLayer.addChild(whiteStripe)
     }
 
-    private func initStartButton() {
+    fileprivate func initStartButton() {
         if isShowingResult {
             startButton.text = NSLocalizedString("Restart Button", comment: "Restart Button")
         } else {
@@ -202,7 +202,7 @@ class MainMenuScene: SKScene {
     
     // MARK: After Game Over
     
-    private func addDrawing() {
+    fileprivate func addDrawing() {
         if isShowingResult {
             if drawing == nil {
                 return
@@ -220,14 +220,14 @@ class MainMenuScene: SKScene {
         uiLayer.addChild(drawing)
     }
     
-    private func showScores() {
+    fileprivate func showScores() {
         let gameOver1 = SKLabelNode(fontNamed: DisplayHelper.FontName)
         gameOver1.text = NSLocalizedString("Game over 1'st row", comment: "Game")
         gameOver1.fontSize = 36 * DisplayHelper.FontScale
         
         let gameOver2 = gameOver1.copy() as! SKLabelNode
         gameOver2.text = NSLocalizedString("Game over 2'nd row", comment: "over")
-        gameOver2.horizontalAlignmentMode = .Left
+        gameOver2.horizontalAlignmentMode = .left
         gameOver2.fontSize = 32 * DisplayHelper.FontScale
         
         gameOver1.zRotation = 0.2
@@ -252,7 +252,7 @@ class MainMenuScene: SKScene {
             
             let resultLabel = SKLabelNode(fontNamed: DisplayHelper.FontName)
             resultLabel.text = result1
-            if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
                 resultLabel.fontSize = 18 * DisplayHelper.FontScale
             } else {
                 resultLabel.fontSize = 16 * DisplayHelper.FontScale
@@ -267,7 +267,7 @@ class MainMenuScene: SKScene {
             let resultLabel1 = SKLabelNode(fontNamed: DisplayHelper.FontName)
             resultLabel1.text = result1
             var y = scoreLabel.position.y;
-            if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+            if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
                 resultLabel1.fontSize = 18 * DisplayHelper.FontScale
                 y -= scoreLabel.frame.size.height * 0.5
             } else {
@@ -277,11 +277,11 @@ class MainMenuScene: SKScene {
             let x = score < 8 ? 0 : resultLabel1.frame.size.width * 0.1
             resultLabel1.position = CGPoint(x: x, y: y)
             resultLabel1.zRotation = 0.06
-            resultLabel1.verticalAlignmentMode = .Bottom
+            resultLabel1.verticalAlignmentMode = .bottom
             
             let resultLabel2: SKLabelNode = resultLabel1.copy() as! SKLabelNode
             resultLabel2.text = result2
-            resultLabel2.verticalAlignmentMode = .Top
+            resultLabel2.verticalAlignmentMode = .top
             
             node.addChild(resultLabel1)
             node.addChild(resultLabel2)
@@ -299,10 +299,10 @@ class MainMenuScene: SKScene {
         uiLayer.addChild(node)
     }
     
-    private func addNewLabel() {
+    fileprivate func addNewLabel() {
         let newLabel = SKLabelNode(fontNamed: DisplayHelper.FontName)
         newLabel.text = NSLocalizedString("New drawing label", comment: "NEW!")
-        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+        if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
             let x = drawing.size.width * 0.5 - newLabel.frame.size.width * 0.5 - 5
             let y = drawing.size.height * 0.5 - newLabel.frame.size.height * 0.5 - 5
             newLabel.position = CGPoint(x: x, y: y)
@@ -315,7 +315,7 @@ class MainMenuScene: SKScene {
         drawing.addChild(newLabel)
     }
     
-    private func presentGameScene() {
+    fileprivate func presentGameScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             
             if adDelegate != nil {
@@ -324,7 +324,7 @@ class MainMenuScene: SKScene {
             }
             
             scene.size = self.size
-            scene.scaleMode = SKSceneScaleMode.ResizeFill
+            scene.scaleMode = SKSceneScaleMode.resizeFill
 
             disableButtons()
             disableRecognizers()
@@ -341,7 +341,7 @@ class MainMenuScene: SKScene {
         }
     }
     
-    private func disableButtons() {
+    fileprivate func disableButtons() {
         startButton.enabled = false
         startButton.delegate = nil
 
@@ -357,20 +357,20 @@ class MainMenuScene: SKScene {
     
     //MARK: Fingerprints
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             tapsCounter += 1
             
-            let location = touch.locationInNode(uiLayer)
+            let location = touch.location(in: uiLayer)
             addFingerprintToLocation(location)
             
-            let dictionary: [NSObject: AnyObject] = ["Count" : tapsCounter]
+            let dictionary: [AnyHashable: Any] = ["Count" : tapsCounter]
             Flurry.logEvent("Left_a_fingerprint_in_menu", withParameters: dictionary)
         }
 //        performShiftDown()
     }
     
-    private func addFingerprintToLocation(location: CGPoint) {
+    fileprivate func addFingerprintToLocation(_ location: CGPoint) {
         let touchprint = Touchprint.touchprintWithTouchLocation(location)
         touchprint.position = location
         touchprint.color = fingerprintColor()
@@ -388,7 +388,7 @@ class MainMenuScene: SKScene {
         fingerprints.append(touchprint)
     }
     
-    private func fingerprintColor() -> SKColor {
+    fileprivate func fingerprintColor() -> SKColor {
         let red = CGFloat(arc4random() % 100) * 0.003 + 0.7
         let green = CGFloat(arc4random() % 100) * 0.003 + 0.7
         let blue = CGFloat(arc4random() % 100) * 0.003 + 0.7
@@ -403,12 +403,12 @@ class MainMenuScene: SKScene {
 
 // MARK: Button Protocol
 extension MainMenuScene: ButtonProtocol {
-    func didTouchDownButton(sender: Button, position: CGPoint) {
-        let uiPosition = uiLayer.convertPoint(position, fromNode: sender)
+    func didTouchDownButton(_ sender: Button, position: CGPoint) {
+        let uiPosition = uiLayer.convert(position, from: sender)
         addFingerprintToLocation(uiPosition)
     }
     
-    func didTouchUpInsideButton(sender: Button, position: CGPoint) {
+    func didTouchUpInsideButton(_ sender: Button, position: CGPoint) {
         if sender === musicSwitcher {
             AudioManager.sharedInstance.switchMusicEnabled()
             updateMusicSwitcherText()
@@ -421,8 +421,8 @@ extension MainMenuScene: ButtonProtocol {
             if senderName == "Push Out button" {
                 Flurry.logEvent("Opened_Push_Out_link")
                 let link = "itms-apps://itunes.apple.com/us/app/push-out-friends-competition/id899582393?ls=1&mt=8"
-                if let url = NSURL(string: link) {
-                    UIApplication.sharedApplication().openURL(url)
+                if let url = URL(string: link) {
+                    UIApplication.shared.openURL(url)
                 }
             }
         } else if sender == rateGameButton {

@@ -14,7 +14,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     
     var gameViewController: UIViewController!
     var enabled: Bool {
-        return GKLocalPlayer.localPlayer().authenticated
+        return GKLocalPlayer.localPlayer().isAuthenticated
     }
     
     class var sharedInstance: GameCenterManager {
@@ -31,23 +31,23 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     
     func autenticatePlayer() {
         let localPlayer = GKLocalPlayer.localPlayer()
-        localPlayer.authenticateHandler = {(viewController : UIViewController?, error : NSError?) -> Void in
-            //handle authentication
-            if viewController != nil {
-                print("Game Center: Need to Log In")
-                if self.gameViewController != nil {
-                    self.pauseCurrentScene()
-                    self.gameViewController.presentViewController(viewController!, animated: true, completion: nil)
-                }
-            } else if localPlayer.authenticated {
-                print("Game Center: Successfully autenticated")
-                self.updateResults()
-                self.resumeCurrentScene()
-            } else {
-                print("Game Center: Autentication failed")
-                self.resumeCurrentScene()
-            }
-        }
+//        localPlayer.authenticateHandler = {(viewController : UIViewController?, error : NSError?) -> Void in
+//            //handle authentication
+//            if viewController != nil {
+//                print("Game Center: Need to Log In")
+//                if self.gameViewController != nil {
+//                    self.pauseCurrentScene()
+//                    self.gameViewController.present(viewController!, animated: true, completion: nil)
+//                }
+//            } else if localPlayer.isAuthenticated {
+//                print("Game Center: Successfully autenticated")
+//                self.updateResults()
+//                self.resumeCurrentScene()
+//            } else {
+//                print("Game Center: Autentication failed")
+//                self.resumeCurrentScene()
+//            }
+//        } as! (UIViewController?, Error?) -> Void
     }
     
     let defaultLeaderboardId = "trottoir.leaderboard"
@@ -55,7 +55,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     func presentGameCenterViewController() {
         // If player is not authenticated in Game Center — bring him to Game Center App
         if !self.enabled {
-            UIApplication.sharedApplication().openURL(NSURL(string:"gamecenter:")!)
+            UIApplication.shared.openURL(URL(string:"gamecenter:")!)
             return
         }
         
@@ -68,37 +68,37 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         // Present View Controller
         let gcvc = GKGameCenterViewController()
         gcvc.gameCenterDelegate = self
-        gcvc.viewState = .Leaderboards
+        gcvc.viewState = .leaderboards
         gcvc.leaderboardIdentifier = defaultLeaderboardId
-        gameViewController.presentViewController(gcvc, animated: true, completion: nil)
+        gameViewController.present(gcvc, animated: true, completion: nil)
     }
     
-    private func pauseCurrentScene() {
+    fileprivate func pauseCurrentScene() {
         let skView = self.gameViewController.view as! SKView
-        skView.paused = true
+        skView.isPaused = true
     }
     
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
-        gameViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameViewController.dismiss(animated: true, completion: { () -> Void in
             self.resumeCurrentScene()
         })
     }
     
-    private func resumeCurrentScene() {
+    fileprivate func resumeCurrentScene() {
         let skView = self.gameViewController.view as! SKView
-        skView.paused = false
+        skView.isPaused = false
     }
 
     
-    func reportScore(scoreValue: Int, completion: (() -> ())?) {
+    func reportScore(_ scoreValue: Int, completion: (() -> ())?) {
         let score = GKScore(leaderboardIdentifier: defaultLeaderboardId)
         score.value = Int64(scoreValue)
         score.context = 0
-        GKScore.reportScores([score], withCompletionHandler: { (error) -> Void in
+        GKScore.report([score], withCompletionHandler: { (error) -> Void in
             if error == nil {
                 print("Game Center: Score successfully reported")
             } else {
-                print("Game Center: Score report failed. \(error!.description)")
+//                print("Game Center: Score report failed. \(error!.description)")
             }
             
             completion?()
@@ -106,9 +106,9 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     }
         
     func updateResults() {
-        GKLeaderboard.loadLeaderboardsWithCompletionHandler { (leaderboards, error) -> Void in
+        GKLeaderboard.loadLeaderboards { (leaderboards, error) -> Void in
             if error != nil {
-                print("Game Center: Leaderboards loading failed.  \(error!.description)")
+//                print("Game Center: Leaderboards loading failed.  \(error!.description)")
                 return
             }
             
@@ -124,7 +124,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func retreiveDataFromLeaderboard(leaderboard: GKLeaderboard) {
+    fileprivate func retreiveDataFromLeaderboard(_ leaderboard: GKLeaderboard) {
         loadFriendsAlltimeTop10FromLeaderboard(leaderboard, completion: { () -> () in
             self.loadFriendsWeekTop10FromLeaderboard(leaderboard, completion: { () -> () in
                 self.loadFriendsTodayTop10FromLeaderboard(leaderboard, completion: { () -> () in
@@ -138,14 +138,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         })
     }
     
-    private func loadGlobalAlltimeBestFromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .Global
+    fileprivate func loadGlobalAlltimeBestFromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .global
         let range = NSRange(location: 1, length: 1)
         leaderboard.range = range
-        leaderboard.timeScope = .AllTime
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = .allTime
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving global alltime best.  \(error!.description)")
+//                print("Game Center: Error during receiving global alltime best.  \(error!.description)")
                 return
             }
             
@@ -161,14 +161,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadGlobalWeekBestFromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .Global
+    fileprivate func loadGlobalWeekBestFromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .global
         let range = NSRange(location: 1, length: 1)
         leaderboard.range = range
-        leaderboard.timeScope = .Week
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = .week
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving global week best.  \(error!.description)")
+//                print("Game Center: Error during receiving global week best.  \(error!.description)")
                 return
             }
             
@@ -184,14 +184,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadGlobalTodayBestFromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .Global
+    fileprivate func loadGlobalTodayBestFromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .global
         let range = NSRange(location: 1, length: 1)
         leaderboard.range = range
-        leaderboard.timeScope = .Today
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = .today
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving global today best.  \(error!.description)")
+//                print("Game Center: Error during receiving global today best.  \(error!.description)")
                 return
             }
             
@@ -207,14 +207,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadFriendsAlltimeTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .FriendsOnly
+    fileprivate func loadFriendsAlltimeTop10FromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .friendsOnly
         let range = NSRange(location: 1, length: 10)
         leaderboard.range = range
-        leaderboard.timeScope = .AllTime
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = .allTime
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
+//                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             
@@ -239,14 +239,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadFriendsWeekTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .FriendsOnly
+    fileprivate func loadFriendsWeekTop10FromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .friendsOnly
         let range = NSRange(location: 1, length: 10)
         leaderboard.range = range
-        leaderboard.timeScope = GKLeaderboardTimeScope.Week
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = GKLeaderboardTimeScope.week
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
+//                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             
@@ -271,14 +271,14 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         }
     }
     
-    private func loadFriendsTodayTop10FromLeaderboard(leaderboard: GKLeaderboard, completion: () -> ()) {
-        leaderboard.playerScope = .FriendsOnly
+    fileprivate func loadFriendsTodayTop10FromLeaderboard(_ leaderboard: GKLeaderboard, completion: @escaping () -> ()) {
+        leaderboard.playerScope = .friendsOnly
         let range = NSRange(location: 1, length: 10)
         leaderboard.range = range
-        leaderboard.timeScope = GKLeaderboardTimeScope.Today
-        leaderboard.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboard.timeScope = GKLeaderboardTimeScope.today
+        leaderboard.loadScores { (scores, error) -> Void in
             if error != nil {
-                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
+//                print("Game Center: Error during receiving friendsonly alltime best.  \(error!.description)")
                 return
             }
             

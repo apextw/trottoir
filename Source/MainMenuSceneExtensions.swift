@@ -10,7 +10,7 @@ extension MainMenuScene {
         
         if swipeUpRecognizer == nil {
             swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MainMenuScene.performShiftDown(_:)))
-            swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+            swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.up
         }
         self.view!.addGestureRecognizer(swipeUpRecognizer)
     }
@@ -22,7 +22,7 @@ extension MainMenuScene {
         
         if swipeDownRecognizer == nil {
             swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MainMenuScene.performShiftUp(_:)))
-            swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+            swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.down
         }
         self.view!.addGestureRecognizer(swipeDownRecognizer)
     }
@@ -38,22 +38,22 @@ extension MainMenuScene {
         }
     }
     
-    internal func performShiftDown(sender: AnyObject) {
+    internal func performShiftDown(_ sender: AnyObject) {
         addSwipeDownRecognizer()
         
         background.prepareScreenBelow()
         addInformation()
         
-        let shiftAction = SKAction.moveByX(0, y: self.size.height, duration: 0.5)
-        shiftAction.timingMode = SKActionTimingMode.EaseOut
-        uiLayer.runAction(shiftAction)
-        let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
-        backgroundLayer.runAction(shiftAction)
+        let shiftAction = SKAction.moveBy(x: 0, y: self.size.height, duration: 0.5)
+        shiftAction.timingMode = SKActionTimingMode.easeOut
+        uiLayer.run(shiftAction)
+        let backgroundLayer = self.childNode(withName: "BackgroundLayer")!
+        backgroundLayer.run(shiftAction)
         
         Flurry.logEvent("Shifted_to_information_screen")
     }
     
-    private func addInformation() {
+    fileprivate func addInformation() {
         let informationLayer = SKNode()
         informationLayer.name = "Information layer"
         
@@ -76,7 +76,7 @@ extension MainMenuScene {
         uiLayer.addChild(informationLayer)
     }
     
-    private func checkOutButton() -> SKNode {
+    fileprivate func checkOutButton() -> SKNode {
         let buttonLayer = SKNode()
         buttonLayer.name = "Check out layer"
         var position = CGPoint()
@@ -84,7 +84,7 @@ extension MainMenuScene {
         let yellowColor = SKColor(red: 1, green: 1, blue: 0.4, alpha: 1)
 
         let basicSize: CGFloat = 20.0 * DisplayHelper.FontScale
-        let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 1.2
+        let marginScale: CGFloat = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone ? 1 : 1.2
         
         let row1 = Button(fontNamed: DisplayHelper.FontName)
         row1.text =  NSLocalizedString("Push Out 1'st row", comment: "Check out")
@@ -133,7 +133,7 @@ extension MainMenuScene {
         row5.text = NSLocalizedString("Only on the App Store", comment: "Only on the App Store")
         row5.name = "Push Out button"
         row5.delegate = self
-        row5.fontColor = SKColor.whiteColor()
+        row5.fontColor = SKColor.white
         row5.fontSize = basicSize
         position.y = (row4.position.y - (row4.frame.size.height * 0.4)) * marginScale
         position.x = 0
@@ -149,7 +149,7 @@ extension MainMenuScene {
         return buttonLayer
     }
     
-    private func gameByInfo() -> SKNode {
+    fileprivate func gameByInfo() -> SKNode {
         let gameByLayer = SKNode()
         
 //        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-with-laptop") {
@@ -165,12 +165,12 @@ extension MainMenuScene {
 
         let gameByLabel = SKLabelNode(fontNamed: fontName)
         gameByLabel.text = NSLocalizedString("Game by label", comment: "Game by")
-        gameByLabel.fontColor = SKColor.whiteColor()
+        gameByLabel.fontColor = SKColor.white
         gameByLabel.fontSize = 1.2 * basicSize
-        gameByLabel.verticalAlignmentMode = .Bottom
-        gameByLabel.horizontalAlignmentMode = .Left
+        gameByLabel.verticalAlignmentMode = .bottom
+        gameByLabel.horizontalAlignmentMode = .left
         var y: CGFloat
-        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+        if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
             x = size.width * 0.1
             y = gameByLabel.frame.size.height * 0.8
         } else {
@@ -183,9 +183,9 @@ extension MainMenuScene {
         let nameLabel = SKLabelNode(fontNamed: fontName)
         nameLabel.text = NSLocalizedString("Game by first name", comment: "Alexander")
         nameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
-        nameLabel.verticalAlignmentMode = .Bottom
-        nameLabel.horizontalAlignmentMode = .Left
-        if NSBundle.mainBundle().preferredLocalizations[0] as NSString == "ru" {
+        nameLabel.verticalAlignmentMode = .bottom
+        nameLabel.horizontalAlignmentMode = .left
+        if Bundle.main.preferredLocalizations[0] as NSString == "ru" {
             nameLabel.fontSize = 1.7 * basicSize
         } else {
             nameLabel.fontSize = 1.9 * basicSize
@@ -199,8 +199,8 @@ extension MainMenuScene {
         surnameLabel.text = NSLocalizedString("Game by last name", comment: "Bekert")
         surnameLabel.fontColor = SKColor(red: 0.8, green: 1, blue: 1, alpha: 1)
         surnameLabel.fontSize = 2 * basicSize
-        surnameLabel.verticalAlignmentMode = .Bottom
-        surnameLabel.horizontalAlignmentMode = .Left
+        surnameLabel.verticalAlignmentMode = .bottom
+        surnameLabel.horizontalAlignmentMode = .left
         x = -size.width * 0.07
         y = -surnameLabel.frame.size.height
         surnameLabel.position = CGPoint(x: x, y: y)
@@ -213,7 +213,7 @@ extension MainMenuScene {
         return gameByLayer
     }
     
-    private func drawingsByInfo() -> SKNode {
+    fileprivate func drawingsByInfo() -> SKNode {
         let drawingsByLayer = SKNode()
         
 //        if let giraffeTexture = SKTextureAtlas(named: "Drawings").textureNamed("giraffe-painter") {
@@ -225,16 +225,16 @@ extension MainMenuScene {
         
         let fontName = DisplayHelper.FontName
         let basicSize: CGFloat = 17.0 * DisplayHelper.FontScale
-        let marginScale: CGFloat = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 1 : 0.5
+        let marginScale: CGFloat = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone ? 1 : 0.5
 
         let angle: CGFloat = 0.19
         
         let shinyLabel = SKLabelNode(fontNamed: fontName)
         shinyLabel.text = NSLocalizedString("Drawings by label 1'st row", comment: "Shiny")
-        shinyLabel.fontColor = SKColor.whiteColor()
+        shinyLabel.fontColor = SKColor.white
         shinyLabel.fontSize = 1.2 * basicSize
-        shinyLabel.verticalAlignmentMode = .Bottom
-        shinyLabel.horizontalAlignmentMode = .Left
+        shinyLabel.verticalAlignmentMode = .bottom
+        shinyLabel.horizontalAlignmentMode = .left
         x = -size.width * 0.4 * marginScale
         var y = shinyLabel.frame.size.height * 0.17
         shinyLabel.position = CGPoint(x: x, y: y)
@@ -242,10 +242,10 @@ extension MainMenuScene {
         
         let drawingsByLabel = SKLabelNode(fontNamed: fontName)
         drawingsByLabel.text = NSLocalizedString("Drawings by label 2'nd row", comment: "drawings by")
-        drawingsByLabel.fontColor = SKColor.whiteColor()
+        drawingsByLabel.fontColor = SKColor.white
         drawingsByLabel.fontSize = 1.2 * basicSize
-        drawingsByLabel.verticalAlignmentMode = .Bottom
-        drawingsByLabel.horizontalAlignmentMode = .Left
+        drawingsByLabel.verticalAlignmentMode = .bottom
+        drawingsByLabel.horizontalAlignmentMode = .left
         x = -size.width * 0.3 * marginScale
         y = -drawingsByLabel.frame.size.height * 0.5
         drawingsByLabel.position = CGPoint(x: x, y: y)
@@ -255,8 +255,8 @@ extension MainMenuScene {
         nameLabel.text = NSLocalizedString("Drawings by first name", comment: "Tatsiana")
         nameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
         nameLabel.fontSize = 1.9 * basicSize
-        nameLabel.verticalAlignmentMode = .Bottom
-        nameLabel.horizontalAlignmentMode = .Left
+        nameLabel.verticalAlignmentMode = .bottom
+        nameLabel.horizontalAlignmentMode = .left
         x = -size.width * 0.46 * marginScale
         y = -nameLabel.frame.size.height * 1.7
         nameLabel.position = CGPoint(x: x, y: y)
@@ -266,8 +266,8 @@ extension MainMenuScene {
         surnameLabel.text = NSLocalizedString("Drawings by last name", comment: "Volkova")
         surnameLabel.fontColor = SKColor(red: 1, green: 0.8, blue: 0.6, alpha: 1)
         surnameLabel.fontSize = 2 * basicSize
-        surnameLabel.verticalAlignmentMode = .Bottom
-        surnameLabel.horizontalAlignmentMode = .Left
+        surnameLabel.verticalAlignmentMode = .bottom
+        surnameLabel.horizontalAlignmentMode = .left
         x = -size.width * 0.35 * marginScale
         y = -surnameLabel.frame.size.height * 2.4
         surnameLabel.position = CGPoint(x: x, y: y)
@@ -282,15 +282,15 @@ extension MainMenuScene {
     }
 
     
-    internal func performShiftUp(sender: AnyObject) {
+    internal func performShiftUp(_ sender: AnyObject) {
         self.view!.removeGestureRecognizer(swipeDownRecognizer)
         self.view!.addGestureRecognizer(swipeUpRecognizer)
         
-        let shiftAction = SKAction.moveByX(0, y: -self.size.height, duration: 0.5)
-        shiftAction.timingMode = SKActionTimingMode.EaseOut
-        uiLayer.runAction(shiftAction)
-        let backgroundLayer = self.childNodeWithName("BackgroundLayer")!
-        backgroundLayer.runAction(shiftAction, completion: { () -> Void in
+        let shiftAction = SKAction.moveBy(x: 0, y: -self.size.height, duration: 0.5)
+        shiftAction.timingMode = SKActionTimingMode.easeOut
+        uiLayer.run(shiftAction)
+        let backgroundLayer = self.childNode(withName: "BackgroundLayer")!
+        backgroundLayer.run(shiftAction, completion: { () -> Void in
             self.background.removeInvisibleRows()
             self.removeInformation()
         })
@@ -298,8 +298,8 @@ extension MainMenuScene {
         Flurry.logEvent("Shifted_back_to_menu")
     }
     
-    private func removeInformation() {
-        if let informationLayer = uiLayer.childNodeWithName("Information layer") {
+    fileprivate func removeInformation() {
+        if let informationLayer = uiLayer.childNode(withName: "Information layer") {
             informationLayer.removeFromParent()
         }
     }
@@ -313,21 +313,21 @@ extension MainMenuScene: SceneShowingAdProtocol {
         updateGameCenterButtonPosition()
         updateRateGameButtonPosition()
         
-        rateGameButton.hidden = false
+        rateGameButton.isHidden = false
         if rateGameStars != nil {
-            rateGameStars.hidden = false
+            rateGameStars.isHidden = false
         }
     }
     
-    func prepareForShowingAdWithSize(size: CGSize) {
+    func prepareForShowingAdWithSize(_ size: CGSize) {
         adBannerSize = size
         updateMusicSwitcherPosition()
         updateGameCenterButtonPosition()
         updateRateGameButtonPosition()
         
-        rateGameButton.hidden = true
+        rateGameButton.isHidden = true
         if rateGameStars != nil {
-            rateGameStars.hidden = true
+            rateGameStars.isHidden = true
         }
     }
     

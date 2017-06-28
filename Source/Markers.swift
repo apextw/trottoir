@@ -7,21 +7,56 @@
 //
 
 import SpriteKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 struct MarkersColor {
-    static var color = SKColor.whiteColor()
+    static var color = SKColor.white
 }
 
 class Markers {
     
-    private var markers : [Marker] = []
+    fileprivate var markers : [Marker] = []
     var markerDelegate: MarkerActivationProtocol!
     
     internal var labels: [SKNode] = []
     
-    private let maxY: CGFloat!;
-    private let minY: CGFloat!;
-    private let markerInvisibleMaxY: CGFloat!
+    fileprivate let maxY: CGFloat!;
+    fileprivate let minY: CGFloat!;
+    fileprivate let markerInvisibleMaxY: CGFloat!
     
     internal var screenSize = CGSize(width: 0, height: 0)
     
@@ -44,26 +79,26 @@ class Markers {
         markerInvisibleMaxY = screenSize.height * 0.5 + Marker.size.height * 0.5
         self.markerDelegate = markersDelegate
         
-        MarkersColor.color = SKColor.whiteColor()
+        MarkersColor.color = SKColor.white
         if Results.attempt > 1 {
             addAttemptLabel()
         }
         addFirstMarker()
     }
     
-    private func addAttemptLabel() {
+    fileprivate func addAttemptLabel() {
         let labelNode = SKLabelNode(fontNamed: DisplayHelper.FontName)
         var attemptText = NSLocalizedString("Attempt number", comment: "Attempt number")
-        attemptText = attemptText.stringByReplacingOccurrencesOfString("%number%", withString: Results.attempt.description)
+        attemptText = attemptText.replacingOccurrences(of: "%number%", with: Results.attempt.description)
         labelNode.text = attemptText
-        labelNode.verticalAlignmentMode = .Center
-        labelNode.horizontalAlignmentMode = .Center
+        labelNode.verticalAlignmentMode = .center
+        labelNode.horizontalAlignmentMode = .center
         labelNode.fontSize = 32 * DisplayHelper.MainMenuScale
         labelNode.position = CGPoint(x: 0, y: screenSize.height / 2 + labelNode.frame.size.height / 2)
         labels.append(labelNode)
     }
         
-    private func addFirstMarker() {
+    fileprivate func addFirstMarker() {
         counter = 1
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
         marker.delegate = markerDelegate
@@ -76,7 +111,7 @@ class Markers {
         markers.append(marker)
     }
     
-    func addTo(node: SKNode) {
+    func addTo(_ node: SKNode) {
         for marker in markers {
             if marker.parent != nil {
                 marker.removeFromParent()
@@ -101,7 +136,7 @@ class Markers {
         }
     }
     
-    private func shift() {
+    fileprivate func shift() {
         for marker in markers {
             if marker.parent == nil {
                 continue
@@ -122,7 +157,7 @@ class Markers {
         }
     }
     
-    private func addMarkerIfNeeded() {
+    fileprivate func addMarkerIfNeeded() {
         guard let lastMarker = markers.last else {
             return
         }
@@ -143,7 +178,7 @@ class Markers {
         }
     }
     
-    private func removeMarkerIfNeeded() {
+    fileprivate func removeMarkerIfNeeded() {
         guard let firstMarker = markers.first else {
             return
         }
@@ -158,7 +193,7 @@ class Markers {
         }
     }
     
-    private func removeLabelIfNeeded() {
+    fileprivate func removeLabelIfNeeded() {
         guard let firstLabel = labels.first else {
             return
         }
@@ -181,7 +216,7 @@ class Markers {
 // MARK: Complexities of adding markers
 extension Markers {
     
-    private func addEasyMarker(lastMarker lastMarker: Marker) {
+    fileprivate func addEasyMarker(lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -204,7 +239,7 @@ extension Markers {
         }
     }
     
-    private func addMediumMarker(lastMarker lastMarker: Marker) {
+    fileprivate func addMediumMarker(lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -227,7 +262,7 @@ extension Markers {
         }
     }
     
-    private func addHardMarker(lastMarker lastMarker: Marker) {
+    fileprivate func addHardMarker(lastMarker: Marker) {
         let layer = lastMarker.parent!
         
         let randomValue = arc4random() % 100
@@ -250,7 +285,7 @@ extension Markers {
         }
     }
     
-    private func addInsaneMarker(lastMarker lastMarker: Marker) {
+    fileprivate func addInsaneMarker(lastMarker: Marker) {
         let layer = lastMarker.parent!
         if arc4random() % 2 == 0 {
             addDoubleMarkerTo(layer, withLastMarkerPosition: lastMarker.position)
@@ -264,7 +299,7 @@ extension Markers {
 // MARK: Styles of adding markers
 extension Markers {
     
-    private func addSingleMarkerTo(node: SKNode, withLastMarkerPosition lastPosition: CGPoint) -> Marker {
+    fileprivate func addSingleMarkerTo(_ node: SKNode, withLastMarkerPosition lastPosition: CGPoint) -> Marker {
         var position = lastPosition
         position.y += border + Marker.size.height
         position.x = 0
@@ -279,7 +314,7 @@ extension Markers {
         return marker
     }
     
-    private func addSingleMarkerTo(node: SKNode) -> Marker {
+    fileprivate func addSingleMarkerTo(_ node: SKNode) -> Marker {
         counter += 1
 //        updateColor()
         let marker = Marker.markerWithLabel("\(counter)", number: counter)
@@ -292,12 +327,12 @@ extension Markers {
         return marker
     }
     
-    private func addDoubleMarkerTo(node: SKNode, withLastMarkerPosition lastPosition: CGPoint) {
+    fileprivate func addDoubleMarkerTo(_ node: SKNode, withLastMarkerPosition lastPosition: CGPoint) {
         let yPosition = lastPosition.y + border + Marker.size.height
         addDoubleMarkerTo(node, toPosition: CGPoint(x: 0, y: yPosition))
     }
     
-    private func addDoubleMarkerTo(node: SKNode, toPosition position: CGPoint) -> (leftMarker: Marker, rightMarker: Marker) {
+    fileprivate func addDoubleMarkerTo(_ node: SKNode, toPosition position: CGPoint) -> (leftMarker: Marker, rightMarker: Marker) {
         let xShift = (Marker.size.width + border) / 2
         
         let leftMarker = addSingleMarkerTo(node)
@@ -316,7 +351,7 @@ extension Markers {
         return (leftMarker, rightMarker)
     }
     
-    private func positionForNewMarkerBasedOnLastMarker(lastMarker: Marker) -> CGPoint {
+    fileprivate func positionForNewMarkerBasedOnLastMarker(_ lastMarker: Marker) -> CGPoint {
         let y = lastMarker.position.y + Marker.size.height + border
         
         // If last marker is a Double marker then calculate X between markers
@@ -332,7 +367,7 @@ extension Markers {
     }
     
     
-    private func addMarkersZigzagStyle(elementsCount count: Int, toNode node: SKNode, withInitialPosition initialPosition: CGPoint, chanceOfDoubleMarker: CGFloat) {
+    fileprivate func addMarkersZigzagStyle(elementsCount count: Int, toNode node: SKNode, withInitialPosition initialPosition: CGPoint, chanceOfDoubleMarker: CGFloat) {
         
         var xCoordinate: CGFloat = initialPosition.x
         var yCoordinate: CGFloat = initialPosition.y
@@ -373,14 +408,14 @@ extension Markers {
         }
     }
     
-    private func addMarkersRandomStyle(elementsCount count: Int, toNode node: SKNode, withInitialY initialY: CGFloat) {
+    fileprivate func addMarkersRandomStyle(elementsCount count: Int, toNode node: SKNode, withInitialY initialY: CGFloat) {
         var xCoordinate: CGFloat = 0
         var yCoordinate: CGFloat = initialY;
         
         let maxX = (screenSize.width * 0.5) - (Marker.size.width * 0.5) - border
         
         for _ in 0 ..< count {
-            xCoordinate = CGFloat(arc4random() % 1000) % maxX
+            xCoordinate = CGFloat(arc4random() % 1000).truncatingRemainder(dividingBy: maxX)
             if arc4random() % 2 == 0 {
                 xCoordinate *= -1
             }
