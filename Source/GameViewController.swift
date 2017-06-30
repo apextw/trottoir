@@ -8,7 +8,6 @@
 
 import UIKit
 import SpriteKit
-import iAd
 import GoogleMobileAds
 
 extension SKNode {
@@ -34,9 +33,6 @@ protocol adProtocol {
 }
 
 class GameViewController: UIViewController {
-
-    var adBannerView: ADBannerView!
-    
     fileprivate var banner: GADBannerView!
     fileprivate var interstitial: GADInterstitial!
     fileprivate var interstitialDidClose: ((Void) -> Void)?
@@ -54,7 +50,6 @@ class GameViewController: UIViewController {
         Touchprint.screenSize = skView.frame.size
 
         // Enable Ad
-//        loadAds()
         createAndLoadInterstitial()
         createAndLoadBanner()
         
@@ -72,14 +67,6 @@ class GameViewController: UIViewController {
             
             skView.presentScene(menuScene)
         }
-    }
-    
-    func loadAds() {
-        adBannerView = ADBannerView(frame: CGRect.zero)
-        adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
-        adBannerView.delegate = self
-        adBannerView.isHidden = true
-        view.addSubview(adBannerView)
     }
     
     override func viewWillLayoutSubviews() {
@@ -134,43 +121,6 @@ class GameViewController: UIViewController {
 //            "67def063eafa10c86d9461980e9bcc98"
 //        ]
         banner.load(request)
-    }
-}
-
-extension GameViewController: ADBannerViewDelegate {
-    
-    func bannerViewWillLoadAd(_ banner: ADBannerView!) {
-        print("banner View Will Load Ad")
-    }
-    
-    func bannerViewDidLoadAd(_ banner: ADBannerView!) {
-        print("banner View Did Load Ad")
-        readyToShowAd = true
-        if wantsToShowAd, let scene = sceneToShowAd {
-            showAdBanner(scene: scene)
-        }
-    }
-    
-    func bannerViewActionShouldBegin(_ banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        print("banner View Action Should Begin")
-        if let skView = self.view as? SKView {
-            skView.isPaused = true
-        }
-        return true
-    }
-    
-    func bannerViewActionDidFinish(_ banner: ADBannerView!) {
-        print("banner View Action Did Finish")
-        if let skView = self.view as? SKView {
-            skView.isPaused = false
-        }
-    }
-    
-    func bannerView(_ banner: ADBannerView!, didFailToReceiveAdWithError error: Error!) {
-        print("banner View did Fail To Receive Ad With Error")
-        readyToShowAd = false
-        adBannerView?.isHidden = true
-        sceneToShowAd?.prepareForHidingAd()
     }
 }
 
@@ -229,8 +179,7 @@ extension GameViewController: GADBannerViewDelegate {
     func adView(_ view: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("AdMob: Banner View Did Fail To Receive Ad With Error")
         readyToShowAd = false
-        if sceneToShowAd != nil && adBannerView != nil {
-            adBannerView.isHidden = true
+        if sceneToShowAd != nil {
             sceneToShowAd?.prepareForHidingAd()
         }
     }
