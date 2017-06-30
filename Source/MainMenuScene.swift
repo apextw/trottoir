@@ -37,7 +37,7 @@ class MainMenuScene: SKScene {
     internal var swipeDownRecognizer: UISwipeGestureRecognizer!
 
     fileprivate var isShowingResult = false
-    var score: Int! = nil {
+    var score = 0 {
         didSet {
             isShowingResult = true
         }

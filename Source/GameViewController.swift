@@ -146,32 +146,31 @@ extension GameViewController: ADBannerViewDelegate {
     func bannerViewDidLoadAd(_ banner: ADBannerView!) {
         print("banner View Did Load Ad")
         readyToShowAd = true
-        if wantsToShowAd && sceneToShowAd != nil {
-            showAdBanner(scene: sceneToShowAd!)
+        if wantsToShowAd, let scene = sceneToShowAd {
+            showAdBanner(scene: scene)
         }
     }
     
     func bannerViewActionShouldBegin(_ banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         print("banner View Action Should Begin")
-        let skView = self.view as! SKView
-        skView.isPaused = true
+        if let skView = self.view as? SKView {
+            skView.isPaused = true
+        }
         return true
     }
     
     func bannerViewActionDidFinish(_ banner: ADBannerView!) {
         print("banner View Action Did Finish")
-        let skView = self.view as! SKView
-        skView.isPaused = false
+        if let skView = self.view as? SKView {
+            skView.isPaused = false
+        }
     }
-    
     
     func bannerView(_ banner: ADBannerView!, didFailToReceiveAdWithError error: Error!) {
         print("banner View did Fail To Receive Ad With Error")
         readyToShowAd = false
-        if sceneToShowAd != nil && adBannerView != nil {
-            adBannerView.isHidden = true
-            sceneToShowAd?.prepareForHidingAd()
-        }
+        adBannerView?.isHidden = true
+        sceneToShowAd?.prepareForHidingAd()
     }
 }
 
@@ -190,7 +189,7 @@ extension GameViewController: adProtocol {
         wantsToShowAd = false
         sceneToShowAd = nil
         
-        if banner != nil && banner.superview != nil {
+        if let banner = banner, banner.superview != nil {
             banner.removeFromSuperview()
             scene.prepareForHidingAd()
         }
@@ -200,8 +199,8 @@ extension GameViewController: adProtocol {
         if interstitial.isReady {
             interstitialDidClose = completion
             interstitial.present(fromRootViewController: self)
-        } else if completion != nil {
-            completion!()
+        } else if let completion = completion {
+            completion()
         }
     }
 }

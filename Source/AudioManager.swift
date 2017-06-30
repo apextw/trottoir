@@ -10,13 +10,7 @@ import AVFoundation
 
 class AudioManager: NSObject, AVAudioPlayerDelegate {
     
-    class var sharedInstance: AudioManager {
-        struct Singleton {
-            static let instance = AudioManager()
-        }
-        
-        return Singleton.instance
-    }
+    static var sharedInstance = AudioManager()
     
     fileprivate let songName = "song"
     

@@ -7,30 +7,6 @@
 //
 
 import Foundation
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 public struct Results {
     
@@ -50,7 +26,7 @@ public struct Results {
             needToReportScore = true
         }
         
-        if result > friendsTodayTop10.last?.score {
+        if let lastScore = friendsTodayTop10.last?.score, result > lastScore {
             needToReportScore = true
         }
         
@@ -160,14 +136,14 @@ public struct Results {
         var firstRow = NSLocalizedString("Result 1 row: \(description)", comment: description)
         var secondRow = NSLocalizedString("Result 2 row: \(description)", comment: description)
 
-        if score != nil {
-            firstRow = firstRow.replacingOccurrences(of: "%score%", with: score!.description)
-            secondRow = secondRow.replacingOccurrences(of: "%score%", with: score!.description)
+        if let score = score {
+            firstRow = firstRow.replacingOccurrences(of: "%score%", with: score.description)
+            secondRow = secondRow.replacingOccurrences(of: "%score%", with: score.description)
         }
         
-        if player != nil {
-            firstRow = firstRow.replacingOccurrences(of: "%player%", with: player!)
-            secondRow = secondRow.replacingOccurrences(of: "%player%", with: player!)
+        if let player = player {
+            firstRow = firstRow.replacingOccurrences(of: "%player%", with: player)
+            secondRow = secondRow.replacingOccurrences(of: "%player%", with: player)
         }
         
         return (firstRow, secondRow)
@@ -255,64 +231,50 @@ public struct Results {
         } else if difference == 0 {
             return localizedResultDescriptionFor("The same as before")
         } else {
-            return localizedResultDescriptionFor("More score to beat previous", score: difference)
+            return localizedResultDescriptionFor("More score to beat previous", score: -difference)
         }
     }
     
     static fileprivate func resultDescriptionInCompareToFriends(_ score: Int) -> (firstRow: String, secondRow: String) {
-        if friendsTodayTop10.count > 1 {
-            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsTodayTop10)
-            
-            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
-                // Compare to friend below
-                let difference = score - closestFriends.resultBelow!.score
-                return localizedResultDescriptionFor("Higher than your friend's today record", score: difference, player: closestFriends.resultBelow!.name)
-            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
-                // Compare to friend above
-                let difference = closestFriends.resultAbove!.score - score
-                return localizedResultDescriptionFor("More score to beat your friend's today record", score: difference, player: closestFriends.resultAbove!.name)
-            }
-            
-        } else if friendsWeekTop10.count > 1 {
-            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsWeekTop10)
-            
-            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
-                // Compare to friend below
-                let difference = score - closestFriends.resultBelow!.score
-                return localizedResultDescriptionFor("Higher than your friend's week record", score: difference, player: closestFriends.resultBelow!.name)
-            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
-                // Compare to friend above
-                let difference = closestFriends.resultAbove!.score - score
-                return localizedResultDescriptionFor("More score to beat your friend's week record", score: difference, player: closestFriends.resultAbove!.name)
-            }
-            
-        } else if friendsAlltimeTop10.count > 1 {
-            let closestFriends = resultsAboveAndBelowScore(score, fromResults: friendsAlltimeTop10)
-            
-            if Int(arc4random() % 2) == 0 && closestFriends.resultBelow != nil && closestFriends.resultBelow?.score < score {
-                // Compare to friend below
-                let difference = score - closestFriends.resultBelow!.score
-                return localizedResultDescriptionFor("Higher than your friend's all time record", score: difference, player: closestFriends.resultBelow!.name)
-            } else if closestFriends.resultAbove != nil && closestFriends.resultAbove?.score > score {
-                // Compare to friend above
-                let difference = closestFriends.resultAbove!.score - score
-                return localizedResultDescriptionFor("More score to beat your friend's all time record", score: difference, player: closestFriends.resultAbove!.name)
-            }
-        } else if let friendNo1 = friendsAlltimeTop10.first {
+        if let result = resultDescriptionInCompareToFriends(userScore: score, friends: friendsTodayTop10, friendBelowLocalizationKey: "Higher than your friend's today record", friendAboveLocalizationKey: "More score to beat your friend's today record") {
+            return result
+        } else if let result = resultDescriptionInCompareToFriends(userScore: score, friends: friendsWeekTop10, friendBelowLocalizationKey: "Higher than your friend's week record", friendAboveLocalizationKey: "More score to beat your friend's week record") {
+            return result
+        } else if let result = resultDescriptionInCompareToFriends(userScore: score, friends: friendsAlltimeTop10, friendBelowLocalizationKey: "Higher than your friend's all time record", friendAboveLocalizationKey: "More score to beat your friend's all time record") {
+            return result
+        } else if let friendNo1 = friendsAlltimeTop10.first, friendNo1.score > 0, friendNo1.name != "" {
             // Your friend number 1
-            if friendNo1.score > 0 && friendNo1.name != "" {
-                if score > friendNo1.score {
-                    return localizedResultDescriptionFor("Higher than your friend #1", player: friendNo1.name)
-                } else if score < friendNo1.score {
-                    let difference = friendNo1.score - score
-                    return localizedResultDescriptionFor("More score to beat your friend #1", score: difference, player: friendNo1.name)
-                } else {
-                    return localizedResultDescriptionFor("Same as your friend #1", player: friendNo1.name)
-                }
+            if score > friendNo1.score {
+                return localizedResultDescriptionFor("Higher than your friend #1", player: friendNo1.name)
+            } else if score < friendNo1.score {
+                let difference = friendNo1.score - score
+                return localizedResultDescriptionFor("More score to beat your friend #1", score: difference, player: friendNo1.name)
+            } else {
+                return localizedResultDescriptionFor("Same as your friend #1", player: friendNo1.name)
             }
         }
         
         return localizedResultDescriptionFor("Tell your friends about it")
+    }
+    
+    static fileprivate func resultDescriptionInCompareToFriends(
+        userScore score: Int, friends: [Result],
+        friendBelowLocalizationKey: String,
+        friendAboveLocalizationKey: String) -> (firstRow: String, secondRow: String)? {
+        
+        let closestFriends = resultsAboveAndBelowScore(score, fromResults: friends)
+        
+        if Int(arc4random() % 2) == 0, let below = closestFriends.resultBelow, below.score < score {
+            // Compare to friend below
+            let difference = score - below.score
+            return localizedResultDescriptionFor(friendBelowLocalizationKey, score: difference, player: below.name)
+        } else if let above = closestFriends.resultAbove, above.score > score {
+            // Compare to friend above
+            let difference = above.score - score
+            return localizedResultDescriptionFor(friendAboveLocalizationKey, score: difference, player: above.name)
+        }
+        
+        return nil
     }
     
     static fileprivate func resultsAboveAndBelowScore(_ score: Int, fromResults results: [Result]) -> (resultAbove: Result?, resultBelow: Result?) {
@@ -321,7 +283,10 @@ public struct Results {
         for result in results {
             resultAbove = resultBelow
             resultBelow = result
-            if resultBelow?.score < score {
+            guard let scoreBelow = resultBelow?.score else {
+                continue
+            }
+            if scoreBelow < score {
                 break
             }
         }
