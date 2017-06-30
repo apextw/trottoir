@@ -10,9 +10,8 @@ import Foundation
 
 
 open class AppRater {
-
+    
     open class func goToRatingPage() {
-        
         let AppID = "935314042"
         let reviewUrlTemplate = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=APP_ID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
         
@@ -24,29 +23,24 @@ open class AppRater {
         }
     }
     
-    fileprivate class func doNotShowDialogInFuture()
-    {
+    fileprivate class func doNotShowDialogInFuture() {
         let key = AppRater.keyForCurrentVersion()
         UserDefaults.standard.set(true, forKey:key)
     }
-
     
-    fileprivate class func keyForCurrentVersion() -> String
-    {
+    fileprivate class func keyForCurrentVersion() -> String {
         let base = "Do Not Show Rate Me Dialog For Version "
-
-        if let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject {
-            let appVersion = nsObject as! String
-            return base + appVersion
+        
+        guard let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+            return base
         }
         
-        return base
+        return base + appVersion
     }
-
-    open class func shouldShowRateMeDialog() -> Bool
-    {
+    
+    open class func shouldShowRateMeDialog() -> Bool {
         let key = AppRater.keyForCurrentVersion()
         return !UserDefaults.standard.bool(forKey: key)
     }
-
+    
 }

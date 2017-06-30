@@ -17,13 +17,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         return GKLocalPlayer.localPlayer().isAuthenticated
     }
     
-    class var sharedInstance: GameCenterManager {
-        struct Singleton {
-            static let instance = GameCenterManager()
-        }
-        
-        return Singleton.instance
-    }
+    static let sharedInstance = GameCenterManager()
     
     override init() {
         print("Init")
@@ -31,23 +25,23 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     
     func autenticatePlayer() {
         let localPlayer = GKLocalPlayer.localPlayer()
-//        localPlayer.authenticateHandler = {(viewController : UIViewController?, error : NSError?) -> Void in
-//            //handle authentication
-//            if viewController != nil {
-//                print("Game Center: Need to Log In")
-//                if self.gameViewController != nil {
-//                    self.pauseCurrentScene()
-//                    self.gameViewController.present(viewController!, animated: true, completion: nil)
-//                }
-//            } else if localPlayer.isAuthenticated {
-//                print("Game Center: Successfully autenticated")
-//                self.updateResults()
-//                self.resumeCurrentScene()
-//            } else {
-//                print("Game Center: Autentication failed")
-//                self.resumeCurrentScene()
-//            }
-//        } as! (UIViewController?, Error?) -> Void
+        localPlayer.authenticateHandler = {(viewController : UIViewController?, error : Error?) -> Void in
+            //handle authentication
+            if viewController != nil {
+                print("Game Center: Need to Log In")
+                if self.gameViewController != nil {
+                    self.pauseCurrentScene()
+                    self.gameViewController.present(viewController!, animated: true, completion: nil)
+                }
+            } else if localPlayer.isAuthenticated {
+                print("Game Center: Successfully autenticated")
+                self.updateResults()
+                self.resumeCurrentScene()
+            } else {
+                print("Game Center: Autentication failed")
+                self.resumeCurrentScene()
+            }
+        }
     }
     
     let defaultLeaderboardId = "trottoir.leaderboard"

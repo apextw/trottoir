@@ -28,9 +28,9 @@ class GameScene: SKScene, GameManagerProtocol {
         resetSpeed()
         
         print("Self.size: x = \(self.size.width), y = \(self.size.height)")
-        print("Self.view?.frame.size: x = \(self.view?.frame.size.width), y = \(self.view?.frame.size.height)")
-        print("Self.view!.bounds.size: x = \(self.view?.bounds.size.width), y = \(self.view?.bounds.size.width)")
-
+        if let frameSize = self.view?.frame.size {
+            print("Self.view?.frame.size: x = \(frameSize.width), y = \(frameSize.height)")
+        }
         
         gameManager = GameManager(delegate: self)
         Results.attempt += 1
@@ -223,29 +223,25 @@ class GameScene: SKScene, GameManagerProtocol {
     }
     
     fileprivate func presentMainMenu(showNewLabel: Bool) {
-        if let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene {
-            scene.adDelegate = adDelegate
-            
-            scene.size = self.size
-            scene.scaleMode = SKSceneScaleMode.resizeFill
-            if background.currentDrawing != nil {
-                scene.drawing = background.currentDrawing.copy() as! SKSpriteNode
-            }
-            scene.score = gameManager.score
-            scene.showNewLabel = showNewLabel
-            let duration = 0.5
-            let transition = SKTransition.push(with: SKTransitionDirection.left, duration: duration)
-            self.view!.presentScene(scene, transition: transition)
-            
-            delay(duration, closure: { () -> () in
-                self.freeObjects()
-            })
+        guard let scene = MainMenuScene.unarchiveFromFile("MainMenu") as? MainMenuScene else {
+            return
         }
-    }
-    
-    func delay(_ delay:Double, closure:@escaping ()->()) {
-        DispatchQueue.main.asyncAfter(
-            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+        scene.adDelegate = adDelegate
+        
+        scene.size = self.size
+        scene.scaleMode = SKSceneScaleMode.resizeFill
+        if let drawing = background.currentDrawing, let copy = drawing.copy() as? SKSpriteNode {
+            scene.drawing = copy
+        }
+        scene.score = gameManager.score
+        scene.showNewLabel = showNewLabel
+        let duration = 0.5
+        let transition = SKTransition.push(with: SKTransitionDirection.left, duration: duration)
+        self.view!.presentScene(scene, transition: transition)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            self?.freeObjects()
+        }
     }
     
     fileprivate func freeObjects() {

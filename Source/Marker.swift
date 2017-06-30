@@ -114,10 +114,10 @@ class Marker : SKSpriteNode {
         self.addChild(touchprint)
     }
     
-    fileprivate func touchprintAngle() -> CGFloat {
-        let doubleValue = (Double((arc4random() % 1000)).truncatingRemainder(dividingBy: M_PI_2)) - M_PI_4
-        return CGFloat(doubleValue)
-    }
+//    fileprivate func touchprintAngle() -> CGFloat {
+//        let doubleValue = (Double((arc4random() % 1000)).truncatingRemainder(dividingBy: .pi / 2)) - .pi / 4
+//        return CGFloat(doubleValue)
+//    }
 
     var isActivated = false
     

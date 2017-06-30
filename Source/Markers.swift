@@ -7,41 +7,6 @@
 //
 
 import SpriteKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 struct MarkersColor {
     static var color = SKColor.white
@@ -299,6 +264,7 @@ extension Markers {
 // MARK: Styles of adding markers
 extension Markers {
     
+    @discardableResult
     fileprivate func addSingleMarkerTo(_ node: SKNode, withLastMarkerPosition lastPosition: CGPoint) -> Marker {
         var position = lastPosition
         position.y += border + Marker.size.height
@@ -314,6 +280,7 @@ extension Markers {
         return marker
     }
     
+    @discardableResult
     fileprivate func addSingleMarkerTo(_ node: SKNode) -> Marker {
         counter += 1
 //        updateColor()
@@ -332,6 +299,7 @@ extension Markers {
         addDoubleMarkerTo(node, toPosition: CGPoint(x: 0, y: yPosition))
     }
     
+    @discardableResult
     fileprivate func addDoubleMarkerTo(_ node: SKNode, toPosition position: CGPoint) -> (leftMarker: Marker, rightMarker: Marker) {
         let xShift = (Marker.size.width + border) / 2
         

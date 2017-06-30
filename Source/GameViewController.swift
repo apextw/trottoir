@@ -208,13 +208,13 @@ extension GameViewController: adProtocol {
 
 extension GameViewController: GADInterstitialDelegate {
     
-    func interstitial(_ ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print("AdMob: Failed to load interstitial ad")
 
         createAndLoadInterstitial()
     }
     
-    func interstitialDidDismissScreen(_ ad: GADInterstitial!) {
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("AdMob: Interstitial ad disappeared")
         
         if interstitialDidClose != nil {
@@ -227,7 +227,7 @@ extension GameViewController: GADInterstitialDelegate {
 }
 
 extension GameViewController: GADBannerViewDelegate {
-    func adView(_ view: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func adView(_ view: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("AdMob: Banner View Did Fail To Receive Ad With Error")
         readyToShowAd = false
         if sceneToShowAd != nil && adBannerView != nil {
@@ -236,7 +236,7 @@ extension GameViewController: GADBannerViewDelegate {
         }
     }
     
-    func adViewDidReceiveAd(_ view: GADBannerView!) {
+    func adViewDidReceiveAd(_ view: GADBannerView) {
         print("AdMob: Banner View Did Receive Ad")
         self.readyToShowAd = true
         if wantsToShowAd && sceneToShowAd != nil {

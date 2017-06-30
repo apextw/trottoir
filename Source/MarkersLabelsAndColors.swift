@@ -17,6 +17,7 @@ extension Markers {
         case alltime
     }
     
+    @discardableResult
     internal func showAchievementForMarkerIfNeeded(marker: Marker) -> SKNode? {
         let number = marker.number
         
