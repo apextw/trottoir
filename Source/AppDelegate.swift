@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.register(defaults: dictionary as! [String : AnyObject])
         }
         
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-7118034005818759~9434895429")
+        
         return true
     }
 

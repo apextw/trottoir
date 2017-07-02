@@ -364,10 +364,9 @@ class MainMenuScene: SKScene {
             let location = touch.location(in: uiLayer)
             addFingerprintToLocation(location)
             
-            let dictionary: [AnyHashable: Any] = ["Count" : tapsCounter]
+            let dictionary = ["Count" : tapsCounter]
             Flurry.logEvent("Left_a_fingerprint_in_menu", withParameters: dictionary)
         }
-//        performShiftDown()
     }
     
     fileprivate func addFingerprintToLocation(_ location: CGPoint) {
@@ -378,8 +377,7 @@ class MainMenuScene: SKScene {
         touchprint.zPosition = 1
         touchprint.setScale(DisplayHelper.MarkerSizeMultiplier)
         
-        if fingerprints.count == maxFingerprintsCount {
-            let firstTouch = fingerprints.first!
+        if fingerprints.count == maxFingerprintsCount, let firstTouch = fingerprints.first {
             firstTouch.removeFromParent()
             fingerprints.removeFirst()
         }
@@ -436,9 +434,9 @@ extension MainMenuScene: ButtonProtocol {
     }
     
     func startButtonPressed() {
-        if adDelegate != nil && Results.attempt > 0 && Results.attempt % 4 == 0 {
-            adDelegate.showAdFullscreenWithCompletion({
-                self.presentGameScene()
+        if adDelegate != nil, Results.attempt > 0, Results.attempt % 2 == 0 {
+            adDelegate.showAdFullscreenWithCompletion({[weak self] in
+                self?.presentGameScene()
             })
         } else {
             presentGameScene()

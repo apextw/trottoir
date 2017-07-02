@@ -91,17 +91,9 @@ class GameViewController: UIViewController {
     }
     
     internal func createAndLoadInterstitial() {
-        interstitial = GADInterstitial (adUnitID: "ca-app-pub-7118034005818759/4865095025")
-        interstitial.delegate = self;
-        
-        let request = GADRequest();
-        // Request test ads on devices you specify. Your test device ID is printed to the console when
-        // an ad request is made. GADInterstitial automatically returns test ads when running on a
-        // simulator.
-//        request.testDevices = [
-//        "67def063eafa10c86d9461980e9bcc98"
-//        ]
-        interstitial.load(request)
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-7118034005818759/4865095025")
+        interstitial.delegate = self
+        interstitial.load(gadRequest())
     }
     
     internal func createAndLoadBanner() {
@@ -110,17 +102,22 @@ class GameViewController: UIViewController {
         let y = self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeSmartBannerPortrait).height
         banner = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait, origin: CGPoint(x: 0, y: y))
         banner.adUnitID = "ca-app-pub-7118034005818759/2557430223"
-        banner.rootViewController = self;
-        banner.delegate = self;
-        
-        let request = GADRequest();
+        banner.rootViewController = self
+        banner.delegate = self
+        banner.isAutoloadEnabled = false
+
+        banner.load(gadRequest())
+    }
+    
+    internal func gadRequest() -> GADRequest {
+        let request = GADRequest()
         // Request test ads on devices you specify. Your test device ID is printed to the console when
         // an ad request is made. GADInterstitial automatically returns test ads when running on a
         // simulator.
 //        request.testDevices = [
 //            "67def063eafa10c86d9461980e9bcc98"
 //        ]
-        banner.load(request)
+        return request
     }
 }
 
@@ -140,6 +137,7 @@ extension GameViewController: adProtocol {
         sceneToShowAd = nil
         
         if let banner = banner, banner.superview != nil {
+            banner.load(gadRequest())
             banner.removeFromSuperview()
             scene.prepareForHidingAd()
         }
@@ -166,8 +164,8 @@ extension GameViewController: GADInterstitialDelegate {
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("AdMob: Interstitial ad disappeared")
         
-        if interstitialDidClose != nil {
-            interstitialDidClose!()
+        if let callback = interstitialDidClose {
+            callback()
             interstitialDidClose = nil
         }
         
