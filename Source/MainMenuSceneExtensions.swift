@@ -44,7 +44,7 @@ extension MainMenuScene {
         background.prepareScreenBelow()
         addInformation()
         
-        let shiftAction = SKAction.moveBy(x: 0, y: self.size.height, duration: 0.5)
+        let shiftAction = SKAction.moveBy(x: 0, y: self.size.height, duration: 0.33)
         shiftAction.timingMode = SKActionTimingMode.easeOut
         uiLayer.run(shiftAction)
         let backgroundLayer = self.childNode(withName: "BackgroundLayer")!
@@ -71,6 +71,13 @@ extension MainMenuScene {
         let drawingsByInfoLayer = drawingsByInfo()
         drawingsByInfoLayer.position = CGPoint(x: 0, y: size.height / 8)
         informationLayer.addChild(drawingsByInfoLayer)
+        
+        // Back Button
+        let back = backButton()
+        let x = (self.frame.size.width - back.frame.size.width) / 2.2
+        let y = (self.frame.size.height - back.frame.size.height) / 2.25
+        back.position = CGPoint(x: x, y: y)
+        informationLayer.addChild(back)
 
         informationLayer.position = CGPoint(x: 0, y: -self.size.height)
         uiLayer.addChild(informationLayer)
@@ -88,7 +95,7 @@ extension MainMenuScene {
         
         let row1 = Button(fontNamed: DisplayHelper.FontName)
         row1.text =  NSLocalizedString("Push Out 1'st row", comment: "Check out")
-        row1.name = "Push Out button"
+        row1.name = MainMenuScene.pushoutButtonName
         row1.delegate = self
         row1.fontColor = blueColor
         row1.fontSize = 2.2 * basicSize
@@ -98,7 +105,7 @@ extension MainMenuScene {
         
         let row2 = Button(fontNamed: DisplayHelper.FontName)
         row2.text = NSLocalizedString("Push Out 2'nd row", comment: "our competition")
-        row2.name = "Push Out button"
+        row2.name = MainMenuScene.pushoutButtonName
         row2.delegate = self
         row2.fontColor = blueColor
         row2.fontSize = 1.2 * basicSize
@@ -109,7 +116,7 @@ extension MainMenuScene {
         
         let row3 = Button(fontNamed: DisplayHelper.FontName)
         row3.text = NSLocalizedString("Push Out 3'rd row", comment: "game")
-        row3.name = "Push Out button"
+        row3.name = MainMenuScene.pushoutButtonName
         row3.delegate = self
         row3.fontColor = blueColor
         row3.fontSize = 2 * basicSize
@@ -120,7 +127,7 @@ extension MainMenuScene {
         
         let row4 = Button(fontNamed: DisplayHelper.FontName)
         row4.text = NSLocalizedString("Push Out title", comment: "Push Out")
-        row4.name = "Push Out button"
+        row4.name = MainMenuScene.pushoutButtonName
         row4.delegate = self
         row4.fontColor = yellowColor
         row4.fontSize = 2.5 * basicSize
@@ -131,7 +138,7 @@ extension MainMenuScene {
         
         let row5 = Button(fontNamed: DisplayHelper.FontName)
         row5.text = NSLocalizedString("Only on the App Store", comment: "Only on the App Store")
-        row5.name = "Push Out button"
+        row5.name = MainMenuScene.pushoutButtonName
         row5.delegate = self
         row5.fontColor = SKColor.white
         row5.fontSize = basicSize
@@ -280,13 +287,23 @@ extension MainMenuScene {
         
         return drawingsByLayer
     }
-
+    
+    fileprivate func backButton() -> SKNode {
+        let backButton = Button(fontNamed: DisplayHelper.FontName)
+        backButton.name = MainMenuScene.backButtonName
+        backButton.text = "X"
+        backButton.fontSize = 40 * DisplayHelper.FontScale
+        backButton.delegate = self
+        backButton.zPosition = 5
+        
+        return backButton
+    }
     
     internal func performShiftUp(_ sender: AnyObject) {
         self.view!.removeGestureRecognizer(swipeDownRecognizer)
         self.view!.addGestureRecognizer(swipeUpRecognizer)
         
-        let shiftAction = SKAction.moveBy(x: 0, y: -self.size.height, duration: 0.5)
+        let shiftAction = SKAction.moveBy(x: 0, y: -self.size.height, duration: 0.33)
         shiftAction.timingMode = SKActionTimingMode.easeOut
         uiLayer.run(shiftAction)
         let backgroundLayer = self.childNode(withName: "BackgroundLayer")!

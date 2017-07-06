@@ -17,6 +17,9 @@ protocol SceneShowingAdProtocol {
 }
 
 class MainMenuScene: SKScene {
+    
+    static let pushoutButtonName = "Push Out button"
+    static let backButtonName = "back button"
 
     var adDelegate: adProtocol!
     var drawing: SKSpriteNode!
@@ -28,11 +31,10 @@ class MainMenuScene: SKScene {
     fileprivate let musicSwitcher = Button(fontNamed: DisplayHelper.FontName)
     fileprivate let startButton = Button(fontNamed: DisplayHelper.FontName)
     fileprivate let gameCenterButton = Button(fontNamed: DisplayHelper.FontName)
+    fileprivate let moreButton = Button(fontNamed: DisplayHelper.FontName)
     internal let rateGameButton = Button(fontNamed: DisplayHelper.FontName)
     internal var rateGameStars: SKSpriteNode!
 
-//    private let performShiftDownSelector: Selector = "performShiftDown:"
-//    private let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "performShiftDown:")
     internal var swipeUpRecognizer: UISwipeGestureRecognizer!
     internal var swipeDownRecognizer: UISwipeGestureRecognizer!
 
@@ -50,6 +52,8 @@ class MainMenuScene: SKScene {
     
     internal var adBannerSize = CGSize()
     
+    // MARK:
+    
     override func didMove(to view: SKView) {
         uiLayer = self.childNode(withName: "UI Layer")
         fillScreenWithBackground()
@@ -58,6 +62,7 @@ class MainMenuScene: SKScene {
         initStartButton()
         initMusicSwitcher()
         initGameCenterButton()
+        initMoreButton()
         if shouldShowRateMeButton {
             initRateGame()
         }
@@ -90,7 +95,7 @@ class MainMenuScene: SKScene {
         }
     }
     
-    fileprivate var labelLeftBorder: CGFloat {
+    private var labelLeftBorder: CGFloat {
         get {
             return self.size.width * 0.05
         }
@@ -116,11 +121,15 @@ class MainMenuScene: SKScene {
     }
     
     internal func updateMusicSwitcherPosition() {
-        var position = CGPoint(x: -self.size.width * 0.5, y: -self.size.height * 0.5)
+        var position = bottomLeftPosition
         position.x += musicSwitcher.frame.size.width * 0.5 + labelLeftBorder
         position.y += musicSwitcher.frame.size.height * 0.5
         position.y += adBannerSize.height
         musicSwitcher.position = position
+    }
+    
+    fileprivate var bottomLeftPosition: CGPoint {
+        return CGPoint(x: -self.size.width * 0.5, y: -self.size.height * 0.5)
     }
     
     // MARK: Game Center Button
@@ -200,6 +209,29 @@ class MainMenuScene: SKScene {
         startButton.zPosition = 5
     }
     
+    
+    // MARK: More Button
+    
+    fileprivate func initMoreButton() {
+        moreButton.text = NSLocalizedString("More Button", comment: "Restart Button")
+        moreButton.fontSize = 24 * DisplayHelper.FontScale
+        updateMoreButtonPosition()
+        moreButton.delegate = self
+        uiLayer.addChild(moreButton)
+        moreButton.zPosition = 5
+    }
+    
+    internal func updateMoreButtonPosition() {
+        
+        var position = bottomLeftPosition
+        let xRange = Float(0.2)
+        let inset = Float((labelLeftBorder + moreButton.frame.size.width / 2) / self.frame.width)
+        position.x += CGFloat(Random.value() < 0.5 ? Random.value(lower: inset, upper: xRange) : Random.value(lower: 1 - xRange, upper: 1 - inset)) * self.frame.width
+        position.y += CGFloat(Random.value(lower: 0.25, upper: 0.45)) * self.frame.height
+        moreButton.position = position
+        moreButton.zRotation = .pi * CGFloat(Random.value(lower: -0.1, upper: 0.1))
+    }
+    
     // MARK: After Game Over
     
     fileprivate func addDrawing() {
@@ -211,7 +243,7 @@ class MainMenuScene: SKScene {
                 drawing.removeFromParent()
             }
             drawing.setScale(DisplayHelper.MainMenuScale)
-            drawing.position = CGPoint(x: self.size.width / 2 - drawing.size.width / 2 -  DisplayHelper.DrawingsBorderShift, y: 0)
+            drawing.position = CGPoint(x: (self.size.width - drawing.size.width) / 2 -  DisplayHelper.DrawingsBorderShift, y: 0)
         } else {
             drawing = Drawings.mainMenuDrawing;
             drawing.setScale(DisplayHelper.MainMenuScale)
@@ -353,6 +385,9 @@ class MainMenuScene: SKScene {
         
         rateGameButton.enabled = false
         rateGameButton.delegate = nil
+        
+        moreButton.enabled = false
+        moreButton.delegate = nil
     }
     
     //MARK: Fingerprints
@@ -401,6 +436,7 @@ class MainMenuScene: SKScene {
 
 // MARK: Button Protocol
 extension MainMenuScene: ButtonProtocol {
+    
     func didTouchDownButton(_ sender: Button, position: CGPoint) {
         let uiPosition = uiLayer.convert(position, from: sender)
         addFingerprintToLocation(uiPosition)
@@ -415,14 +451,17 @@ extension MainMenuScene: ButtonProtocol {
         } else if sender === gameCenterButton {
             print("Open Game Center")
             GameCenterManager.sharedInstance.presentGameCenterViewController()
-        } else if let senderName = sender.name {
-            if senderName == "Push Out button" {
-                Flurry.logEvent("Opened_Push_Out_link")
-                let link = "itms-apps://itunes.apple.com/us/app/push-out-friends-competition/id899582393?ls=1&mt=8"
-                if let url = URL(string: link) {
-                    UIApplication.shared.openURL(url)
-                }
+        } else if sender === moreButton {
+            performShiftDown(sender)
+        } else if sender.name == MainMenuScene.pushoutButtonName {
+            Flurry.logEvent("Opened_Push_Out_link")
+            let link = "itms-apps://itunes.apple.com/us/app/push-out-friends-competition/id899582393?ls=1&mt=8"
+            if let url = URL(string: link) {
+                UIApplication.shared.openURL(url)
             }
+        } else if sender.name == MainMenuScene.backButtonName {
+            print("Back Button presssed")
+            performShiftUp(self)
         } else if sender == rateGameButton {
             print("Rate game pressed")
             rateGameButton.text = NSLocalizedString("Thank you for rating us", comment: "Thank you ^^")

@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         GADMobileAds.configure(withApplicationID: "ca-app-pub-7118034005818759~9434895429")
-        
+
         return true
     }
 

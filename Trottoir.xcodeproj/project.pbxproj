@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		93CE71B81F04561C0037DD92 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CE71B71F04561C0037DD92 /* GameKit.framework */; };
+		93CE71BE1F0AEEC20037DD92 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CE71BD1F0AEEC20037DD92 /* Random.swift */; };
 		9D18442C1A8CB74100AAA198 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D18442E1A8CB74100AAA198 /* Localizable.strings */; };
 		9D1844361A8CD9CB00AAA198 /* lc-chalk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D1844341A8CD9CB00AAA198 /* lc-chalk.ttf */; };
 		9D1D910719F34152002D92CA /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D910619F34152002D92CA /* MainMenu.sks */; };
@@ -48,6 +49,7 @@
 		104864CB752E8968CD219C0F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		523FB445B09F3198C0D3A255 /* Pods-Trottoir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trottoir.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trottoir/Pods-Trottoir.debug.xcconfig"; sourceTree = "<group>"; };
 		93CE71B71F04561C0037DD92 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		93CE71BD1F0AEEC20037DD92 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Random.swift; path = Toolkit/Random.swift; sourceTree = "<group>"; };
 		9D1844291A8CB6F400AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D1844301A8CB74500AAA198 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D1844311A8CB7E700AAA198 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -127,6 +129,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		93CE71B91F0AEE6A0037DD92 /* Toolkit */ = {
+			isa = PBXGroup;
+			children = (
+				93CE71BD1F0AEEC20037DD92 /* Random.swift */,
+			);
+			name = Toolkit;
+			sourceTree = "<group>";
+		};
 		9D1844321A8CD9B300AAA198 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 		9D39779319E7B0C1008ED26F = {
 			isa = PBXGroup;
 			children = (
+				93CE71B91F0AEE6A0037DD92 /* Toolkit */,
 				9D2698901A00DBA6002FF873 /* Bridging */,
 				9DC9581319F16E500097FA83 /* Source */,
 				9D39779E19E7B0C1008ED26F /* Assets */,
@@ -397,6 +408,7 @@
 				9D45F21219EE6EFE00EC0575 /* GameManager.swift in Sources */,
 				9D3977A219E7B0C1008ED26F /* AppDelegate.swift in Sources */,
 				9D3D7CC019E9B15600A36405 /* Background.swift in Sources */,
+				93CE71BE1F0AEEC20037DD92 /* Random.swift in Sources */,
 				9D99D2791A654DCB00BAE8DF /* AppRater.swift in Sources */,
 				9DA29FF219F3FCDF00756D31 /* AudioManager.swift in Sources */,
 				9DB100DB1A2858D0006083D6 /* DisplayHelper.swift in Sources */,
@@ -548,7 +560,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging/Flurry-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
